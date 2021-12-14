@@ -1,0 +1,36 @@
+<div class="block_zag_index">
+	<div class="wrapper paddingi">
+
+		<div class="left_index_black">
+			<h1 class="big_h1">SkillHunt</h1>
+			<div class="search_div">
+				<div>
+
+					<input type="search" [(ngModel)]="findTask.filterName" class="search-input" (keydown.enter)="sendFindTask($event)"
+					(focus)="innerInputFocussed()" (blur)="innerInputBlurred()">
+					<div *ngIf="isVisiblePlaceholder()" class="placeholder_search_input" (click)="clickOnPlaceholder()">
+						<p>{{textInTheSearchBar}}</p>
+					</div>
+
+				</div>
+				<button type="submit" class="search-submit" (click)="routerFindTask()"></button>
+			</div>
+
+		</div>
+		<div class="right_index_block"></div>
+	</div>
+</div>
+
+<div class="category_index">
+	<div class="wrapper">
+		<h2 class="h2_index paddingi">Мы имеем большой объём курсов</h2>
+		<p class="podh2_index paddingi"></p>
+
+    <app-home-categories></app-home-categories>
+
+
+
+  </div>
+</div>
+
+<app-footer></app-footer>

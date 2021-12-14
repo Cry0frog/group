@@ -1,0 +1,79 @@
+<h1 class="h1">Категории задач</h1>
+<mat-form-field class="table-filter-area">
+    <input matInput (keyup) = "applyFilter($event.target.value)" placeholder = "Поиск">
+</mat-form-field>
+
+<table mat-table [dataSource] = "dataSource" matSort class = "table_users">
+
+  <!-- Name Column -->
+  <ng-container matColumnDef = "name">
+      <th *matHeaderCellDef mat-sort-header> Название </th>
+      <td *matCellDef = "let row" style="display: flex; align-items: center; height: 50px;">
+          <div [ngClass]="{'child-category': row.isChild()}" style="display: flex;align-items: center;height: 50px;">
+              <div class="category">
+                  <img src="/api/category/photo/{{row.id}}">
+              </div>
+              <mat-icon *ngIf="row.isRootDirectory()" (click)="onRootDirectoryClick(row)">
+                  {{row.isExpanded ? 'keyboard_arrow_down' : 'keyboard_arrow_right'}}
+              </mat-icon>
+              {{row.name}}
+          </div>
+      </td>
+  </ng-container>
+
+  <!-- Operations Column -->
+  <ng-container matColumnDef="operations">
+      <th *matHeaderCellDef mat-sort-header > Операции </th>
+      <td *matCellDef = "let row" class = "users_btns">
+          <button *ngIf="!row.isRootDirectory()" title="Превью создания задачи" class="status_btn preview_icon margin-5"
+              (click)="previewTaskCreation(row)">
+          </button>
+          <button title="Добавить подкатегорию" *ngIf="row.isRootDirectory()" class="status_btn green_plus"
+              (click)="addCategory(row)">
+          </button>
+          <button title="Создать категорию на базе текущей" *ngIf="!row.isRootDirectory()" class="status_btn copy-button"
+              (click)="addCategoryBasedOnCurrent(row)">
+          </button>
+          <button title="Опубликовано" *ngIf="row.isPublished() && !row.isRootDirectory()"
+              class="status_btn green_ok_icon">
+          </button>
+          <button title="Редактировать" class="edit_btn margin-5"
+                  (click)="updateCategory(row)">
+              
+          </button>
+          <button title="Обновить фото" class="edit_btn" style="background-color: orange; margin-right: 5px;"
+                  (click)="updatePhoto(row)">
+              
+          </button>
+          <button title="Переместить вверх" class="edit_btn top_arrow_icon" style="background-color: orange; margin-right: 5px; display: -webkit-inline-box;"
+                  (click)="moveToTop(row)">
+          </button>
+          <button title="Переместить вниз" class="edit_btn down_arrow_icon" style="background-color: orange; margin-right: 5px; display: -webkit-inline-box;"
+                  (click)="moveToDown(row)">
+          </button>
+          <button title="Поменять категорию" *ngIf="!row.isRootDirectory()" class="transfer-btn" style="margin-right: 5px;"
+                  (click)="transferCategory(row)">
+          </button>
+          <button title="Безопасный платеж" class="pay_btn "></button>
+          <button title="Заблокировать чат" class="block_btn margin-5"></button>
+          <button title="Удалить категорию" class="delete_btn"
+                  (click)="deleteCategory(row)">
+              
+          </button>
+      </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
+  <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
+</table>
+<div class="mt50">
+    <div class="width_60">
+        <button class="orange_btn" (click)="addFolder()" style="margin-right: 15px;">
+            Создать категорию
+        </button>
+        <button class="orange_btn" (click)="addCategory(null)">
+            Создать подкатегорию
+        </button>
+    </div>
+    <div class="clear"></div>
+</div>

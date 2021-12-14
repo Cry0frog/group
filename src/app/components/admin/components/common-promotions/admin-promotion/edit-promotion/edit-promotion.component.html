@@ -1,0 +1,52 @@
+<h1 *ngIf="data.id == null" mat-dialog-title>Добавление акции</h1>
+<h1 *ngIf="data.id != null" mat-dialog-title>Изменение акции</h1>
+<div mat-dialog-content class="with_field">
+
+  <div>
+    <p class="zag-sz margin-top-30">Название</p>
+    <input matInput type="text" [(ngModel)]="data.name">
+  </div>
+
+  <div>
+    <p class="zag-sz margin-top-30">Заголовок</p>
+    <input matInput type="text" [(ngModel)]="data.heading">
+  </div>
+
+  <div class="summernote">
+    <p class="zag-sz margin-top-30">Описание</p>
+    <div [(ngModel)]="data.description"
+      [ngxSummernote]="config">
+    </div>
+  </div>
+
+  <div class="margin-top-30">
+    <mat-checkbox [(ngModel)]="data.published">Опубликовано</mat-checkbox>
+  </div>
+
+  <div>
+    <mat-checkbox [(ngModel)]="data.showHome">Показать на главной</mat-checkbox>
+  </div>
+
+  <div>
+    <mat-checkbox matTooltip="При участии в акции пользователь генерирует свой промокод"
+      [(ngModel)]="data.generateCode">
+        Генерировать промо - код
+    </mat-checkbox>
+  </div>
+
+  <div *ngIf="data.generateCode" class="zag-sz margin-top-30">
+    <p>Количество бонусов, которые начисляются пользователю при указании промокода</p>
+    <input matInput type="number" style="width: 30%;" [(ngModel)]="data.amountValue">
+  </div>
+
+</div>
+
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+    <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+    <div *ngIf = "data.id == null">
+        <button class="orange_btn" [mat-dialog-close]="data">Добавить</button>
+    </div>
+     <div *ngIf="data.id != null" >
+        <button class="orange_btn" [mat-dialog-close]="data">Изменить</button>
+     </div>
+</div>

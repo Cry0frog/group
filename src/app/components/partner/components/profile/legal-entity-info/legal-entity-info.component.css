@@ -1,0 +1,16 @@
+.margin-top-20 {
+  margin-top: 20px;
+}
+
+.zag-profile{
+  color: #444;
+}
+
+.ogrn {
+  padding-left: 50px;
+}
+
+@media(max-width: 1220px) {
+  .profile_db {display: grid;}
+  .ogrn {padding-left: 0px;}
+}

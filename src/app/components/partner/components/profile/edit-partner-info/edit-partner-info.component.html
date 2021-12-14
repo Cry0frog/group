@@ -1,0 +1,7 @@
+<div mat-dialog-content class="with_field ">
+  <app-change-account-info [dataPartnerInfo]="data" [isEditProfileInfo]="true"></app-change-account-info>
+  <div class="dialog-actions margin-top-30" mat-dialog-actions>
+    <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+    <button class="orange_btn" (click)="updatePartneInfo()" >Изменить</button>
+  </div>
+</div>

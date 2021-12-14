@@ -1,0 +1,31 @@
+<div mat-dialog-content class="with_field ">
+    <p class="h1">В вашем аккаунте не указаны некоторые данные. 
+        Для продолжении регистрации, пожалуйста, заполните поля.</p>
+<div>   
+<div *ngIf="data.nullEmail || data.confEmail">    
+    <p class="zag-sz">Почта</p>
+    <input matInput type="text" [(ngModel)]="data.email" required> 
+</div>
+
+<div *ngIf="data.nullPhone">
+    <p class="zag-sz margin-top-30">Номер телефона</p>
+    <p-inputMask mask="+7 (999) 999-9999" placeholder="Номер телефона" [(ngModel)]="data.phoneNumber"></p-inputMask>
+</div>
+
+<div *ngIf="data.nullCity" class="right_div city-section">
+    <p class="zag-sz margin-top-30">Город</p>
+    <p-dropdown class="city-choose" [options]="cities" [(ngModel)]="data.city" 
+        (keyup)="onChangeCity($event)" [filter]="true"
+        placeholder="Выберите город" emptyFilterMessage="Не найдено">
+    </p-dropdown>
+</div>
+<div *ngIf="data.confEmail" style="margin-bottom: 25px; color: red">
+    Аккаунт с такой почтой уже существует
+</div>
+<div *ngIf="data.confPhoneNumber" style="margin-bottom: 25px; color: red">
+    Аккаунт с таким номером телефона уже существует
+</div>
+<div class="dialog-actions margin-top-30" mat-dialog-actions>
+    <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+    <button class="orange_btn" [mat-dialog-close]="data">Отправить</button>
+</div>

@@ -1,0 +1,18 @@
+<div class="feedback-block zadanie-block" *ngFor="let promo of promotions" style="width: 100%; cursor: pointer; outline: none;" [routerLink]="[promo.id]">
+    <div class="block_promotion">
+      <div>
+          <img class="feedback-img" src="/api/promotion/photo/{{promo.id}}">
+          <div class="feedback-block-content">
+            <div class="feedback-zag" style="width: 149px;">
+                {{promo.name}}
+            </div>
+          </div>
+      </div>
+    <div class="block_info">
+        <div class="margin-5-p-area right-performer-area" style="margin: 0;">
+            <div class="right-info-performer-item">
+                {{promo.heading}}
+            </div>
+        </div>
+    </div>
+</div>

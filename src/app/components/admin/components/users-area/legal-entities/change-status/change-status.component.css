@@ -1,0 +1,57 @@
+.margin-top-30 {
+    margin-top: 30px;
+}
+
+.with_field {
+    width: 105%;
+}
+
+.block_operation div,
+.block_operation mat-checkbox{
+    margin: auto;
+}
+
+.block_operation mat-checkbox{
+    margin-left: 10px;
+}
+
+.block_operation {
+    display: flex;
+}
+
+.block_dicr {
+    display: flex;
+    width: 40%;
+}
+
+.block_dicr p {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.block_conf_docs {
+    display: flex;
+}
+
+.doc_contract_legal_entity,
+.doc_charter,
+.doc_egryp,
+.doc_tax_registration {
+    width: 40px;
+    height: 40px;
+    background-size: 34px;
+    padding-left: 130px;
+}
+
+.select_roles{
+    width: 50%;
+    line-height: 50px;
+    padding: 0 25px;
+    height: 50px;
+    border: none;
+    color: black;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    background: #F7F7F7;
+    border-radius: 25px;
+}

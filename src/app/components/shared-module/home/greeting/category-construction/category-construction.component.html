@@ -1,0 +1,245 @@
+<div (scroll)="scrollHandler($event)">
+  <div class="first_screen_adv">
+  	<div class="wrapper paddingi">
+  		<h1 class="big_h1">Ремонт и строительство</h1>
+      <p class="p-adv">GoodDeal – современный удобный сервис по поиску специалистов в области ремонта</p>
+      <p class="p-adv">Телефон: 8800-301-12-97</p>
+      <p class="p-adv">Режим работы - круглосуточно</p>
+  		<ol>
+  			<li>Создайте задание</li>
+  			<li>Выберите лучшего исполнителя</li>
+  			<li>Готово! Ваше задание уже выполняется</li>
+  		</ol>
+  		<a class="new_orange_btn" id="create_task" href="/new_task">Создать задание</a>
+  	</div>
+  </div>
+
+  <a *ngIf="isShowButton" class="create-zadanie create-zadanie-fixed def-href-point" href="/new_task"> Создать задание </a>
+
+  <div class="new_cat">
+  	<div class="wrapper">
+
+  		<h2 class="h2_index paddingi">Мы имеем большой штат исполнителей</h2>
+      <p class="podh2_index paddingi">готовы помочь вам в решении самых разнообразных задач</p>
+
+      <div class="flex">
+  		<!--
+        <div *ngFor="let category of sortedArray" class="new-cat-block" (click)='routerCreateTask(category)'>
+  				<div class="ncb-content">
+  					<img src="../../../../../../assets/img/nabor.png" />
+  					<p>{{category.nameCategory}}</p>
+  				</div>
+        </div> -->
+
+  			<div class="new-cat-block"  (click)='routerCreateTask("Строительство")'>
+  				<div class="ncb-content">
+  					<img src="../../../../../../assets/img/1_Строительство.jpg" />
+  					<p>Строительство</p>
+  				</div>
+  			</div>
+  			<div class="new-cat-block"  (click)='routerCreateTask("Ремонт под ключ")'>
+  				<div class="ncb-content">
+  					<img src="../../../../../../assets/img/2_Ремонт_под_ключ.jpg" />
+  					<p>Ремонт под ключ</p>
+  				</div>
+  			</div>
+  			<div class="new-cat-block"  (click)='routerCreateTask("Фасадные и кровельные работы")'>
+  				<div class="ncb-content">
+  					<img src="../../../../../../assets/img/3_Ремонт_кровли_и_фассада.jpg"/>
+  					<p>Фасадные и кровельные работы</p>
+  				</div>
+  			</div>
+  			<div class="new-cat-block"  (click)='routerCreateTask("Электромонтажные работы")'>
+  				<div class="ncb-content">
+  					<img src="../../../../../../assets/img/4_Электрика.jpg" />
+  					<p>Электромонтажные работы</p>
+  				</div>
+  			</div>
+  			<div class="new-cat-block"  (click)='routerCreateTask("Работы с окнами и балконами")'>
+  				<div class="ncb-content">
+  					<img src="../../../../../../assets/img/5_Работы_с_окнами_и_балконами.jpg"/>
+  					<p>Работы с окнами и балконами</p>
+  				</div>
+  			</div>
+  			<div class="new-cat-block"  (click)='routerCreateTask("Сантехнические работы, отопление, водоснабжение, канализация")'>
+  				<div class="ncb-content">
+  					<img src="../../../../../../assets/img/6_Сантехника.jpg" />
+  					<p>Сантехника, отопление, водоснабжение</p>
+  				</div>
+        </div>
+        <div class="new-cat-block"  (click)='routerCreateTask("Сварочные работы")'>
+  				<div class="ncb-content">
+  					<img src="../../../../../../assets/img/7_Сварочные_работы.jpg" />
+  					<p>Сварочные работы</p>
+  				</div>
+        </div>
+        <div class="new-cat-block"  (click)='routerCreateTask("Отделочные работы")'>
+  				<div class="ncb-content">
+  					<img src="../../../../../../assets/img/8_Отделочные_работы.jpg" />
+  					<p>Отделочные работы</p>
+  				</div>
+        </div>
+        <div class="new-cat-block"  (click)='routerCreateTask("Работы с газом")'>
+  				<div class="ncb-content">
+  					<img src="../../../../../../assets/img/9_Работы_с_газом.jpg" />
+  					<p>Работы с газом</p>
+  				</div>
+        </div>
+        <div class="new-cat-block"  (click)='routerCreateTask("Промышленный альпинизм")'>
+  				<div class="ncb-content">
+  					<img src="../../../../../../assets/img/10_Промышленный_альпинизм.jpg" />
+  					<p>Промышленный альпинизм</p>
+  				</div>
+        </div>
+        <div class="new-cat-block" style="margin-left: auto;" (click)='routerCreateTask("Работы по установке/ремонту дверей и замков")'>
+          <div class="ncb-content">
+            <img src="../../../../../../assets/img/11_Ремонт_дверей_и_замков.jpg" />
+            <p>Установка и ремонт дверей/замков</p>
+          </div>
+        </div>
+        <div class="new-cat-block"  (click)='routerCreateTask("Работы по сборке и ремонту мебели")'>
+          <div class="ncb-content">
+            <img src="../../../../../../assets/img/12_Ремонт_мебели.jpg" />
+            <p>Сборка и ремонт мебели</p>
+          </div>
+        </div>
+        <div class="new-cat-block"  (click)='routerCreateTask("Услуги архитектора/проектировщика")'>
+          <div class="ncb-content">
+            <img src="../../../../../../assets/img/13_Архитектор.jpg" />
+            <p>Услуги архитектора/проектировщика</p>
+          </div>
+        </div>
+        <div class="new-cat-block" style="margin-right: auto;" (click)='routerCreateTask("Разнорабочий")'>
+          <div class="ncb-content">
+            <img src="../../../../../../assets/img/14_Разнорабочий.jpg" />
+            <p>Услуги разнорабочих</p>
+          </div>
+        </div>
+  			<!-- <a href="" class="see_cat">Посмотреть все категории</a> -->
+  		</div>
+  	</div>
+  </div>
+
+  <app-default-body-category-construction></app-default-body-category-construction>
+
+  <div *ngIf="!checkForThreePartnerInfoForTheCategoryConstruction()">
+    <div class="wrapper paddingi">
+      <h2 class="h2_index_big no-litle">"Мы" работаем в данной сфере</h2>
+      <p style="text-align: center;">
+        Наши исполнители в категории "Ремонт и строительство".
+      </p>
+    </div>
+    <div>
+      <div class="wrapper">
+        <div class="flex">
+          <div class="category_block" *ngFor="let partnerInfo of partnersInfo">
+            <div class="category_block_new">
+              <div style="height: 115px;">
+                <a>
+                  <img src="/api/partner/info/photo/{{partnerInfo.idPartner}}"/>
+                </a>
+                <a class="zag-create" style="cursor: pointer;" (click)="routerProfile(partnerInfo)">{{partnerInfo.fio}}</a>
+                <div style="cursor: pointer;">
+                  <p class="user_info">Обо мне:</p>
+                  <p class="full_string">{{partnerInfo.aboutMe}}</p>
+                </div>
+              </div>
+  
+              <button class="orange_btn poluchit-btn margin-5 request-handling-btn" 
+              (click)='linkToNewTaskForSelectedPerformer(partnerInfo)'>
+                 Предложить задачу
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="spexc-block">
+      <a class="see_cat" style="margin: 30px auto 0;" (click)="loadAllPerformers()">
+        Посмотреть всех
+      </a>
+    </div>
+  </div>
+
+  <div class="wrapper paddingi">
+    <h2 class="h2_index_big no-litle">Как формируется цена и какую цену мне поставить?</h2>
+    <p style="text-align: justify;">
+      В приложении GoodDeal Вы можете поставить ту цену, которую готовы заплатить за работу исполнителю . Исполнители могут откликнуться на
+      Ваше задание по текущей цене, или предложить более выгодные для Вас или себя условия. В целом на стоимость работ обычно влияет сложность
+      работ, наличие дополнительных услуг (вынести весь мусор после ремонта, расставить мебель и т.д.) а так же срочность выполнения задания.
+      Чтобы быстрее найти исполнителя мы рекомендуем указывать реальные цены.
+    </p>
+  	<!-- <div class="price-block">
+  		<div class="pri-block">Вы сами определяете цену</div>
+  		<div class="pri-block">Старайтесь указывать реальные и объективные цены</div>
+  		<div class="pri-block">Указывать можно и примерные цены</div>
+  		<div class="pri-block">На цену может влиять срочность, сложность, объем работ</div>
+    </div> -->
+  </div>
+
+  <div>
+    <div class="wrapper">
+      <div class="flex">
+        <div class="category_block">
+          <div class="category_block_new">
+            <a>
+              <img src="../../../../../../assets/img/85181.png"/>
+            </a>
+            <a class="zag-create"> Иванов Степан Петрович</a>
+            <div class="non-focused-label" style="cursor: pointer;">
+              <span class="zag-create-span">4500₽</span>
+              <p style="margin: 0 0 10px">Создана 05.02.2021</p>
+              <p class="desc-create">Поклеить обои в детской</p>
+            </div>
+          </div>
+        </div>
+        <div class="category_block">
+          <div class="category_block_new">
+            <a>
+              <img src="../../../../../../assets/img/88629.png"/>
+            </a>
+            <a class="zag-create"> Шуйская Светлана Михайловна</a>
+            <div class="non-focused-label" style="cursor: pointer;">
+              <span class="zag-create-span">450₽</span>
+              <p style="margin: 0 0 10px">Создана 26.01.2021</p>
+              <p class="desc-create">Поменять счётчик гор. воды</p>
+            </div>
+          </div>
+        </div>
+        <div class="category_block">
+          <div class="category_block_new">
+            <a>
+              <img src="../../../../../../assets/img/88617.png"/>
+            </a>
+            <a class="zag-create"> Чупров Владимир Богданович</a>
+            <div class="non-focused-label" style="cursor: pointer;">
+              <span class="zag-create-span">900₽</span>
+              <p style="margin: 0 0 10px">Создана 16.02.2021</p>
+              <p class="desc-create">Заменить 2 розетки</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mobile_store">
+    <div style="display: flex;">
+      <p class="orange_podzag">Скачайте наше приложение и пользуйтесь GoodDeal, где бы вы не находились.</p>
+    </div>
+    <div style="display: flex;">
+      <div style="justify-content: space-between; margin-left: auto; margin-right: auto;">
+        <div>
+          <div class="store-block">
+            <a href="https://play.google.com/store/apps/details?id=com.keeneye.gd" target="_blank" class="google_play_link"></a>
+          </div>
+        </div>
+        <div style="margin-top: 5px;">
+          <div class="store-block">
+            <a href="https://apps.apple.com/ru/app/gooddeal/id1507809289" target="_blank" class="apple_store_link"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>

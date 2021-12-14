@@ -1,0 +1,80 @@
+<div>
+    <div class="block-corner">
+        <h1 class="h1">Планируемые задачи</h1>
+        <mat-form-field class="table-filter-area">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder = "Поиск">
+        </mat-form-field>
+
+        <div class="vibor" style="margin-top: 10px;">
+            <a class="def-href-point" (click)="filterAll()" [ngClass]="{'active-vibor': isAllStatus()}">
+                Все
+            </a>
+            <a class="chernovik-vibor def-href-point" (click)="filterNotReady()" [ngClass]="{'active-vibor': isNotReady()}">
+                Не готовы
+            </a>
+            <a class="vprocesse-vibor def-href-point" (click)="filterInProgress()" [ngClass]="{'active-vibor': isInProgress()}">
+                В процессе
+            </a>
+            <a class="vipolneno-vibor def-href-point" (click)="filterSuccess()" [ngClass]="{'active-vibor': isSuccess()}">
+                Выполненные
+            </a>
+            <a class="trouble-vibor def-href-point" (click)="filterError()" [ngClass]="{'active-vibor': isError()}">
+                Проблемные
+            </a>
+        </div>
+
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortChange($event)" class="table_users">
+            <ng-container matColumnDef="id">
+                <th *matHeaderCellDef mat-sort-header>ID</th>
+                <td *matCellDef="let row">{{row.id}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th *matHeaderCellDef>Название</th>
+                <td *matCellDef="let row">{{row.getName()}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th *matHeaderCellDef>Статус</th>
+                <td *matCellDef="let row" [class]="getStatusColorClass(row)">
+                    <div >
+                        {{row.getStatus()}}
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="nextActionTime">
+                <th *matHeaderCellDef mat-sort-header>Дата следующей активности</th>
+                <td *matCellDef="let row">{{row.getNextActionTime()}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="operations">
+                <th *matHeaderCellDef>Операции</th>
+                <td *matCellDef="let row" class="users_btns">
+                    <button title="Создать на основе этой задачи" class="status_btn green_plus margin-5"
+                        (click)="createBasedOnTask(row)">
+                    </button>
+                    <button title="Удалить отложенную задачу" class="delete_btn"
+                        (click)="deletePlannedTask(row)">
+                        
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <button matTooltip="Добавление планируемой задачи" class="buttonAdd" (click)="addPlannedTask()">
+            Добавление планируемой задачи
+        </button>
+        <mat-paginator
+          [pageSize]="fakeTaskWithCountedPages.pageableParams.size"
+          [pageSizeOptions]="[15, 40, 80]"
+          [showFirstLastButtons]="true"
+          [length]="fakeTaskWithCountedPages.pageableParams.countedPages"
+          [pageIndex]="fakeTaskWithCountedPages.pageableParams.page"
+          (page)="handlePage($event)">
+      </mat-paginator>
+    </div>
+</div>

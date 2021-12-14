@@ -1,0 +1,109 @@
+<h1 mat-dialog-title *ngIf="data.id == null">Добавление тарифа</h1>
+<h1 mat-dialog-title *ngIf="data.id != null">Обновление тарифа</h1>
+<div mat-dialog-content class="with_field">
+    <div>    
+        <p class="zag-sz">Дата</p>
+        <div class="custom-datetime">
+            <input matInput type="text"
+                (focus)="onFocusDate()" (blur)="onChangeFocusDate()"
+                [value]="data.startRate | date:'dd.MM.yyyy HH:mm'"
+                readonly/>
+            <p-calendar #calendar class="datetime-date with-time" [(ngModel)]="data.startRate" [locale]="ru_calendar"
+                dateFormat="dd.mm.yy" placeholder="Дата" showTime="true" hourFormat="24">
+            </p-calendar>
+        </div>  
+    </div>
+
+    <div class="select margin-top-30">    
+        <mat-select [(ngModel)]="data.type" required >
+            <mat-option *ngFor="let rateType of rateTypesMapper" [value]="rateType.value" >
+              {{rateType.viewValue}}
+            </mat-option>
+        </mat-select> 
+    </div>
+
+    <div>    
+        <p class="zag-sz margin-top-30">Стоимость</p>
+        <input matInput type="number" [(ngModel)]="data.cost"/>
+    </div>
+    
+    <div>    
+        <p class="zag-sz margin-top-30">Описание</p>
+        <input matInput type="text" [(ngModel)]="data.description" required>
+    </div>
+
+    <div>
+        <div class="full-width-input time-window-section" style="display: flex;">
+            <div class="time-window-align">
+                <div>    
+                    <p class="zag-sz margin-top-30">Начало временного окна</p>
+                    <div class="custom-datetime">
+                        <input matInput type="text"
+                            (focus)="onFocusStartWindow()" (blur)="onChangeFocusStartWindow()"
+                            [value]="data.timeWindowStart | date:'HH:mm'"
+                            readonly/>
+                        <p-calendar #calendarStartWindow class="datetime-date with-time custom-timeonly" 
+                            [(ngModel)]="data.timeWindowStart" [locale]="ru_calendar"
+                            placeholder="Старт временного окна" timeOnly="true" hourFormat="24">
+                        </p-calendar>
+                    </div>
+                </div>
+            </div>
+            <div class="time-window-align">
+                <div>    
+                    <p class="zag-sz margin-top-30">Окончание временного окна</p>
+                    <div class="custom-datetime">
+                        <input matInput type="text"
+                            (focus)="onFocusEndWindow()" (blur)="onChangeFocusEndWindow()"
+                            [value]="data.timeWindowEnd | date:'HH:mm'"
+                            readonly/>
+                        <p-calendar #calendarEndWindow class="datetime-date with-time custom-timeonly" 
+                            [(ngModel)]="data.timeWindowEnd" [locale]="ru_calendar"
+                            placeholder="Окончание временного окна" timeOnly="true" hourFormat="24">
+                        </p-calendar>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="podpis-wf" style="margin-top: 5px;">
+            Если Вы не установите временное окно, то тариф будет распространяться на весь день
+        </p>
+    </div>
+
+    <div *ngIf="data.isWeightCategoryRate()" class="select">    
+        <mat-select [(ngModel)]="data.weightCategory" name="weightCategoryType">
+            <mat-option *ngFor="let weightCategoryType of weightCategoryMapper" [value]="weightCategoryType.value">
+                {{weightCategoryType.viewValue}}
+            </mat-option>
+        </mat-select>
+    </div>
+    
+    <div *ngIf="data.isTransportCategoryRate()" class="select">    
+        <mat-select [(ngModel)]="data.transportCategory" name="transportCategoryType">
+            <mat-option *ngFor="let transportCategoryType of transportCategoryMapper" [value]="transportCategoryType.value">
+                {{transportCategoryType.viewValue}}
+            </mat-option>
+        </mat-select>
+    </div>
+    <div *ngIf="data.isProductCategoryRate()" class="select">
+        <mat-select [(ngModel)]="data.productCategory" name="productCategoryType">
+            <mat-option *ngFor="let productCategoryType of productCategoryMapper" [value]="productCategoryType.value">
+                {{productCategoryType.viewValue}}
+            </mat-option>
+        </mat-select>
+    </div>
+
+    <div *ngIf="data.isDistanceType()" class="select">    
+        <mat-select [(ngModel)]="data.distanceType" name="distanceType">
+            <mat-option *ngFor="let distanceType of distanceTypeMapper" [value]="distanceType.value">
+                {{distanceType.viewValue}}
+            </mat-option>
+        </mat-select>
+    </div>
+</div>
+
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+  <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+  <button *ngIf="data.id == null" class="orange_btn" [mat-dialog-close]="data">Добавить</button>
+  <button *ngIf="data.id != null" class="orange_btn" [mat-dialog-close]="data">Изменить</button>  
+</div>

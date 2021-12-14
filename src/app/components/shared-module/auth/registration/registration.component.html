@@ -1,0 +1,93 @@
+<div>
+	<div class="block_input">
+		<input matInput class="white-caret-cursor" type="text" placeholder="Электронная почта"
+			  [(ngModel)]="registrationRequest.email">
+		<div *ngIf="isNullEmail" style="display: flex; margin-top: 10px; padding: 0 25px;">
+			<div class="error_email">
+				<p>!</p>
+			</div>
+			<div style="display: flex;">
+				<p style="color: red; margin-bottom: auto; margin-top: auto;">Необходимо заполнить почту</p>
+			</div>
+		</div>
+  </div>
+  <div class="block_input">
+		<input matInput class="white-caret-cursor" type="password" placeholder="Пароль"
+			[(ngModel)]="registrationRequest.password">
+		<app-validation-error-template [errorHandler]="registrationRequest" [propertyTemplate]="'password'">
+		</app-validation-error-template>
+      </div>
+      <div class="block_input">
+		<input matInput class="white-caret-cursor" type="password" placeholder="Повторный пароль"
+			[(ngModel)]="registrationRequest.confirmationPassword">
+		<app-validation-error-template [errorHandler]="registrationRequest" [propertyTemplate]="'confirmationPassword'">
+		</app-validation-error-template>
+	</div>
+	<div class="block_input">
+		<input matInput class="white-caret-cursor" type="text" placeholder="Фамилия"
+			[(ngModel)]="surname">
+		<app-validation-error-template [errorHandler]="registrationRequest" [propertyTemplate]="'fio'">
+		</app-validation-error-template>
+	</div>
+      <div class="block_input">
+		<input matInput class="white-caret-cursor" type="text" placeholder="Имя"
+			[(ngModel)]="name">
+		<app-validation-error-template [errorHandler]="registrationRequest" [propertyTemplate]="'fio'">
+		</app-validation-error-template>
+	</div>
+	<div class="block_input">
+		<input matInput class="white-caret-cursor" type="text" placeholder="Отчество"
+			[(ngModel)]="patronymic">
+		<app-validation-error-template [errorHandler]="registrationRequest" [propertyTemplate]="'fio'">
+		</app-validation-error-template>
+  </div>
+	<div class="block_input">
+		<input matInput class="white-caret-cursor" max="99" type="number" placeholder="Возраст"
+		  [(ngModel)]="registrationRequest.age">
+		<app-validation-error-template [errorHandler]="registrationRequest" [propertyTemplate]="'age'">
+		</app-validation-error-template>
+  </div>
+  <div class="block_input">
+	 <p-inputMask class="registration-phone" mask="+7 (999) 999-9999" placeholder="Номер телефона"
+	 	[(ngModel)]="registrationRequest.phoneNumber">
+	 </p-inputMask>
+  </div>
+  <div class="block_input">
+    <input matInput class="white-caret-cursor" type="text" placeholder="Промокод (при наличии)"
+       [(ngModel)]="registrationRequest.promoCode">
+  </div>
+  <div class="city-section block_input">
+    <p-dropdown class="city-choose" [options]="cities" [(ngModel)]="selectedCity"
+			(keyup)="onChangeCity($event)" [filter]="true" placeholder="Выберите город"
+			emptyFilterMessage="Не найдено">
+    </p-dropdown>
+
+    <div *ngFor="let error of registrationRequest.getErrorsWithoutFields(); let i = index">
+      <app-validation-error-template [errorHandler]="registrationRequest" [index]="i">
+      </app-validation-error-template>
+    </div>
+
+	</div>
+	<div class="soglasie">
+		<input type="checkbox" [(ngModel)]="registrationRequest.agreeToProcessingPersonalData" class="checkbox" id="checkbox_1">
+		<label for="checkbox_1">Согласен c условиями <a target="_blank" href="/terms_of_user" class="index_link">пользовательского cоглашения</a> и <a target="_blank" href="/terms_of_user#9" class="index_link">обработкой персональных данных</a></label>
+	</div>
+	<div style="margin-top: 20px;" class="soglasie">
+		<input type="checkbox" [(ngModel)]="registrationRequest.agreePrivacyPolicy" class="checkbox" id="checkbox_2">
+		<label for="checkbox_2">Согласен c <a target="_blank" href="/privacy_policy" class="index_link">политикой конфиденциальности</a></label>
+	</div>
+  <button style="margin-top: 20px;" class="orange_btn" (click)="getVerificationRequest()" [ngClass]="{'not_agree_to_processing': !registrationRequest.agreeToProcessingPersonalData || !registrationRequest.agreePrivacyPolicy}"
+		[disabled]="!registrationRequest.agreeToProcessingPersonalData && !registrationRequest.agreePrivacyPolicy">
+			Зарегистрироваться
+	</button>
+	<div class="reg_socseti">
+		<p class="mb10">Войти через соц. сети</p>
+		<p>
+			<a class="soc_btn vk_btn" href="{{urlLoginVK}}"></a>
+			<a class="soc_btn fb_btn" href="{{urlLoginFacebook}}"></a>
+			<a class="soc_btn google_btn" href="{{urlLoginGoogle}}"></a>
+			<a class="soc_btn yandex_btn" href="{{urlLoginYandex}}"></a>
+		</p>
+	</div>
+</div>
+<app-side-panel [isJobNav]='false'></app-side-panel>

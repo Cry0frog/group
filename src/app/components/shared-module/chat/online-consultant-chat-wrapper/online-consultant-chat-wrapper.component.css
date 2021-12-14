@@ -1,0 +1,9 @@
+.chat-block {
+    min-height: 600px;
+}
+
+.block-corner{
+    padding: 0px;
+    border-radius: 0px;
+    box-shadow: 0 0 0 0;
+}

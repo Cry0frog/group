@@ -1,0 +1,9 @@
+<div style="position: relative;">
+  <div id="map" class="map" (click)="closeContext()">
+    <div id="info"></div>
+  </div>
+
+  <div class="context">
+    <app-contextmenu [mapMode]='mapMode' (mapActionEvent)="handlerMapActions($event)"></app-contextmenu>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="wrapper content paddingi">
+    <div class="block-corner">
+        <h1 class="h1">Комиссии</h1>
+    
+        <table mat-table [dataSource] = "dataSource" matSort class = "table_users"
+              matSortActive="id" matSortDirection="desc">
+            <ng-container matColumnDef = "id">
+              <th *matHeaderCellDef mat-sort-header>ID</th>
+              <td *matCellDef="let row"> {{row.id}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef = "startCommission">
+              <th *matHeaderCellDef mat-sort-header style="width: 175px;">Дата применения</th>
+              <td *matCellDef="let row">{{row.startCommission | date:'dd.MM.yyyy HH:mm'}}</td>
+            </ng-container>
+                
+            <ng-container matColumnDef="commission">
+              <th *matHeaderCellDef mat-sort-header>Комиссия</th>
+              <td *matCellDef="let row">{{row.commission}}</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="bottomSummBorder">
+              <th *matHeaderCellDef mat-sort-header>Ограничение снизу</th>
+              <td *matCellDef="let row">{{row.bottomSummBorder}}</td>
+            </ng-container>
+            
+            <!-- Operations Column -->
+            <ng-container matColumnDef="operations">
+                <th *matHeaderCellDef>Операции</th>
+                <td *matCellDef = "let row" class = "users_btns" style="width: 120px;">
+                  <button matTooltip = "Обновить комиссию" class="buttonUpdateUsers margin-5" 
+                    (click) = "updateCommission(row)">
+                  </button>
+                  <button matTooltip = "Удалить комиссию" class="buttonDeleteUsers"
+                    (click) = "deleteCommission(row)">
+                  </button>
+                </td>
+            </ng-container>
+              
+            <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
+            <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
+        </table>
+    
+        <button matTooltip = "Создание комиссии" class = "buttonAdd" 
+                (click) = "addCommission()">
+            Создать тариф
+        </button>
+        <mat-paginator 
+          [length]="100"
+          [pageSize]="10"
+          [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
+    </div>
+</div>
+        
+        

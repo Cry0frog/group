@@ -1,0 +1,56 @@
+<div class="section-content">
+  <div class="zadanie-block" *ngFor="let resume of listResume" style="width: 100%; position: relative;">
+    <div class="zadanie-block-content">
+      <div style="display: flex;">
+        <a class="zadanie-block-img" target="_blank" href="/user/{{resume.creatorId}}">
+            <img class="ispolnitel_img" src="/api/partner/info/photo/{{resume.creatorId}}"/>
+        </a>
+        <a class="ispolnitel_name" href="/user/{{resume.creatorId}}" target="_blank">
+            {{resume.creatorName}}
+        </a>
+      </div>
+
+      <p style="font-size: 12px; margin: 0px;">
+        {{resume.cityName}}
+      </p>
+
+      <div class="non-focused-label" style="cursor: pointer;">
+        <div class="righttop">
+          <p style="font-size: 12px; margin: 0px;">
+            Создана {{resume.createdAt | date:'dd.MM.yyyy'}}
+          </p>
+        </div>
+
+        <p class="zadanie-link zadanie-block-name">
+          {{resume.desiredPosition}}
+        </p>
+
+        <div style="float: right; margin-top: 20px;">
+          <span *ngIf="resume.salary" class="zadanie-block-price" >
+            от {{resume.salary}}₽
+          </span>
+        </div>
+
+        <div *ngIf="!isUserMode()" class="request-handling-section">
+          <div *ngIf="isNotYour(resume); else yourResume" class="request-button-block">
+            <button *ngIf="!isAdmin() && !isFavoriteResumeComponrntMode()" class="orange_btn poluchit-btn margin-5 request-handling-btn"
+            (click)="offerVacancy(resume)">
+              Предложить вакансию
+            </button>
+            <button class="orange_btn poluchit-btn margin-5 request-handling-btn"
+            (click)="openMyResume(resume)">
+              Посмотреть резюме
+            </button>
+          </div>
+
+          <ng-template #yourResume>
+            <span class="task-price-color" style="float: right;">
+              Ваше резюме
+            </span>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isFavoriteResumeComponrntMode()" class="ball"></div>
+  </div>
+</div>

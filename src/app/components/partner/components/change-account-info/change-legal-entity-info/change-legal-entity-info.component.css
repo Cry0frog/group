@@ -1,0 +1,100 @@
+.margin-top-30 {
+  margin-top: 30px;
+}
+
+.right_div{
+  display: inline-block;
+}
+
+:host /deep/ .city-section .ui-dropdown-trigger.ui-state-default {
+  background: #F7F7F7 !important;
+  position: absolute;
+  right: 15px;
+}
+
+:host /deep/ .city-choose .ui-dropdown-label-container {
+  width: 350px;
+  margin-right: 2px;
+}
+
+:host /deep/ .city-section .ui-dropdown {
+  width: 100%;
+  height: 50px;
+  border: 0;
+}
+
+
+:host /deep/ .city-section .ui-dropdown-label-container {
+  background: #F7F7F7 !important;
+
+  padding: 0 25px;
+  border: 0;
+  line-height: 50px;
+  border-radius: 25px;
+}
+
+:host /deep/ .city-section .ui-dropdown-label.ui-inputtext {
+  background: #F7F7F7 !important;
+  height: 50px;
+
+  color: black;
+  font-size: 16px;
+  font-family: 'Roboto',sans-serif;
+  padding: 0;
+  color: #888;
+}
+
+.h1 {
+  margin-bottom: 30px;
+}
+
+::ng-deep .ui-dropdown-filter-container {
+  border-top-left-radius: 20px !important;
+  border-top-right-radius: 20px !important;;
+}
+
+::ng-deep .ui-dropdown-panel {
+  border-radius: 20px !important;
+}
+
+::ng-deep .ui-dropdown-item {
+  border-bottom-right-radius: 20px !important;
+  border-bottom-left-radius: 20px !important;
+}
+
+.block_city_number {
+  display: flex;
+}
+
+.edit_number {
+  padding-left: 20px;
+  width: 50%;
+}
+
+.edit_email {
+  width: 50%;
+}
+
+.block_inn_ogrn {
+  display: flex;
+}
+
+.ogrn {
+  padding-left: 90px;
+}
+
+@media(max-width: 1035px) {
+  .block_city_number {display: block;}
+  .edit_number {padding-left: 0px; width: 100%;}
+  .edit_email {width: 100%;}
+}
+
+@media(max-width: 550px) {
+  .city-section {width: 100%;}
+  ::ng-deep .city-choose .ui-dropdown-label-container {width:100% !important;}
+}
+
+@media(max-width: 700px) {
+  .block_inn_ogrn {display: block;}
+  .ogrn {padding-left: 0px;}
+}

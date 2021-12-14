@@ -1,0 +1,38 @@
+<div mat-dialog-content class="with_field">
+  <div style="display: flex;">
+    <input
+      style="display: none"
+      type="file" (change)="fileChangeEvent($event)"
+      #fileInput>
+    <button class="input_img" (click)="fileInput.click()">Загрузить фото</button>
+  </div>
+
+  <div class="mt10">
+    <p>Фотография не должна превышать 3МБ</p>
+    <p>Допустимые типы изображений: JPEG, JPG, PNG, TIFF, BMP</p>
+  </div>
+
+  <div *ngIf="imageChangedEvent != '' ">
+      <image-cropper
+          [imageChangedEvent]="imageChangedEvent"
+          [maintainAspectRatio]="true"
+          [aspectRatio]="1 / 1"
+          [resizeToWidth]="768"
+          format="png"
+          (imageCropped)="imageCropped($event)">
+      </image-cropper>
+  </div>
+
+  <div style="color: red;">
+    {{errorMessage}}
+  </div>
+
+  <div *ngIf="isUploadFileUpdate" class="progress_bar">
+    <mat-progress-bar mode="determinate" value="{{eventProgress}}"></mat-progress-bar>
+  </div>
+
+  <div mat-dialog-actions style="display: flex; justify-content: space-between">
+      <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+      <button class="orange_btn" (click)="loadImage()">Сохранить</button>
+  </div>
+</div>

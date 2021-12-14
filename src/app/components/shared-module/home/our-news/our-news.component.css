@@ -1,0 +1,11 @@
+.block_zag {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+@media(max-width: 1000px) {
+  .block_zag {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}

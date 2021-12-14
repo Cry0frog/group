@@ -1,0 +1,21 @@
+<div *ngIf="!staticPageMode">
+  <div>
+    <div *ngFor="let shortFieldActivity of sortedArray" class="flex">
+      <a (click)="routerFindVacancy(shortFieldActivity)" class="category_block">
+        <div class="category_block_content">
+          <div>
+            <p class="name_category_index">{{shortFieldActivity.nameFieldActivity}}</p>
+          </div>
+          <div class="category-photo">
+            <img class="photo-position" src="/api/field_activity/photo/{{shortFieldActivity.fieldActivityId}}">
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div *ngIf="!isAllCategoriesMode">
+    <a class="see_cat" (click)="loadAllCategories()">
+      Посмотреть все категории
+    </a>
+  </div>
+</div>

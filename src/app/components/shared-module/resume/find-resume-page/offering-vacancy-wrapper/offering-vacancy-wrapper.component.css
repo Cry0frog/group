@@ -1,0 +1,7 @@
+.orange_btn {
+  height: 25px;
+}
+
+@media (max-width: 428px) {
+.orange_btn {width: -webkit-fill-available; margin-bottom: 5px;}
+}

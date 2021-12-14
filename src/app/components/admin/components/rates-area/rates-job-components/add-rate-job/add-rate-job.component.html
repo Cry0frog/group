@@ -1,0 +1,23 @@
+<h1 mat-dialog-title *ngIf="data.id == null">Добавление тарифа</h1>
+<h1 mat-dialog-title *ngIf="data.id != null">Обновление тарифа</h1>
+<div mat-dialog-content class="with_field" style="margin: 0 auto;">
+
+    <div class="select-block_sz margin-top-30">
+      <mat-select class="select-sz" placeholder="Период" [(ngModel)]="data.countDays" required >
+          <mat-option *ngFor="let days of rateJobDays" [value]="days.value" >
+            {{days.viewValue}}
+          </mat-option>
+      </mat-select>
+    </div>
+
+    <div>
+        <p class="zag-sz margin-top-30">Сумма</p>
+        <input matInput type="number" [(ngModel)]="data.amountValue" required>
+    </div>
+</div>
+
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+  <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+  <button *ngIf="data.id == null" class="orange_btn" [mat-dialog-close]="data">Добавить</button>
+  <button *ngIf="data.id != null" class="orange_btn" [mat-dialog-close]="data">Изменить</button>
+</div>

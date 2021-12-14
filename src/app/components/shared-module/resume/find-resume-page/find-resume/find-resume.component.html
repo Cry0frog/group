@@ -1,0 +1,144 @@
+<div (scroll)="scrollHandler($event)">
+  <div class="bottom-chat">
+      <input class="textarea-chat" placeholder="Поиск"
+          [(ngModel)]="filterResume.filterName" (keydown.enter)="search()"
+          [ngClass]="{'textarea-chat-with-clear': !filterResume.isEmpty()}"
+      />
+      <button *ngIf="!filterResume.isEmpty()" class="clear-button"
+          (click)="clearFilter()" matTooltip="Очистить настройки"></button>
+      <button class="settings-button">
+          <div class="ku-ku setting-window">
+              <h1 class="h1">Дополнительная фильтрация</h1>
+
+              <div class="filter-prop">
+                  <div class='name_option'>
+                      <p class="text">З/П больше</p>
+                  </div>
+                  <div class="with_field right-align">
+                      <input class="input-hard-size" type="number" [(ngModel)]="filterResume.byCostMore">
+                  </div>
+              </div>
+<!--
+              <div class="datetime-interval-section filter-prop">
+                  <div class="datetime-section-title">
+                      <p class="new_width title-left-align text date-span-height">
+                          Дата создания больше
+                      </p>
+                  </div>
+                  <div class="datetime-section right-align">
+                      <p-calendar class="datetime-date" readonlyInput="true" [(ngModel)]="filterResume.byCreatedAtMore"
+                          dateFormat="dd.mm.yy" placeholder="Выберите дату" [locale]="ru_calendar">
+                      </p-calendar>
+                  </div>
+              </div> -->
+
+              <div class="filter-prop mt5">
+                <div class='name_option'>
+                    <p class="text">График работы</p>
+                </div>
+
+                <div class="with_field right-align multi_select_choose">
+                  <p-multiSelect [options]="scheduleItems" [(ngModel)]="filterResume.schedules" [showToggleAll]="false" [filter]="false" defaultLabel="Выберите график работы" selectedItemsLabel="Все"></p-multiSelect>
+                </div>
+              </div>
+
+              <div class="filter-prop">
+                <div class='name_option'>
+                    <p class="text">Тип занятости</p>
+                </div>
+                <div class="with_field right-align multi_select_choose">
+                  <p-multiSelect [options]="employmentItems" [(ngModel)]="filterResume.employments" [showToggleAll]="false" [filter]="false" defaultLabel="Выберите тип занятости" selectedItemsLabel="Все"></p-multiSelect>
+                </div>
+              </div>
+
+              <div class="filter-prop">
+                <div class='name_option'>
+                    <p class="text">Место работы</p>
+                </div>
+                <div class="with_field right-align multi_select_choose">
+                  <p-multiSelect [options]="placeWorkItems" [(ngModel)]="filterResume.placeWorks" [showToggleAll]="false" [filter]="false" defaultLabel="Выберите место работы" selectedItemsLabel="Все"></p-multiSelect>
+                </div>
+              </div>
+
+              <div class="filter-prop mt5">
+                <div class='name_option'>
+                    <p class="text">Образование</p>
+                </div>
+                <div class="with_field right-align city-section">
+                  <p-dropdown [options]="educationItems" [(ngModel)]="filterResume.education"
+                    placeholder="Выберите образование">
+                  </p-dropdown>
+                </div>
+              </div>
+
+              <div class="filter-prop mt5">
+                  <div class='name_option'>
+                      <p class="text">Выберите город</p>
+                  </div>
+                  <div class="with_field right-align city-section">
+                      <p-dropdown class="city-choose" [options]="cities" [(ngModel)]="filterResume.selectedCity"
+                          (keyup)="onChangeCity($event)" [filter]="true" placeholder="Выберите город"
+                          emptyFilterMessage="Не найдено">
+                      </p-dropdown>
+                  </div>
+              </div>
+
+              <div class="cb-div">
+                <input type="checkbox" id="c1_moving" [(ngModel)]="filterResume.moving"/>
+                <label class="label-job text" for="c1_moving">
+                    <span></span>Готовность к переездам
+                </label>
+              </div>
+
+              <div class="cb-div">
+                <input type="checkbox" id="c1_business_trips" [(ngModel)]="filterResume.businessTrips"/>
+                <label class="label-job text" for="c1_business_trips">
+                    <span></span>Готовность к командировка
+                </label>
+              </div>
+
+              <!-- <div *ngIf="isAutorizedUser()" class="cb-div">
+                  <input type="checkbox" id="c1_onlyMyCountry" [(ngModel)]="filterResume.onlyMyCity"/>
+                  <label class="label-job text" for="c1_onlyMyCountry">
+                      <span></span>Искать только в моём городе
+                  </label>
+              </div> -->
+
+              <div class="task-request-operation-container" style="display: flex;">
+                  <button class="orange_btn poluchit-btn margin-5 request-handling-btn"
+                      (click)="clearFilter()">
+                    Очистить фильтр
+                  </button>
+
+                  <button class="orange_btn poluchit-btn margin-5 request-handling-btn right-align"
+                          (click)="search()">
+                      Применить фильтр
+                  </button>
+              </div>
+          </div>
+      </button>
+      <button class="search-button" (click)="search()"></button>
+  </div>
+  <div class="clear"></div>
+
+  <div class="filter_category_mob paddingi" style="padding-top: 20px;">
+    <div>
+      <p class="h1">Выберите категорию</p>
+      <div class="category" style="height: 170px; overflow-y: auto; display: block;">
+        <app-filter-fields-activity [fieldsActivity]="fieldsActivity" [choosenFieldsActivity]="choosenFieldsActivity"
+          [choosenFieldAsctivityIds]="choosenFieldsActivityIds" [isMobileMode]="true" (toggleFieldAcivityEvents)="toggleFieldActivityHandler($event)">
+        </app-filter-fields-activity>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="choosenVacancy != null">
+    <p class="h1" style="margin-top: 20px;">
+        Вакансия: '{{choosenVacancy.name}}'
+    </p>
+  </div>
+
+  <app-list-resume [listResume]="listResume" [resumeComponentMode]="getResumeMode"
+    (eventOfferResume)="offerResumeHandler($event)">
+  </app-list-resume>
+</div>

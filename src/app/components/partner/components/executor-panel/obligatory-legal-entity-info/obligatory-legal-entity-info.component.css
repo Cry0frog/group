@@ -1,0 +1,39 @@
+.margin-top-30 {
+  margin-top: 30px;
+}
+
+.orange_btn {
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  height: 50px;
+  padding: 0 30px;
+  text-align: center;
+  background: rgb(255,88,0);
+  background: linear-gradient(0deg, rgba(255,88,0,1) 0%, rgba(255,170,0,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff5800",endColorstr="#ffaa00",GradientType=1);
+  border-radius: 25px;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.h1 {
+  margin-bottom: 30px;
+}
+
+.mat-dialog-content {
+  margin: 0;
+}
+
+@media (max-width: 450px) {
+  .orange_btn {width: -webkit-fill-available; margin-bottom: 5px;}
+}
+
+.disabled_btn {
+  background: gray;
+}

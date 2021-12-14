@@ -1,0 +1,5 @@
+export enum RateJobType {
+  ONCE = 'ONCE',
+  SUBSCRIPTION = 'SUBSCRIPTION',
+  NOT_ENOUGH_MONEY = 'NOT_ENOUGH_MONEY'
+}

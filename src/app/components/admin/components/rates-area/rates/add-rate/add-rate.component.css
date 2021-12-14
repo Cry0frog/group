@@ -1,0 +1,78 @@
+:host /deep/ .datetime-date.with-time {
+  height: 0px;
+	padding: 0;
+	border: 0;
+	max-height: 0px;
+	margin: 0;
+  font-size: 0%;
+}
+
+:host /deep/ .custom-datetime .mat-form-field-infix {
+  display: grid !important;
+}
+
+:host /deep/ .datetime-date.with-time {
+  height: 0px;
+	padding: 0;
+	border: 0;
+	max-height: 0px;
+	margin: 0;
+  font-size: 0%;
+}
+
+:host /deep/ .datetime-date.with-time > .ui-calendar {
+  height: 0px;
+  padding: 0;
+  border: 0;
+  max-width: 0px;
+  top: -55px;
+  left: -316px;
+}
+
+:host /deep/ .datetime-date.with-time > .ui-calendar > .ui-inputtext {
+  height: 0px;
+  padding: 0;
+  border: 0;
+}
+
+:host /deep/ .custom-timeonly .ui-timepicker {
+  width: 180px;
+}
+
+.custom-datetime {
+  width: 100%;
+}
+
+.time-window-align {
+  width: 50%;
+}
+
+.time-window-section .time-window-align {
+  padding-right: 5px;
+}
+
+.time-window-section .time-window-align:last-child {
+  padding-right: 0px;
+}
+
+.margin-top-30 {
+  margin-top: 30px;
+}
+
+.select{
+  width: 100%;
+  line-height: 50px;
+  padding: 0 25px;
+  height: 50px;
+  border: none;
+  color: black;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  background: #F7F7F7;
+  border-radius: 25px;
+}
+
+.with_field {
+  width: 107%;
+  height: 475px
+}

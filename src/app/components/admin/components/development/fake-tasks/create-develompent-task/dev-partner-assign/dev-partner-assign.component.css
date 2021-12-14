@@ -1,0 +1,25 @@
+.text-height {
+    line-height: 40px;
+}
+
+.planned-partner-area {
+    display: -webkit-box;
+    margin-bottom: 20px;
+}
+
+
+::ng-deep body .ui-datepicker table td {
+  padding: 0 !important;
+}
+
+::ng-deep body .ui-datepicker table td > a {
+  padding: 0px !important;
+}
+
+::ng-deep .fake_creatore .ui-calendar .ui-datepicker,  ::ng-deep .fake_performer .ui-calendar .ui-datepicker{
+  top: -79.323px !important;
+}
+
+::ng-deep body .ui-datepicker.ui-datepicker-timeonly {
+  top: 0 !important;
+}

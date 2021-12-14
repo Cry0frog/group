@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Предложите свою цену</h1>
+<div mat-dialog-content class="with_field">
+    <div>
+      <div>
+        <input matInput type="number" maxlength="6" [(ngModel)]="newPrice" required>
+      </div>
+    </div>
+</div>
+
+<app-validation-error-template [errorHandler]="data">
+</app-validation-error-template>
+
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+    <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+    <button class="orange_btn" (click)="dialogClosed()"> Предложить </button>
+</div>

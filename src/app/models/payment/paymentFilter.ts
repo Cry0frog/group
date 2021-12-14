@@ -1,0 +1,6 @@
+export enum PaymentFilter {
+  ALL = 'ALL',
+  READY_TO_PAYOUT = 'READY_TO_PAYOUT',
+  PAYOUT_IN_PROGRESS = 'PAYOUT_IN_PROGRESS',
+  SUCCESS = 'SUCCESS'
+}

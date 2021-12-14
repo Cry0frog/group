@@ -1,0 +1,21 @@
+<div>
+    <h1 *ngIf="!isCreateTask; else createTask" mat-dialog-title style="line-height: 1.2em; margin-bottom: 5px;">Предложите пользователю задачу</h1>
+    <ng-template #createTask>
+      <h1 mat-dialog-title>У вас нет задач, которые Вы могли бы предложить другим исполнителям.
+          Пожалуйста, создайте задачу.
+      </h1>
+  </ng-template>
+    <div mat-dialog-content (scroll)="scrollHandler($event)">
+        <app-list-tasks [isLoaded]="isLoaded" [taskInfos]="taskInfos"
+            [mode]="getTaskMode()" (eventChooseTask)="handleChooseTask($event)">
+        </app-list-tasks>
+    </div>
+    <div mat-dialog-actions style="display: flex; justify-content: space-between">
+        <button class="orange_btn" (click)="onNoClick()">
+            Отмена
+        </button>
+        <button class="orange_btn" (click)="linkToNewTask()">
+          Создать задачу
+      </button>
+    </div>
+</div>

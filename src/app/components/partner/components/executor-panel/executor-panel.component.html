@@ -1,0 +1,99 @@
+<div class="section-content">
+
+    <div *ngIf="!isPerformer(); else performerArea">
+        <p>Станьте исполнителем, чтобы Вы смогли увидеть все свои запросы</p>
+        <button *ngIf="!isDisabled && !isLegalEnityFull(); else addPerformerRoleForLegalEntity" class="complete_zakaz btn-center-align" (click)="editPartnerInfo()">
+          Стать исполнителем
+        </button>
+
+        <ng-template #addPerformerRoleForLegalEntity>
+          <button class="complete_zakaz btn-center-align" (click)="editLegalEntityInfo()">
+            Стать исполнителем
+          </button>
+        </ng-template>
+
+        <div *ngIf="isDisabled" class="windows8">
+          <div class="wBall" id="wBall_1">
+            <div class="wInnerBall"></div>
+          </div>
+          <div class="wBall" id="wBall_2">
+            <div class="wInnerBall"></div>
+          </div>
+          <div class="wBall" id="wBall_3">
+            <div class="wInnerBall"></div>
+          </div>
+          <div class="wBall" id="wBall_4">
+            <div class="wInnerBall"></div>
+          </div>
+          <div class="wBall" id="wBall_5">
+            <div class="wInnerBall"></div>
+          </div>
+        </div>
+
+        <p *ngIf="isStatusNotVerify()" style="color: red;">Чтобы стать исполнителем, необходимо указать в своём профиле номер телефона и электронную почту</p>
+    </div>
+    <ng-template #performerArea>
+        <div class="section-content">
+            <div class="vibor">
+                <a class="def-href-point" (click)="filterAll()" [ngClass]="{'active-vibor': isAllStatus()}">
+                    Все
+                </a>
+                <a class="podtvergdeno-vibor def-href-point" (click)="filterCustomerConfirmed()" [ngClass]="{'active-vibor': isCustomerConfirmedStatus()}">
+                    Подтверждено заказчиком
+                </a>
+                <a class="chernovik-vibor def-href-point" (click)="filterUnderConsideration()" [ngClass]="{'active-vibor': isUnderConsiderationStatus()}">
+                    На рассмотрении
+                </a>
+                <a class="trouble-vibor def-href-point" (click)="filterCanceled()" [ngClass]="{'active-vibor': isCanceledStatus()}">
+                    Отклонённые
+                </a>
+            </div>
+            <div class="zadanie-block" *ngFor="let shortTaskRequest of sortedArray" style="width: 100%;">
+                <div class="zadanie-block-content">
+                    <div>
+                        <a class="zadanie-block-img" href="/user/{{shortTaskRequest.creatorId}}">
+                            <img class="ispolnitel_img" src="/api/partner/info/photo/{{shortTaskRequest.creatorId}}"/>
+                        </a>
+                        <a class="ispolnitel_name" href="/user/{{shortTaskRequest.creatorId}}">
+                             {{shortTaskRequest.fioTaskOwner}}
+                        </a>
+                    </div>
+                    <div class="non-focused-label" (click)="openTask(shortTaskRequest.taskId)" style="cursor: pointer;">
+                        <p style="font-size: 12px;">
+                            Создана {{shortTaskRequest.createdAt | date:'dd.MM.yyyy'}}
+                        </p>
+                        <p class="zadanie-link zadanie-block-name">
+                            {{shortTaskRequest.nameTask}}
+                        </p>
+                        <div class="righttop">
+                            <div class="margin-5-p-area"  style="display: flex;">
+                                <p class="zadanie-block-date"
+                                [ngClass] = "{
+                                            'task-request-customer-confirmed-status-color': shortTaskRequest.isCommonCustomerConfitmed(),
+                                            'task-request-under-consideration-status-color': shortTaskRequest.isCommonUnderCunsideration(),
+                                            'task-request-canceled-status-color': shortTaskRequest.isCommonCanceled()
+                                        }"
+                                >
+                                    {{taskRequetsStatus[shortTaskRequest.taskRequestStatus]}}
+                                </p>
+
+                            </div>
+                            <p class="zadanie-block-price"
+                             [ngClass] = "{
+                                          'task-request-customer-confirmed-status-color': shortTaskRequest.isCommonCustomerConfitmed(),
+                                          'task-request-under-consideration-status-color': shortTaskRequest.isCommonUnderCunsideration(),
+                                          'task-request-canceled-status-color': shortTaskRequest.isCommonCanceled()
+                            }">
+                                до {{shortTaskRequest.moneyTopBorder}}₽
+                            </p>
+                        </div>
+                        <div class="zadanie-block-otziv">
+                            <p>{{shortTaskRequest.comment}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>
+

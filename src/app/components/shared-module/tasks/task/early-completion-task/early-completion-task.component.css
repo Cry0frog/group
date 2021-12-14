@@ -1,0 +1,17 @@
+.mapping-btn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.mat-dialog-content {
+    overflow: unset;
+}
+
+@media (max-width: 616px) {
+    .mapping-btn {
+        display: grid;
+    }
+    .m_b_5 {
+        margin-bottom: 5px !important;
+    }
+}

@@ -1,0 +1,56 @@
+<div class="block_zag">
+	<div class="wrapper paddingi">
+		<h1 class="big_h1">Партнеры</h1>
+	</div>
+</div>
+<div class="wrapper content" (scroll)="scrollHandler($event)">
+    <div>
+        <div class="block-corner">
+            <p class="h1">Партнёры</p>
+            <p>Мы рады, что Вас заинтересовал раздел «Партнёры». Мы недавно начали свою деятельность, поэтому партнёров у нас пока не много. Однако, мы стремимся выстраивать новые отношения и готовы к сотрудничеству!</p>
+            <p>Если Вы хотите стать нашим партнёром – кликните на кнопку "Стать партнёром" и заполните заявку, или напишите письмо по эл. Адресу: <a style="text-decoration: underline">office@gooddealonline.ru</a>, расскажите подробнее о своей компании, чем мы можем быть Вам полезны, и чем Вы можете быть полезны нам.</p>
+            <p>Будем рады Вашим предложениям!</p>
+        </div>
+    </div>
+
+    <div class="width_33 paddingi" style="padding-right: 0px;">
+      <app-request-member></app-request-member>
+    </div>
+
+    <div class="width_66 margin-top-for-partners">
+        <div class="flex margin-minus">
+            <div *ngFor="let member of shortMembers" (click)="openMemberInfo(member)" class="partner-block" data-toggle="modal" data-target="#myModal1">
+                <div class="partner-block-content">
+                    <img src="/api/partner/info/photo/{{member.idPartner}}">
+                    <p class="fio_member">{{member.fio}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="width_33 paddingi" style="margin-top: 30px;">
+      <app-display-advertising [place]="place"></app-display-advertising>
+    </div>
+</div>
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog-1" role="document">
+        <img *ngIf="!isEmptyId()" src="/api/partner/info/photo/{{memberInfo.idPartner}}">
+        <p class="zag_partners">{{memberInfo.fio}}</p>
+        <div class="profile_db margin-top-20">
+            <div class="profile_year ng-star-inserted">{{memberInfo.age}}</div>
+            <div >{{memberInfo.getCityName()}}</div>
+        </div>
+        <div *ngIf="isLegalEntity" class="profile_db margin-top-20">
+            <div >ИНН: {{legalEntityMemberInfo.inn}}</div>
+            <div>ОГРН: {{legalEntityMemberInfo.ogrn}}</div>
+        </div>
+        <div class="profile_statistics margin-top-20">
+            <div>Выполнено заданий: {{memberInfo.completedTasks}}</div>
+            <div>Средняя оценка: {{memberInfo.averageRating}}</div>
+            <div>Создано заданий: {{memberInfo.createTasks}}</div>
+        </div>
+        <p *ngIf="!isLegalEntity" class="margin-top-20">{{memberInfo.aboutMe}}</p>
+        <button type="button" class="see_cat" data-dismiss="modal" aria-label="Close">Закрыть</button>
+
+    </div>
+</div>

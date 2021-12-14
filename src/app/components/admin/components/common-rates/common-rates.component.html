@@ -1,0 +1,23 @@
+<div class="wrapper content paddingi">
+    <div class="block-corner" style="margin-bottom: 20px;">
+        <p class="h1">{{getNameActivePage()}}</p>
+        
+        <div class="tabs1 mode-rates-area">	
+            <input id="tab10" class="common-rates" type="radio" name="tabs1" (click)="switchToCommonRates()">
+            <label class="isp-label" style="margin-right: 278px;" for="tab10">Тарифы</label>
+            
+            <input id="tab20" class="region-rates" type="radio" name="tabs1" (click)="switchToRegionRates()">
+            <label class="zakaz-labe" style="margin-right: 190px;" for="tab20">Региональные тарифы</label>
+            
+            <input id="tab30" class="hour-rates" type="radio" name="tabs1" (click)="switchToHourRates()">
+            <label class="zakaz-labe" for="tab30">Часовые тарифы</label>
+        </div>
+
+        <router-outlet></router-outlet>
+    </div>
+
+    <div class="block-corner">
+        <app-rate-calculator></app-rate-calculator>
+    </div>
+    
+</div>

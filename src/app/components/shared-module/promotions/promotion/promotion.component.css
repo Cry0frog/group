@@ -1,0 +1,64 @@
+.profile_img img {
+	border-radius: 100px;
+	height: 150px;
+	object-fit: fill;
+	width: 150px;
+}
+
+.centre {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.vertical_centre {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.link {
+  margin-left: 10px;
+  font-size: 30px;
+  cursor: pointer;
+  text-decoration: underline;
+  color: #FF8000;
+}
+
+.link:hover {
+  color: #007ad9;
+  text-decoration: none;
+}
+
+.green_ok_icon,
+.cross_icon {
+  margin-left: 20px;
+}
+
+::ng-deep .summernote .note-video-clip {
+  width: 490px !important;
+}
+
+::ng-deep .summernote  table {
+  width: 100%;
+
+}
+
+::ng-deep .summernote  table,
+::ng-deep .summernote  tr,
+::ng-deep .summernote  td {
+  border: 1px solid black;
+}
+
+@media(max-width: 1220px) {
+  ::ng-deep .summernote .note-video-clip {
+    width: 380px !important;
+    height: 255px !important;
+  }
+}
+
+@media(max-width: 700px) {
+  ::ng-deep .summernote .note-video-clip {
+    width: 270px !important;
+    height: 180px !important;
+  }
+}
+

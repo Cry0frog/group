@@ -1,0 +1,300 @@
+<div mat-dialog-content class="with_field">
+    <div *ngIf="!isNotCreated(); else notCreated">
+        <h1 mat-dialog-title *ngIf="resume.id == null; else notNullId" class="mat_dialog_font_size">Создание резюме</h1>
+        <ng-template #notNullId>
+            <h1 class="mat_dialog_font_size" mat-dialog-title>Обновление резюме</h1>
+        </ng-template>
+    </div>
+    <ng-template #notCreated>
+        <div *ngIf="isShowMarkResume() && isAuthenticated() && !isAdmin() && resume.defaultResume" style="float: right; margin-top: 5px; margin-right: 5px;">
+            <button class="empty_star" [ngClass]="{'filled_star': resume.favoriteResume}" (click)="markResume()"></button>
+        </div>
+    </ng-template>
+
+    <div>
+        <p class="zag-sz margin-top-15">Ф.И.О.</p>
+        <input matInput type="text" [(ngModel)]="resume.fio" [disabled]='isNotCreated()' required>
+        <app-validation-error-template [errorHandler]="resume" [propertyTemplate]="'fio'">
+        </app-validation-error-template>
+    </div>
+    <div style="width: min-content; min-width: 110px;">
+        <p class="zag-sz margin-top-15">Возраст</p>
+        <input matInput type="text" pKeyFilter="pint" [(ngModel)]="resume.age" [disabled]='isNotCreated()' maxlength="2" required>
+    </div>
+    <app-validation-error-template [errorHandler]="resume" [propertyTemplate]="'age'">
+    </app-validation-error-template>
+
+    <mat-card class="margin-top-15" *ngFor="let property of resume.getWorkExperienceProperties()">
+        <div>
+            <p class="zag-sz margin-top-10">Название организации</p>
+            <input matInput type="text" [(ngModel)]="property.nameCompany" [disabled]='isNotCreated()'>
+            <app-validation-error-template [errorHandler]="resume" [propertyTemplate]="'properties[__INDEX_TEMP].nameCompany'" [index]="findIndexOfProperty(property)">
+            </app-validation-error-template>
+        </div>
+        <div>
+            <p class="zag-sz margin-top-10">Должность</p>
+            <input matInput type="text" [(ngModel)]="property.position" [disabled]='isNotCreated()'>
+            <app-validation-error-template [errorHandler]="resume" [propertyTemplate]="'properties[__INDEX_TEMP].position'" [index]="findIndexOfProperty(property)">
+            </app-validation-error-template>
+        </div>
+        <div class="margin-top-10">
+            <div class="date-block-title">
+                <p class="zag-sz margin-top-10">Работал</p>
+            </div>
+            <div class="datetime-section">
+              <div style="display: table; margin-right: 10px;">
+                <span style="margin: auto 0px; display: table-cell;">с</span>
+                <p-inputMask mask="99.99.9999" placeholder="Дата" class="startWork" [(ngModel)]="property.startWorkShow" [disabled]='isNotCreated()'></p-inputMask>
+                <app-validation-error-template [errorHandler]="resume" [propertyTemplate]="'properties[__INDEX_TEMP].startWork'" [index]="findIndexOfProperty(property)">
+                </app-validation-error-template>
+              </div>
+
+              <div style="display: table;">
+                <span style="margin: auto 0px; display: table-cell;">по</span>
+                <p-inputMask mask="99.99.9999" class="endWork" placeholder="Дата" [(ngModel)]="property.endWorkShow" [disabled]='isNotCreated()'></p-inputMask>
+                <app-validation-error-template [errorHandler]="resume" [propertyTemplate]="'properties[__INDEX_TEMP].endWork'" [index]="findIndexOfProperty(property)">
+                </app-validation-error-template>
+              </div>
+
+            </div>
+
+        </div>
+        <app-validation-error-template [errorHandler]="resume" [propertyTemplate]="'properties[__INDEX_TEMP]'" [index]="findIndexOfProperty(property)">
+        </app-validation-error-template>
+        <mat-card-actions *ngIf="!isNotCreated()">
+            <button type="button" class="delete_prop_btn" (click)="onRemoveResumeProperty(property)">
+                <span>&times;</span>
+            </button>
+        </mat-card-actions>
+    </mat-card>
+    <div *ngIf="!isNotCreated()" class="zag-sz margin-top-15" style="display: flex;">
+        <div style="align-self: center">Опыт работы</div>
+        <button title="Добавить опыт работы" class="status_btn orange_plus margin-left-10"
+            (click)="addWorkExperience()">
+        </button>
+    </div>
+
+    <mat-card class="margin-top-15" *ngFor="let property of resume.getEducationProperties()">
+        <div>
+            <p class="zag-sz margin-top-10">Образование</p>
+            <div class="select-block_sz" include="form-input()">
+                <mat-select class="select-sz" [(ngModel)]="property.education" placeholder="Выберите образование" [disabled]='isNotCreated()'>
+                  <mat-option *ngFor="let educationType of educationTypes" [value]="educationType.value">
+                      {{educationType.viewValue}}
+                  </mat-option>
+                </mat-select>
+                <app-validation-error-template [errorHandler]="resume" [propertyTemplate]="'properties[__INDEX_TEMP].education'" [index]="findIndexOfProperty(property)">
+                </app-validation-error-template>
+            </div>
+        </div>
+        <div *ngIf="isVisibleSpeciality(property)">
+            <div>
+                <p class="zag-sz margin-top-15">Образовательное учреждение</p>
+                <textarea class="textarea-resume" id="{{findIndexOfProperty(property)}}"
+                    placeholder="Напишите название образовательного учреждения"
+                    [(ngModel)]="property.educationalInstitution" [disabled]='isNotCreated()'>
+                </textarea>
+            </div>
+            <div>
+                <p class="zag-sz margin-top-10">Специальность</p>
+                <input matInput type="text" [(ngModel)]="property.speciality" [disabled]='isNotCreated()'>
+            </div>
+        </div>
+        <mat-card-actions *ngIf="!isNotCreated()">
+            <button type="button" class="delete_prop_btn" (click)="onRemoveResumeProperty(property)">
+                <span>&times;</span>
+            </button>
+        </mat-card-actions>
+    </mat-card>
+    <div *ngIf="!isNotCreated()" class="zag-sz margin-top-15" style="display: flex;">
+        <div style="align-self: center">Образование</div>
+        <button title="Добавить образование" class="status_btn orange_plus margin-left-10"
+            (click)="addEducation()">
+        </button>
+    </div>
+
+    <mat-card class="margin-top-15" *ngFor="let property of resume.getAdditionalEducationProperties()">
+        <p class="zag-sz margin-top-10">Дополнительное образование</p>
+        <textarea class="textarea-resume"
+			placeholder="Напишите про Ваше дополнительное образование"
+			[(ngModel)]="property.additionalEducation" [disabled]='isNotCreated()'>
+		</textarea>
+        <app-validation-error-template [errorHandler]="resume" [propertyTemplate]="'properties[__INDEX_TEMP].additionalEducation'" [index]="findIndexOfProperty(property)">
+        </app-validation-error-template>
+        <mat-card-actions *ngIf="!isNotCreated()">
+            <button type="button" class="delete_prop_btn" (click)="onRemoveResumeProperty(property)">
+                <span>&times;</span>
+            </button>
+        </mat-card-actions>
+    </mat-card>
+    <div *ngIf='!isNotCreated()' class="zag-sz margin-top-15" style="display: flex;">
+        <div class="additional_education_block_btn">Дополнительное образование</div>
+        <div style="display: inline-flex; margin-top: 5px;">
+            <button title="Добавить дополнительное образование" class="status_btn orange_plus margin-left-10"
+              (click)="addAdditionalEducation()">
+            </button>
+        </div>
+    </div>
+
+    <div>
+        <p class="zag-sz margin-top-15">Навыки и умения</p>
+        <textarea class="textarea-resume"
+			placeholder="Опишите Ваши навыки и умения"
+			[(ngModel)]="resume.skills" [disabled]='isNotCreated()'>
+		</textarea>
+    </div>
+    <div>
+        <p class="zag-sz margin-top-15">Личные качества</p>
+        <textarea class="textarea-resume"
+			    placeholder="Напишите про Ваши личные качества"
+			    [(ngModel)]="resume.personalQualities" [disabled]='isNotCreated()'>
+		</textarea>
+        <app-validation-error-template [errorHandler]="resume" [propertyTemplate]="'personalQualities'">
+        </app-validation-error-template>
+    </div>
+
+    <mat-card class="zag-sz margin-top-15">
+        <p class="heading_work margin-top-10">Информация о желаемой работе</p>
+        <p class="zag-sz margin-top-15">Город</p>
+        <div class="with_field right-align city-section" style="width: auto;">
+            <p-dropdown class="city-choose" [options]="cities" [(ngModel)]="resume.workCity"
+                (keyup)="onChangeCity($event)" [filter]="true" placeholder="Выберите город"
+                emptyFilterMessage="Не найдено" [disabled]='isNotCreated()'>
+            </p-dropdown>
+        </div>
+
+        <p class="zag-sz margin-top-15">Сфера деятельности</p>
+        <div class="select-block_sz" include="form-input()">
+            <mat-select class="select-sz" [formControl]="toppingChildFieldActivity"
+            placeholder="Выберите сферу(ы) деятельности" multiple [disabled]='isNotCreated()'>
+                <mat-option *ngFor="let childCategory of childFieldsActivity" class="my-mat-option" [value]="childCategory.id">
+                    {{childCategory.name}}
+                </mat-option>
+            </mat-select>
+            <app-validation-error-template [errorHandler]="resume" [propertyTemplate]="'fieldsActivity'">
+            </app-validation-error-template>
+        </div>
+        <div>
+            <p class="zag-sz margin-top-15">Какую работу/должность ищете?</p>
+            <input matInput type="text" [(ngModel)]="resume.desiredPosition" [disabled]='isNotCreated()'>
+            <app-validation-error-template [errorHandler]="resume" [propertyTemplate]="'desiredPosition'">
+            </app-validation-error-template>
+        </div>
+        <p class="zag-sz margin-top-15">Предполагаемый график работы</p>
+        <div class="select-block_sz" include="form-input()">
+          <mat-select class="select-sz" [(ngModel)]="resume.scheduleType" placeholder="Выберите график работы" [disabled]='isNotCreated()'>
+            <mat-option *ngFor="let scheduleType of scheduleTypes" [value]="scheduleType.value">
+                {{scheduleType.viewValue}}
+            </mat-option>
+          </mat-select>
+          <app-validation-error-template [errorHandler]="resume" [propertyTemplate]="'scheduleType'">
+          </app-validation-error-template>
+        </div>
+        <p class="zag-sz margin-top-15">Тип работы</p>
+        <div class="select-block_sz" include="form-input()">
+          <mat-select class="select-sz" [(ngModel)]="resume.placeWorkType" placeholder="Выберите тип работы" [disabled]='isNotCreated()'>
+            <mat-option *ngFor="let placeWorkType of placeWorkTypes" [value]="placeWorkType.value">
+                {{placeWorkType.viewValue}}
+            </mat-option>
+          </mat-select>
+          <app-validation-error-template [errorHandler]="resume" [propertyTemplate]="'placeWorkType'">
+          </app-validation-error-template>
+        </div>
+        <p class="zag-sz margin-top-15">Тип занятости</p>
+        <div class="select-block_sz" include="form-input()">
+          <mat-select class="select-sz" [(ngModel)]="resume.employmentType" placeholder="Выберите тип занятости" [disabled]='isNotCreated()'>
+            <mat-option *ngFor="let employmentType of employmentTypes" [value]="employmentType.value">
+                {{employmentType.viewValue}}
+            </mat-option>
+          </mat-select>
+          <app-validation-error-template [errorHandler]="resume" [propertyTemplate]="'employmentType'">
+          </app-validation-error-template>
+        </div>
+        <p class="zag-sz margin-top-15">Тип трудоустройства</p>
+        <div class="select-block_sz" include="form-input()">
+          <mat-select class="select-sz" [(ngModel)]="resume.desirableEmploymentType" placeholder="Выберите тип занятости" [disabled]='isNotCreated()'>
+            <mat-option *ngFor="let desirableEmploymentType of desirableEmploymentTypes" [value]="desirableEmploymentType.value">
+                {{desirableEmploymentType.viewValue}}
+            </mat-option>
+          </mat-select>
+          <app-validation-error-template [errorHandler]="resume" [propertyTemplate]="'desirableEmploymentType'">
+          </app-validation-error-template>
+        </div>
+        <div>
+            <p class="zag-sz margin-top-15">Минимальная заработная плата</p>
+            <input matInput type="text" pKeyFilter="pint" [(ngModel)]="resume.minSalary" maxlength="10" [disabled]='isNotCreated()'>
+            <app-validation-error-template [errorHandler]="resume" [propertyTemplate]="'minSalary'">
+            </app-validation-error-template>
+        </div>
+        <div>
+            <p class="zag-sz margin-top-15">Дополнительная информация</p>
+            <textarea class="textarea-resume"
+                placeholder="Напишите о себе"
+                [(ngModel)]="resume.additionalInformation" [disabled]='isNotCreated()'>
+            </textarea>
+            <app-validation-error-template [errorHandler]="resume" [propertyTemplate]="'additionalInformation'">
+            </app-validation-error-template>
+        </div>
+        <div class="zag-sz cb-div margin-top-15">
+            <input type="checkbox" id="c1" name="cc" [(ngModel)]="resume.crossings" [disabled]='isNotCreated()'/>
+            <label class="label-job" for="c1">
+                <span></span>Готовность к переездам
+            </label>
+        </div>
+        <div class="zag-sz cb-div margin-top-15">
+            <input type="checkbox" id="c2" name="cc" [(ngModel)]="resume.businessTrip" [disabled]='isNotCreated()'/>
+            <label class="label-job" for="c2">
+                <span></span>Готовность к командировкам
+            </label>
+        </div>
+    </mat-card>
+    <div *ngIf="!isNotCreated() && !isResumeVacancy()" class="zag-sz cb-div margin-top-15">
+        <input type="checkbox" id="c3" name="cc" [(ngModel)]="resume.visibleResume"/>
+        <label class="label-job" for="c3">
+            <span></span>Опубликовано
+        </label>
+        <div *ngIf="resume.id != null" class="resume_statistics_block">
+            <p>Количество просмотров: {{resume.countedViewing}}</p>
+            <p class="m_t_minus16">Количество добавлений в избранное: {{resume.countedFavorite}}</p>
+        </div>
+    </div>
+
+    <div *ngIf="isNotCreated() && !isAdmin() && !hideContactInfo">
+      <div style="width: 100%; display: flex;">
+        <button class="orange_btn" style="margin: 0 auto 10px;" (click)="switchToShowCreatorInfo()">
+          Показать контактные данные соискателя
+        </button>
+      </div>
+
+      <div *ngIf="isShowCreatorInfo">
+        <div *ngIf="!isAuthenticated(); else customerInfoBlock">
+          <p>Чтобы посмотреть информацию о работнике, необходимо зарегистрироваться или выполнить вход</p>
+        </div>
+        <ng-template #customerInfoBlock>
+          <div class="block-corner block-s-zayavkami" >
+            <div class="zakaz4ik_info">
+              <a href="/user/{{resumeCreatorInfo.partnerId}}" style="cursor: pointer; display: block;">
+                  <img src="api/partner/info/photo/{{resumeCreatorInfo.partnerId}}" />
+              </a>
+              <p class="grey-little-p">
+                Создатель резюме
+              </p>
+              <a class="zakaz4ik_name" href="/user/{{resumeCreatorInfo.partnerId}}">{{resumeCreatorInfo.username}}</a>
+              <p>Почта: {{resumeCreatorInfo.email}}</p>
+              <p>Телефон: {{resumeCreatorInfo.phone}}</p>
+              <button class="write_chat_btn orange-btn-color" [mat-dialog-close]='null' (click)='openChat(resume.id)'>
+                Чат
+                <div class="kruzhok">{{resumeCreatorInfo.countNewMessage}}</div>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div *ngFor="let error of resume.getErrorsWithoutFields(); let i = index">
+        <app-validation-error-template [errorHandler]="resume" [index]="i">
+        </app-validation-error-template>
+    </div>
+
+</div>

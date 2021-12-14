@@ -1,0 +1,22 @@
+<div class="wrapper content paddingi">
+    <div class="width_100 paddingi">
+		
+        <div class="common-tabs tabs partner-panel">
+            <input id="tab1" class="partners" type="radio" name="tabs" checked>
+            <label class="non-focused-label" for="tab1" [routerLink]="[getFakePartners()]">
+                <i class="tavs-icon"></i>
+                <span>Боты</span>
+            </label>
+        
+            <input id="tab2" class="tasks" type="radio" name="tabs">
+            <label class="non-focused-label" for="tab2" [routerLink]="[getFakeTasks()]">
+                <i class="tavs-icon"></i>
+                <span>Планируемые задачи</span>
+            </label>
+
+            <div class="block-corner">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

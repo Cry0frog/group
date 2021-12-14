@@ -1,0 +1,28 @@
+<h2 class="h2_index paddingi">Самые свежие резюме</h2>
+<p class="podh2_index paddingi">Быстрое решение кадровых вопросов</p>
+<div class="wrapper">
+  <div class="flex">
+    <div *ngFor="let resume of lastThreeResume" class="category_block">
+      <div class="category_block_new">
+        <a target="_blank" href="/user/{{resume.creatorId}}">
+          <img src="/api/partner/info/photo/{{resume.creatorId}}"/>
+        </a>
+        <a class="zag-create" href="/user/{{resume.creatorId}}" target="_blank"> {{resume.creatorName}}</a>
+        <div class="non-focused-label" style="cursor: pointer;"
+          >
+          <span *ngIf='resume.salary' class="zag-create-span">
+            {{resume.salary}}₽
+          </span>
+          <p>Создана {{resume.createdAt | date: "dd.MM.yyyy"}}</p>
+          <p class="desc-create">{{resume.desiredPosition}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <a class="see_cat" (click)="openResumeList()">
+    Подробнее
+  </a>
+</div>

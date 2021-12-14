@@ -1,0 +1,13 @@
+<div>
+  <img *ngIf="data.id; else addTaskImage" src="/api/partner/info/work_example/{{data.id}}" alt=""/>
+  <ng-template #addTaskImage>
+    <img *ngIf='data.croppedImg' [src]="data.croppedImg.imageBase64"/>
+  </ng-template>
+  <mat-checkbox *ngIf='!data.isImageForTask' [(ngModel)]="data.showImage" style="margin-top: 10px;">Показывать</mat-checkbox>
+</div>
+<div style="margin-top: 30px;">
+  <app-user-photo [errorMessage]="errorMessage" [isUploadFileUpdate]="isUploadFileUpdate" [eventProgress]="eventProgress"
+    (updatePhotoEvent)="loadImage($event)" (closeDialogEvent)="onNoClick()">
+  </app-user-photo>
+</div>
+

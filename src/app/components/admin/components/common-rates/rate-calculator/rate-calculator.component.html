@@ -1,0 +1,84 @@
+<div>
+    <p class="zag-sz" style="margin-top: 20px;">
+        Калькулятор
+        <ng-container *ngIf="calc != null">
+            Предполагаемая стоимость: {{calc.getCalcPay()}} руб.
+        </ng-container>
+    </p>
+    <div style="display: flex;">
+        <div class="region-v with_field city-section" style="margin-right: 10px;">
+            <div class="region-v with_field city-section" style="margin-top: 0;">
+                <p-dropdown class="city-choose" [options]="cities" [(ngModel)]="selectedCity" 
+                    (keyup)="onChangeCity($event)" [filter]="true" 
+                    placeholder="Выберите город" emptyFilterMessage="Не найдено">
+                </p-dropdown>
+            </div>
+
+            <div class="select-block_sz with_field" include="form-input()">
+                <mat-select class="select-sz" [(ngModel)]="ratesCheck.weightCategory"
+                        placeholder="Весовая категория">
+                    <mat-option [value]="null">Не учитывать весовую категорию</mat-option>
+                    <mat-option *ngFor="let pCategory of weightCategoryMapper" [value]="pCategory.value">
+                        {{pCategory.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </div>
+
+            <div class="select-block_sz with_field" include="form-input()">
+                <mat-select class="select-sz" [(ngModel)]="ratesCheck.productCategory"
+                        placeholder="Категория товара">
+                    <mat-option [value]="null">Не учитывать категорию продукта</mat-option>
+                    <mat-option *ngFor="let pCategory of productCategoryMapper" [value]="pCategory.value">
+                        {{pCategory.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </div>
+
+            <div class="with_field mb30" *ngIf="ratesCheck.calcMode == calcMode.BASED_ON_METER">
+                <input type="number" [(ngModel)]="ratesCheck.distance" placeholder="Расстояние (в метрах)">
+            </div>
+            <div class="with_field mb30" *ngIf="ratesCheck.calcMode == calcMode.BASED_ON_HOUR">
+                <input type="number" [(ngModel)]="ratesCheck.hour" placeholder="Время (в часах)">
+            </div>
+
+            <div>
+                <button [ngClass]="{'disabled-btn': isCannotCalc()}"  class="orange_btn" (click)="checkCalc()">
+                    Проверить сумму
+                </button>
+            </div>
+
+        </div>
+        <div class="region-v with_field city-section">
+            <div class="datetime-section with_field">
+                <p-calendar class="datetime-date with-time" readonlyInput="true" [(ngModel)]="ratesCheck.date"
+                    dateFormat="dd.mm.yy" placeholder="Дата" [locale]="ru_calendar">
+                </p-calendar>
+            </div>
+
+            <div class="select-block_sz with_field" include="form-input()">
+                <mat-select class="select-sz" [(ngModel)]="ratesCheck.transportCategory"
+                        placeholder="Категория транспорта">
+                    <mat-option [value]="null">Не учитывать категорию транспорта</mat-option>
+                    <mat-option *ngFor="let tCategory of transportCategoryMapper" [value]="tCategory.value">
+                        {{tCategory.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </div>
+
+            <div class="select-block_sz with_field" include="form-input()">
+                <mat-select class="select-sz" [(ngModel)]="ratesCheck.calcMode" (selectionChange)="onCalcModeChange()"
+                        placeholder="Расчёт на основе">
+                    <mat-option *ngFor="let calcMode of calcModeMapper" [value]="calcMode.value">
+                        {{calcMode.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </div>
+
+            <div class="margin-top-30 checkbox_with_field">
+                <mat-checkbox [(ngModel)]="ratesCheck.urgently" class="full-width-input">
+                    Режим выполнения заказа "Срочно"
+                </mat-checkbox>
+            </div>
+        </div>
+    </div>
+</div>

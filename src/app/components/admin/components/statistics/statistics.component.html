@@ -1,0 +1,77 @@
+<div class="wrapper content paddingi">
+  <div class="common-tabs tabs partner-panel">
+      <input id="tab1" class="common_statistics" type="radio" name="tabs" checked>
+      <label class="non-focused-label" for="tab1" [routerLink]="[getCommonStatistics()]">
+          <i class="tavs-icon"></i>
+          <span>Общая статистика</span>
+      </label>
+
+      <input id="tab2" class="user_statistics" type="radio" name="tabs">
+      <label class="non-focused-label" for="tab2" [routerLink]="[getUserStatistics()]">
+          <i class="tavs-icon"></i>
+          <span>Статистика по пользователям</span>
+      </label>
+
+      <input id="tab3" class="job_statistics" type="radio" name="tabs">
+      <label class="non-focused-label" for="tab3" [routerLink]="[getJobStatistics()]">
+          <i class="tavs-icon"></i>
+          <span>Статистика по работе</span>
+      </label>
+
+      <div class="block-corner">
+        <div style="display: flex;">
+          <div *ngIf="!isUserStatistic" class="region-v with_field city-section" style="margin-top: 0;">
+              <p-dropdown class="city-choose" [options]="cities" [(ngModel)]="selectedCity" (keyup)="onChangeCity($event)"
+                  [filter]="true" placeholder="Выберите регион" emptyFilterMessage="Не найдено">
+              </p-dropdown>
+          </div>
+          <div class="periods" style="margin-left: 0px;margin-right: auto;">
+              <div class="datetime-section">
+                  <p-calendar class="datetime-date with-time" dateRangeSelector
+                      dateFormat="dd.mm.yy" placeholder="Дата" selectionMode="range"
+                      [locale]="ru_calendar" [(ngModel)]="dateRange">
+                  </p-calendar>
+              </div>
+          </div>
+          <div *ngIf="isCommonStatistic" class="vibor-cat-stat">
+            <mat-select class="custom-mat-select select-sz" [formControl]="toppings" panelClass="my-panel-class"
+              (selectionChange)="selectCatigories($event.value)" placeholder="Выберите подкатегорию" multiple>
+                <mat-option [value]="-1" >
+                  Все категории
+                </mat-option>
+                <mat-option *ngFor="let category of displaySelectCategories" class="my-mat-option" [ngClass]="{'child-category': category.isChild()}" [value]="category.id">
+                  <div style="display: flex;">
+                      {{category.name}}
+                    <div *ngIf='!category.isChild()' style="width: 30px; height: 30px; display: flex;" (click)="toggleCategory(!category.isExpanded, category)">
+                      <div class="arrow_reversal" [ngClass]="{'rotate_arrow_reversal': category.isExpanded}" ></div>
+                    </div>
+                  </div>
+                </mat-option>
+            </mat-select>
+        </div>
+        <div *ngIf="isJobStatistic" class="vibor-cat-stat">
+          <mat-select class="custom-mat-select select-sz" [formControl]="toppings" panelClass="my-panel-class"
+            (selectionChange)="selectFieldsActivity($event.value)" placeholder="Выберите сферу дефтельности" multiple>
+              <mat-option [value]="-1" >
+                Все сферы
+              </mat-option>
+              <mat-option *ngFor="let field of fieldsActivity" class="my-mat-option" [value]="field.id">
+                {{field.name}}
+              </mat-option>
+          </mat-select>
+        </div>
+      </div>
+      <div class="clear"></div>
+      <div style="margin-bottom: 20px; display: flex;margin-top: 10px;">
+          <div style="margin-right: 0; margin-left: auto;">
+              <button matTooltip="Применить" class="buttonAdd" (click)="applyStatisticSettings()"
+                      style="margin-top: 0;">
+                  Применить
+              </button>
+          </div>
+      </div>
+
+          <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
+      </div>
+  </div>
+</div>

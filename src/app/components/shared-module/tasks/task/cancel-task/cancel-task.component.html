@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Внимание!</h1>
+<div mat-dialog-content>
+    <span>Повторно взяться за выполнение этого задания Вы уже не сможете.</span>
+</div>
+<div mat-dialog-actions class="mapping_btn">
+    <button mat-stroked-button color="primary" class="cancel_zakaz standart-short-btn request-handling-btn m_b_5"
+        [mat-dialog-close]="data">Отменить выполнение</button>
+
+    <button class="right-align orange_btn margin-5 request-handling-btn m_b_5" mat-stroked-button color="primary" 
+            (click)="onNoClick()">
+        Продолжить выполнение
+    </button>
+    
+</div>

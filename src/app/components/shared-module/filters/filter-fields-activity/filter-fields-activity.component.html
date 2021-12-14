@@ -1,0 +1,25 @@
+<ul class="root">
+  <li *ngFor="let fieldActivity of getSortedById(fieldsActivity)">
+      <div style="display: flex;">
+        <a class="def-href-point category-top" id="category_{{fieldActivity.id}}"
+            [ngClass]="{'choosen-category': isChooseCategory(fieldActivity), 'choosen-child': isChoosenChild(fieldActivity)}"
+            (click)="toggleCategory(fieldActivity)"
+        >
+            {{fieldActivity.name}}
+        </a>
+        <!-- <mat-icon style="cursor: pointer;" (click)="fieldActivity.isExpanded = !fieldActivity.isExpanded">
+          {{fieldActivity.isExpanded ? 'keyboard_arrow_down' : 'keyboard_arrow_right'}}
+        </mat-icon> -->
+      </div>
+      <ul class="child" [ngClass]="{'child_display': fieldActivity.isExpanded }">
+          <li *ngFor="let child of getSortedById(fieldActivity.children)">
+              <a class="def-href-point category-child" id="category_{{child.id}}"
+                  [ngClass]="{'choosen-category': isChooseCategory(child)}"
+                  (click)="toggleCategory(child)"
+              >
+                  {{child.name}}
+              </a>
+          </li>
+      </ul>
+  </li>
+</ul>

@@ -1,0 +1,75 @@
+<div >
+    <h1 class="h1">Тарифы категорий</h1>
+    <mat-form-field class="table-filter-area">
+        <input matInput (keyup) = "applyFilter($event.target.value)" placeholder = "Поиск">
+    </mat-form-field>
+    <table mat-table [dataSource] = "dataSource" matSort (matSortChange)="sortChange($event)" class = "table_users"
+          matSortActive="id" matSortDirection="desc">
+        <ng-container matColumnDef = "id">
+          <th *matHeaderCellDef mat-sort-header>ID</th>
+          <td *matCellDef = "let row"> {{row.id}} </td>
+        </ng-container>
+        <ng-container matColumnDef = "startRate">
+          <th *matHeaderCellDef mat-sort-header style="width: 175px;">Дата применения</th>
+          <td *matCellDef = "let row">{{row.startRate | date:'dd.MM.yyyy HH:mm'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef = "type">
+          <th *matHeaderCellDef mat-sort-header>Тип</th>
+          <td *matCellDef = "let row"> {{rateTypeDisplay[row.type]}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cost">
+          <th *matHeaderCellDef mat-sort-header>Цена</th>
+          <td *matCellDef="let row">{{row.cost}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="timeWindowStart">
+          <th *matHeaderCellDef>Начало окна</th>
+          <td *matCellDef="let row">{{row.timeWindowStart | date:'HH:mm'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="timeWindowEnd">
+          <th *matHeaderCellDef>Конец окна</th>
+          <td *matCellDef="let row">{{row.timeWindowEnd | date:'HH:mm'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="additionalInfo">
+          <th *matHeaderCellDef>Дополнительно</th>
+          <td *matCellDef="let row">{{row.additionalInfo}}</td>
+        </ng-container>
+        <ng-container matColumnDef="description">
+          <th *matHeaderCellDef>Описание</th>
+          <td *matCellDef="let row">{{row.description}}</td>
+        </ng-container>
+
+        <!-- Operations Column -->
+        <ng-container matColumnDef="operations">
+            <th *matHeaderCellDef>Операции</th>
+            <td *matCellDef = "let row" class = "users_btns" style="width: 120px;">
+              <button matTooltip = "Обновить тариф" class = "buttonUpdateUsers margin-5"
+                [ngClass]="{'disabled-btn':row.hard}" [disabled]="row.hard"
+                (click) = "addOrUpdateRate(row)">
+              </button>
+              <button matTooltip = "Удалить тариф" class="buttonDeleteUsers"
+                [ngClass]="{'disabled-btn':row.hard}" [disabled]="row.hard"
+                (click) = "deleteRate(row)">
+              </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
+        <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
+    </table>
+    <button matTooltip = "Создание тарифа" class = "buttonAdd"
+            (click) = "addOrUpdateRate(null)">
+        Создать тариф
+    </button>
+    <mat-paginator
+    [pageSize]="ratesWithCountedPages.pageSize"
+    [pageSizeOptions]="[5, 10, 20]"
+    [showFirstLastButtons]="true"
+    [length]="ratesWithCountedPages.countedPages"
+    [pageIndex]="ratesWithCountedPages.pageIndex"
+    (page)="handlePage($event)">
+    </mat-paginator>
+</div>

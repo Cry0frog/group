@@ -1,0 +1,49 @@
+<div *ngIf="!isSendSuccess; else sendSuccess" class="support" style="margin-bottom: 20px;" [ngClass]="{'open-support': isOpenWindowRequest}">
+  <div class="support-header" (click)="isOpenWindowRequest = !isOpenWindowRequest">
+    <div class="support-header-write">
+      Стать партнёром
+    </div>
+    <div class="support-header-content">
+    </div>
+  </div>
+  <div class="support-chat" id="scroll_div">
+    <div class="podpiska">
+      <p class="podpiska_zag">Заявка на партнёрство</p>
+      <div class="block_input name_input">
+        <input name="your-email" [(ngModel)]='requestSuport.fio' placeholder="Название организации">
+      </div>
+      <div class="mb10">
+        <app-validation-error-template [errorHandler]="requestSuport" [propertyTemplate]="'fio'">
+        </app-validation-error-template>
+      </div>
+      <div class="block_input mail_input">
+        <input type="email" name="your-email" [(ngModel)]='requestSuport.email' placeholder="E-mail">
+      </div>
+      <div class="mb10">
+        <app-validation-error-template [errorHandler]="requestSuport" [propertyTemplate]="'email'">
+        </app-validation-error-template>
+      </div>
+      <div class="block_input phone_input">
+        <p-inputMask mask="+7 (999) 999-9999" name="your-email" [(ngModel)]='requestSuport.phoneNumber' placeholder="Номер телефона"></p-inputMask>
+      </div>
+      <div class="mb10">
+        <app-validation-error-template [errorHandler]="requestSuport" [propertyTemplate]="'phoneNumber'">
+        </app-validation-error-template>
+      </div>
+      <div class="block_input">
+        <textarea placeholder="Расскажите нам о своей компании, чем Вы можете быть полезны нам, а так же чем мы можем быть полезны Вам" [(ngModel)]='requestSuport.message'></textarea>
+      </div>
+      <div class="mb10">
+        <app-validation-error-template [errorHandler]="requestSuport" [propertyTemplate]="'message'">
+        </app-validation-error-template>
+      </div>
+      <button class="pod-btn" (click)="sendRequest()">Отправить</button>
+    </div>
+  </div>
+</div>
+<ng-template #sendSuccess>
+  <div class="podpiska" style="margin-top: 30px; border-radius: 25px;">
+    <p class="podpiska_zag">Заявка успешно отправлена</p>
+    <p> Мы ознакомимся с Вашим предложением в ближайшее время. Спасибо!</p>
+  </div>
+</ng-template>

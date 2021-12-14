@@ -1,0 +1,18 @@
+<div class="registration">
+  <div class="registration_content">
+    <div class="logo_reg"></div>
+    <h1 class="reg_h1">Регистрация</h1>
+
+    <div class="tabs1 mode-tasks-area">
+            <!-- <button class="orange_btn left_btn" (click)="linkToRegIndivid()">Зарегистрироваться как физическое лицо</button>
+      <button class="orange_btn right_btn" (click)="linkToRegLegal()">Зарегистрироваться как организация</button> -->
+
+      <input id="tab10" class="individual" type="radio" name="tabs1" (click)="switchToRegIndivid()">
+      <label class="isp-label" for="tab10">Физическое лицо</label>
+      <input id="tab20" class="legal_entity" type="radio" name="tabs1" (click)="switchToPartnerRegLegal()">
+      <label class="zakaz-labe" for="tab20">Организация</label>
+    </div>
+
+    <router-outlet></router-outlet>
+  </div>
+</div>

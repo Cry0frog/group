@@ -1,0 +1,33 @@
+.link {
+  cursor: pointer;
+  display: block;
+  color: #FF8000;
+  text-decoration: underline;
+  margin: auto;
+  font-size: 24px;
+}
+
+.link:hover {
+  color: #116fbf;
+  text-decoration: none;
+}
+
+.block_advertising {
+  display: inline-block;
+}
+
+.indent_advertising {
+  padding-left: 15px;
+  padding-top: 15px;
+}
+
+@media(max-width: 1000px) {
+  .position_advertising {
+    width: 100%;
+    display: flex;
+    padding-left: 0px;
+  }
+  .indent_advertising {
+    padding-left: 0px;
+  }
+}

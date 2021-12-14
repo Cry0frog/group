@@ -1,0 +1,122 @@
+<div class="wrapper content">
+
+    <div *ngIf="!isAdmin() && isYourProfile()" class="width_33 paddingi">
+        <div class="limit" align="center">
+            <div style="width: 100%;" class="display_block_bonus">
+                <div style="width: 100%;" class="display_block_bonus m_b_10">
+                    <div style="width: 92%; display: grid;">
+                        <div style="display: flex">
+                            <div class="center_element" style="width: -webkit-fill-available;">
+                                <p class="balance">{{income.value}}₽</p>
+                            </div>
+                            <div class="gd-hint" (click)="getTooltipMobile(gdIncome)" [matTooltipDisabled]="isMobileMode" matTooltip="{{gdIncome}}">
+                                ?
+                            </div>
+                        </div>
+                        <div style="display: flex; margin-top: 8px;">
+                            <div class="center_element" style="width: -webkit-fill-available;">
+                                <p class="balance-date">Бонусы - {{amount.value}}</p>
+                            </div>
+                            <div *ngIf="!isOneTimePaymentsActivated() && !subscription.enableSubscriptionJob" class="gd-hint" (click)="getTooltipMobile(gdBalance)" [matTooltipDisabled]="isMobileMode" matTooltip="{{gdBalance}}">
+                                ?
+                            </div>
+                            <div *ngIf="isOneTimePaymentsActivated() && subscription.enableSubscriptionJob" class="gd-hint" (click)="getTooltipMobile(gdSubscriptionAndOneTimePayments)" [matTooltipDisabled]="isMobileMode" matTooltip="{{gdSubscriptionAndOneTimePayments}}">
+                                ?
+                            </div>
+                            <div *ngIf="isOneTimePaymentsActivated() && !subscription.enableSubscriptionJob" class="gd-hint" (click)="getTooltipMobile(gdOnlyOneTimePayments)" [matTooltipDisabled]="isMobileMode" matTooltip="{{gdOnlyOneTimePayments}}">
+                                ?
+                            </div>
+                            <div *ngIf="!isOneTimePaymentsActivated() && subscription.enableSubscriptionJob" class="gd-hint" (click)="getTooltipMobile(gdOnlySubscription)" [matTooltipDisabled]="isMobileMode" matTooltip="{{gdOnlySubscription}}">
+                                ?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pay-btn-group-area display_block_bonus">
+                    <div>
+                        <button class="orange_btn poluchit-btn" style="height: 30px;" matTooltip="{{gdRequestPayout}}" (click)="getPayout()">
+                            Получить
+                        </button>
+                        <a matTooltip="{{gdRefill}}" (click)="refillBalance()">
+                            Пополнить
+                        </a>
+                        <a *ngIf="isBadPerformer() || isBadPartner()" style="margin-top: 10px" (click)="unlockUser()">
+                            Разблокировать аккаунт
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="subscription.enableSubscriptionJob" class="pay-btn-group-area display_block_sub">
+              <div class="center_element_sub">
+                <a *ngIf="!subscription.subscriptionHave" class="pay-sub" matTooltip="{{gdSubscription}}" (click)="showPaySubscribe()">
+                  Оформить подписку
+                </a>
+                <p *ngIf="subscription.subscriptionHave" class="balance-date">Подписка действительна до - {{subscription.dateEndSubscribe | date:'dd.MM.yyyy'}}</p>
+              </div>
+              <div class="gd-hint gd-hint-sub" (click)="getTooltipMobile(gdSubscriptionHelp)" [matTooltipDisabled]="isMobileMode" matTooltip="{{gdSubscriptionHelp}}">
+                  ?
+              </div>
+          </div>
+        </div>
+    </div>
+
+
+	<div class="width_66 paddingi">
+    <div class="common-tabs tabs partner-panel">
+      <input id="tab1" class="profile" type="radio" name="tabs" checked>
+      <label class="non-focused-label" for="tab1" [routerLink]="[getProfileRouterLink()]">
+          <i class="tavs-icon"></i>
+          <span *ngIf="isYourProfile()">Мой Профиль</span>
+          <span *ngIf="!isYourProfile()">Профиль</span>
+      </label>
+
+      <input *ngIf="isYourProfile()" id="tab3" class="executor-panel executor-tasks" type="radio" name="tabs">
+      <label *ngIf="isYourProfile()" style="transform: translateY(0px);" class="non-focused-label" for="tab3" [routerLink]="[getPartnerTaskRouterLink()]">
+        <div *ngIf='isCountConfirmationNull()' class="kruzhok">{{getCountConfirmation()}}</div>
+        <div class="margin_between_div">
+            <i class="tavs-icon"></i>
+            <span>Мои услуги</span>
+        </div>
+      </label>
+
+      <input *ngIf="isYourProfile()" id="tab4" class="rates payments" type="radio" name="tabs" [routerLink]="[getVacancyRouterLink()]">
+      <label *ngIf="isYourProfile()" class="non-focused-label" for="tab4" >
+        <i class="tavs-icon">&#xe81c;</i>
+        <span>Моя работа</span>
+      </label>
+
+      <input *ngIf="isYourProfile()" id="tab5" class="rates payments" type="radio" name="tabs">
+      <label *ngIf="isYourProfile()" class="non-focused-label" for="tab5" [routerLink]="[getRatesRouterLink()]">
+        <i class="tavs-icon">&#xe81b;</i>
+        <span>Финансы</span>
+      </label>
+
+      <input *ngIf="isYourProfile()" id="tab6" class="rates payments" type="radio" name="tabs">
+      <label *ngIf="isYourProfile()" class="non-focused-label" for="tab6" [routerLink]="[getPartnerShareLink()]">
+          <i class="tavs-icon"></i>
+          <span>Промокод</span>
+      </label>
+
+      <div class="block-corner">
+          <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
+      </div>
+    </div>
+	</div>
+
+  <div *ngIf="!isAdmin() && isYourProfile()" class="width_33 paddingi block_footer">
+    <app-right-bottom-partner-area [isShowVacancyComponent]='isShowVacancyComponent'></app-right-bottom-partner-area>
+      <div *ngIf="!isAdmin() && !isShowVacancyComponent && isPerformer()" class="mb50">
+          <button class="predz" style="margin-top: 25px;" (click)="openCreateTask()">Создать задание</button>
+          <p class="podpredz">Задание появится в общем списке, после исполнитель сможет его выбрать</p>
+      </div>
+  </div>
+  <div>
+    <button *ngIf="!isPerformer() && (isBadPerformer() || isBadPartner())" class="orange_btn" style="margin-top: 40px" (click)="unlockUser()">
+      Разблокировать аккаунт
+    </button>
+  </div>
+
+  <app-display-advertising [place]="place"></app-display-advertising>
+
+  <div class="clear"></div>
+</div>

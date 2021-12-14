@@ -1,0 +1,124 @@
+<h1 *ngIf="data.id == null" mat-dialog-title>Добавление бота</h1>
+<h1 *ngIf="data.id != null" mat-dialog-title>Обновление бота</h1>
+<div mat-dialog-content class="with_field">
+
+    <div *ngIf="data.id != null" class="fake_img">
+        <div style="margin-left: auto; margin-right: auto;">
+            <img src="/api/admin/development/partner/photo/{{data.id}}">
+        </div>
+    </div>
+    <div class="margin-top-30">    
+        <p class="zag-sz">Роли</p>
+        <div class="select_roles">
+            <mat-select [(ngModel)]="data.roles" multiple required >
+                <mat-option *ngFor="let role of addRoles" [value]="role.value" [disabled]="isAdminRole(role.value)">
+                  {{role.viewValue}}
+                </mat-option>
+            </mat-select>
+        </div>
+    </div>
+
+    <div>    
+        <p class="zag-sz margin-top-30">Логин</p>
+        <input matInput type="email" [(ngModel)]="data.username" [disabled]="data.id != null" required>  
+    </div>
+
+    <div>    
+        <p class="zag-sz margin-top-30">Пароль</p>
+        <input matInput type="password" [(ngModel)]="data.password" 
+            (change)="changePassword($event)" required>  
+    </div>
+
+    <div>    
+        <p class="zag-sz margin-top-30">Повторный пароль</p>
+        <input matInput type="password" [(ngModel)]="data.confirmationPassword" required>  
+    </div>
+
+    <div class="right_div city-section margin-top-30">
+        <p-dropdown class="city-choose" [options]="cities" [(ngModel)]="data.city" 
+            (keyup)="onChangeCity($event)" [filter]="true"
+            placeholder="Выберите город" emptyFilterMessage="Не найдено">
+    </p-dropdown>
+    </div>
+    <div>    
+        <p class="zag-sz margin-top-30">Ф.И.О.</p>
+        <input matInput type="text" [(ngModel)]="data.fio" required> 
+    </div>
+    <div style="display: flex;">
+        <div style="width: 20%;">    
+            <p class="zag-sz margin-top-30">Возраст</p>
+            <input matInput type="number" [(ngModel)]="data.age" required>
+        </div>
+        <div style="width: 30%; margin-left: 90px;">
+            <p class="zag-sz margin-top-30">Номер телефона</p>
+            <p-inputMask mask="+7 (999) 999-9999" placeholder="Номер телефона" [(ngModel)]="data.phoneNumber"></p-inputMask>
+        </div>
+    </div>
+    
+    <div>
+        <p class="zag-sz margin-top-30">Почта</p>
+        <input matInput type="text" [(ngModel)]="data.email" required>
+    </div>
+    
+    <div>    
+        <p class="zag-sz margin-top-30">Обо мне</p>
+        <textarea matInput type="textarea" placeholder="Обо мне"
+            [(ngModel)]="data.aboutMe" required>
+        </textarea>
+    </div>
+    <div style="display: flex;">
+        <div style="width: 30%;">    
+            <p class="zag-sz margin-top-30">GD бонусы</p>
+            <input matInput type="number" [(ngModel)]="data.amount" required>
+        </div>
+        <div style="width: 30%; margin-left: 90px;">
+            <p class="zag-sz margin-top-30">Баланс</p>
+            <input matInput type="number" [(ngModel)]="data.income" required>
+        </div>
+    </div>
+
+    <!--
+    <div class="margin-top-30">
+        <mat-checkbox [(ngModel)]="data.showPerformers" matInput class="full-width-input">
+            Показывать в списке исполнителях
+        </mat-checkbox>
+    </div>
+-->
+
+    <p class="h1 margin-top-30">Паспортные данные</p>
+    <div>
+        <p class="zag-sz margin-top-30">Номер и серия паспорта</p>
+        <p-inputMask mask="99 99 999999" placeholder="Номер и серия паспорта" 
+            [(ngModel)]="data.passportInfo.passportNumberAndSeries">
+        </p-inputMask>
+    </div>
+    <div>
+        <p class="zag-sz margin-top-30">Паспорт выдан</p>
+        <textarea matInput type="textarea" placeholder="Паспорт выдан"
+            [(ngModel)]="data.passportInfo.passportIssued" required>
+        </textarea>
+    </div>
+    <div class="passport_date">
+        <p class="zag-sz margin-top-30">Дата выдачи</p>
+        <p-inputMask mask="99.99.9999" placeholder="Дата выдачи" 
+            [(ngModel)]="data.passportInfo.dateIssue">
+        </p-inputMask>
+    </div>
+    <div class="passport_code">
+        <p class="zag-sz margin-top-30">Код подразделения</p>
+        <p-inputMask mask="999-999" placeholder="Код подразделения" 
+            [(ngModel)]="data.passportInfo.departmentCode">
+        </p-inputMask>
+    </div>
+
+</div>
+
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+    <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+    <div *ngIf = "data.id == null">
+        <button class="orange_btn" [mat-dialog-close]="data" >Добавить</button>
+    </div>
+     <div *ngIf="data.id != null" >
+        <button class="orange_btn" [mat-dialog-close]="data" >Изменить</button>
+     </div>
+</div>

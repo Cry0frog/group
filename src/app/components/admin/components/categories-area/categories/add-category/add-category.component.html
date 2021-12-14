@@ -1,0 +1,262 @@
+<h1 mat-dialog-title *ngIf="data.id == null && data.folder == false">Добавление категории</h1>
+<h1 mat-dialog-title *ngIf="data.id == null && data.folder == true">Добавление группы</h1>
+
+<h1 mat-dialog-title *ngIf="data.id != null && data.folder == false">Обновление категории</h1>
+<h1 mat-dialog-title *ngIf="data.id != null && data.folder == true">Обновление группы</h1>
+
+<div mat-dialog-content class="with_field">
+
+    <div>
+        <p class="zag-sz">Название категории</p>
+        <input matInput type="text" [(ngModel)]="data.name">
+    </div>
+    <div>
+        <p class="zag-sz margin-top-30">Описание категории</p>
+        <input matInput type="text" [(ngModel)]="data.description">
+    </div>
+    <div>
+        <p class="zag-sz margin-top-30">Минимальная сумма</p>
+        <input matInput type="text" [(ngModel)]="data.minCost">
+        <p class="podpis-wf">
+            Если 0 или не указана, то используется 100 руб
+        </p>
+    </div>
+    <div class="full-width-input margin-top-30">
+        <div class="select">
+            <mat-select [(ngModel)]="data.status" name="status">
+                <mat-option *ngFor="let status of categoryStatuses" [value]="status.value">
+                    {{status.viewValue}}
+                </mat-option>
+            </mat-select>
+        </div>
+    </div>
+    <div *ngIf="data.folder == true" class="margin-top-30">
+        <mat-checkbox [(ngModel)]="data.visibleHome" class="full-width-input"
+                matTooltip="Если выбрана эта опция, то эта категория отобразится на главной странице">
+            Отображать на главной
+        </mat-checkbox>
+    </div>
+    <ng-container *ngIf="data.folder == false">
+        <mat-checkbox [(ngModel)]="data.fast" class="full-width-input"
+                matTooltip="Если выбрана эта опция, то пользователь будет сразу брать задачу на выполнение, а не дожидаться одобрения заказчика">
+            Мгновенная категория задач
+        </mat-checkbox>
+        <mat-checkbox [(ngModel)]="data.showImages" class="full-width-input"
+                matTooltip="Если выбрана эта опция, то пользователь сможет прикреплять фотографии к задаче">
+            Включить добавление фотографий
+        </mat-checkbox>
+        <mat-checkbox [(ngModel)]="data.showDocs" class="full-width-input"
+                matTooltip="Если выбрана эта опция, то пользователь сможет прикреплять документы к задаче">
+            Включить добавление документов
+        </mat-checkbox>
+        <mat-checkbox *ngIf="this.data.isAllowToChooseReadyToPayOption()" [(ngModel)]="this.data.showReadyToPay"
+                matTooltip="Если выбрана эта опция, то пользователю сам будет выставлять цену, иначе она будет вычисляться">
+            Позволить указывать "Готов заплатить"
+        </mat-checkbox>
+
+        <mat-checkbox [(ngModel)]="data.showAdminNotice" class="full-width-input mat-checkbox-long"
+                matTooltip="Если выбрана эта опция, в описание задачи (в созданной задаче) будет добавлено уведомление от администратора">
+            Отображать в задаче уведомление пользователям от администратора
+        </mat-checkbox>
+        <div *ngIf="data.showAdminNotice">
+            <p class="zag-sz margin-top-30">Уведомление</p>
+            <input matInput type="text" [(ngModel)]="data.adminNoticeText">
+        </div>
+
+        <mat-card class="section-margin" *ngFor="let prop of data.getSortedPropertiesByOrder()">
+            <mat-checkbox *ngIf="prop.isDateCategoryPropertyType()"
+                [(ngModel)]="prop.allowChooseModeTaskPerform" class="full-width-input"
+                matTooltip="Позволить выбирать режим выполнения задачи (Срочно, сразу, на дату)">
+                    Позволить выбирать режим выполнения задачи
+            </mat-checkbox>
+            <div *ngIf="prop.isSimpleCategoryPropertyType() || prop.isMapCategoryPropertyType() || prop.isOnePropDateCategoryPropertyType()">
+                <p class="zag-sz">Заголовок</p>
+                <input matInput type="text" [(ngModel)]="prop.title">
+            </div>
+            <div *ngIf="prop.isDateTimeInterval()">
+                <p class="zag-sz">Заголовок для первой части даты</p>
+                <input matInput type="text" [(ngModel)]="prop.title">
+            </div>
+            <div *ngIf="prop.isSimpleCategoryPropertyType() || prop.isMapCategoryPropertyType()">
+                <p class="zag-sz margin-top-30">Подсказка</p>
+                <input matInput type="text" [(ngModel)]="prop.exampleText">
+            </div>
+            <div *ngIf="prop.isDateTimeInterval()">
+                <p class="zag-sz margin-top-30">Заголовок для второй части даты</p>
+                <input matInput type="text" [(ngModel)]="prop.exampleText">
+            </div>
+            <div class="full-width-input margin-top-30">
+                <div class="select">
+                    <mat-select [(ngModel)]="prop.type" name="type">
+                        <mat-option *ngFor="let type of getCategoryTypesByType(prop)" [value]="type.value">
+                            {{type.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+            <div *ngIf="prop.isSimpleCategoryPropertyType()">
+                <p class="zag-sz margin-top-30">Пример</p>
+                <input matInput type="text" [(ngModel)]="prop.placeholder">
+            </div>
+            <div *ngIf="prop.isCoordinate()" class="option-container margin-top-30">
+                <mat-checkbox [(ngModel)]="prop.showSelectPlaceForService"
+                        matTooltip="Если выбрана эта опция, будет предложено выбрать место оказания услуги: Дистанционно(точку на карте указывать не нужно), У исполнителя, У меня, Не принципиально)">
+                    Позволить выбирать место оказания услуги
+                </mat-checkbox>
+                <div *ngIf="prop.showSelectPlaceForService">
+                    <mat-selection-list [(ngModel)]="data.availableLocationTypes">
+                        <mat-list-option *ngFor="let locationType of locationTypes" [value]="locationType.value">
+                            {{locationType.viewValue}}
+                        </mat-list-option>
+                    </mat-selection-list>
+                </div>
+            </div>
+            <div *ngIf="prop.isCoordinatePath()" class="option-container margin-top-30">
+                <mat-checkbox [(ngModel)]="prop.buildRout" matInput class="full-width-input"
+                        matTooltip="Если не выбрана эта опция, то система не будет строить путь между точками">
+                    Формировать маршрут
+                </mat-checkbox>
+                <mat-checkbox [(ngModel)]="prop.showCategoryTransport" class="full-width-input"
+                        matTooltip="Если выбрана эта опция, пользователю будет предлагаться выбрать категорию транспорта: Легковые автомобили, Газель, Грузовой транспорт, Самолет (участвует в формировании цены)">
+                    Показывать категорию ТС
+                </mat-checkbox>
+                <mat-accordion *ngIf="prop.showCategoryTransport">
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Выберите разрешенные для выбора пользователем видов транспорта
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <mat-selection-list [(ngModel)]="data.availableTransportCategories">
+                            <mat-list-option *ngFor="let prop of transportCategoryMapper" [value]="prop.value">
+                                {{prop.viewValue}}
+                            </mat-list-option>
+                        </mat-selection-list>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <mat-checkbox [(ngModel)]="prop.showCategoryWeight" class="full-width-input"
+                        matTooltip="Если выбрана эта опция, пользователю будет предлагаться выбрать весовую категорию доставляемого товара: Посылка до 1кг, Посылка до 5кг, Посылка до 10кг, Посылка до 20кг (участвует в формировании цены)">
+                    Показывать весовую категорию товаров
+                </mat-checkbox>
+                <mat-accordion *ngIf="prop.showCategoryWeight">
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Выберите разрешенные для выбора пользователем весовые категории доставляемых товаров
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <mat-selection-list [(ngModel)]="data.availableWeightCategories">
+                            <mat-list-option *ngFor="let prop of weightCategoryMapper" [value]="prop.value">
+                                {{prop.viewValue}}
+                            </mat-list-option>
+                        </mat-selection-list>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <mat-checkbox [(ngModel)]="prop.showCategoryProduct" class="full-width-input"
+                        matTooltip="Если выбрана эта опция, пользователю будет предлагаться выбрать категорию доставляемого товара: Еда (Из заведений), Продукты (Из магазина), Цветы (участвует в формировании цены)">
+                    Показывать категорию товаров
+                </mat-checkbox>
+                <mat-accordion *ngIf="prop.showCategoryProduct">
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Выберите разрешенные для выбора пользователем видов доставляемых товаров
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <mat-selection-list [(ngModel)]="data.availableProductCategories">
+                            <mat-list-option *ngFor="let prop of categoryProductMapper" [value]="prop.value">
+                                {{prop.viewValue}}
+                            </mat-list-option>
+                        </mat-selection-list>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+
+                <mat-checkbox [(ngModel)]="prop.showPorterOption" class="full-width-input"
+                        matTooltip="Если выбрана эта опция, пользователю будет предлагаться выбрать нужны ли грузчики и кол-во (участвует в формировании цены)">
+                    Показывать опцию настройки грузчиков
+                </mat-checkbox>
+                <mat-checkbox [(ngModel)]="prop.showPassengerOption" class="full-width-input"
+                        matTooltip="Если выбрана эта опция, у пользователя будет возможность указать кол-во пассажиров (участвует в формировании цены)">
+                    Показывать опцию настройки пассажиров
+                </mat-checkbox>
+
+
+
+                <p class="zag-sz margin-top-30">Вычисление суммы на основе</p>
+                <mat-select class="select-sz" [(ngModel)]="prop.calcMode">
+                    <mat-option *ngFor="let mode of calcModeMapper" [value]="mode.value">
+                        {{mode.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </div>
+            <div *ngIf="prop.isCoordinatePath() || prop.isCoordinate()" class="option-container margin-top-30">
+                <mat-checkbox [(ngModel)]="prop.useCityArea" class="full-width-input"
+                      matTooltip="Если выбрана эта опция, при поиске адреса в адресной строке Вам будут показаны улицы города и окрестности">
+                          Учитывать город и окрестности
+                </mat-checkbox>
+            </div>
+
+            <!-- -->
+            <div >
+            <mat-divider></mat-divider>
+            <mat-card-actions class="margin-top-18">
+                <button mat-button class="prop_btn margin-top-18" (click)="onRemoveProperty(prop)">Удалить</button>
+            </mat-card-actions>
+        </div>
+        </mat-card>
+
+        <br/>
+        <mat-card class="section-margin">
+            <mat-card-header style="display: block;">
+                Добавить свойство
+            </mat-card-header>
+            <mat-card-actions>
+                <button class="prop_btn" (click)="addSimpleProp()">Простое</button>
+                <button class="prop_btn" (click)="addMapProp()"
+                        [disabled]="this.data.isOneMapProperty()">
+                    Картографическое
+                </button>
+                <button class="prop_btn" (click)="addDateProp()"
+                        [disabled]="this.data.isOneDateProperty()">
+                    Время или дата
+                </button>
+            </mat-card-actions>
+        </mat-card>
+
+        <div style="margin-bottom: 10px;">
+            <p class="zag-sz margin-top-30">Особая информация при оплате</p>
+            <input matInput type="text" [(ngModel)]="data.payMessage">
+        </div>
+        <div class="section-margin payout-area">
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Выберите разрешенные способы оплаты
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <mat-selection-list [(ngModel)]="data.availablePayoutTypes">
+                        <mat-list-option *ngFor="let prop of categoryPropPayoutTypes" [value]="prop.value">
+                            {{prop.viewValue}}
+                        </mat-list-option>
+                    </mat-selection-list>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </ng-container>
+</div>
+
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+  <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+  <button *ngIf="data.id == null" class="orange_btn"
+    [mat-dialog-close]="data">Добавить</button>
+  <button *ngIf="data.id != null" class="orange_btn"
+    [mat-dialog-close]="data">Изменить</button>
+</div>

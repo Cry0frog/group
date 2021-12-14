@@ -1,0 +1,14 @@
+Host: https://moscow.gooddealonline.ru
+Sitemap: https://moscow.gooddealonline.ru/sitemap.xml
+
+User-agent: *
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Mail.Ru
+Allow: /

@@ -1,0 +1,21 @@
+.font-weight-900{
+    font-weight: 900;
+}
+
+.link{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.h1 {
+    margin-bottom: 20px;
+}
+
+.mt-35{
+    margin-top:35px;
+}
+
+ol, ul {
+  list-style: decimal;
+  margin-left: 38px;
+}

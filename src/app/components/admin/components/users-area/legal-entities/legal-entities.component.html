@@ -1,0 +1,138 @@
+<div>
+  <div style="display: flex;">
+    <div style="display: flex;">
+      <h1 style="margin-top: auto; margin-bottom: auto;" class="h1">Организации</h1>
+    </div>
+    <div class="select_roles">
+      <mat-select [(ngModel)]="shortLegalEntityWithCountedPages.filterRole" (selectionChange)="selectFilter($event.value)">
+          <mat-option *ngFor="let filter of filterLegalEntityMapper" [value]="filter.value">
+              {{filter.viewValue}}
+          </mat-option>
+      </mat-select>
+    </div>
+  </div>
+
+  <div>
+    <mat-form-field class="table-filter-area">
+      <input matInput (keyup) = "applyFilter($event.target.value)" placeholder="Поиск">
+    </mat-form-field>
+
+    <table mat-table [dataSource] = "dataSource" matSort class = "table_users">
+
+      <!-- Id Column -->
+      <ng-container matColumnDef = "id">
+        <th *matHeaderCellDef mat-sort-header> ID </th>
+        <td *matCellDef = "let row">
+          <div style="display: flex;">
+            <mat-checkbox *ngIf="replenishmentBonusesMode || sendNotifMode" class="my_checkbox" [(ngModel)]="row.isSelectUser"
+              (change)="addCandUser($event.checked, row)" style="margin-right: 10px;">
+            </mat-checkbox>
+            <a href="user/{{row.id}}" target="_blank">{{row.id}}</a>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Username Column -->
+      <ng-container matColumnDef = "username">
+        <th *matHeaderCellDef mat-sort-header> Пользователь </th>
+        <td *matCellDef = "let row">
+          <div>
+            <div>
+              {{row.username}}
+            </div>
+            <div *ngIf="row.email != null" style="margin-top: 5px;">
+              ({{row.email}})
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- NameOrganization Column -->
+      <ng-container matColumnDef = "nameOrganization">
+        <th *matHeaderCellDef mat-sort-header > Названии организации </th>
+        <td *matCellDef = "let row"> {{row.nameOrganization}} </td>
+      </ng-container>
+
+      <!-- Roles Column -->
+      <ng-container matColumnDef = "roles">
+        <th *matHeaderCellDef mat-sort-header>Роли</th>
+        <td *matCellDef = "let row">
+          <span *ngFor="let role of row.roles" matTooltip={{roleTitleDisplay[role]}}
+          [ngClass] = "{
+            green_z:role === 'PARTNER',
+            orange_i:role === 'PERFORMER',
+            red_a:role === 'SUPER_USER',
+            member_store_role:role === 'MEMBER_STORE',
+            member_another_role:role === 'MEMBER_ANOTHER',
+            member_performer_role:role === 'MEMBER_PERFORMER'
+          }">
+            {{roleDisplay[role]}}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- PhoneNumber Column -->
+      <ng-container matColumnDef="phoneNumber">
+        <th *matHeaderCellDef> Телефон </th>
+        <td *matCellDef="let row" > {{row.phoneNumber}} </td>
+      </ng-container>
+
+      <!-- City Column -->
+      <ng-container matColumnDef="city">
+          <th *matHeaderCellDef> Город </th>
+          <td *matCellDef="let row" > {{row.city.name}} </td>
+      </ng-container>
+
+      <!-- Date reg Column -->
+      <ng-container matColumnDef="dateReg">
+        <th *matHeaderCellDef> Дата регистрации </th>
+        <td *matCellDef="let row" > {{row.dateReg | date:'dd.MM.yyyy'}} </td>
+    </ng-container>
+
+      <!-- Operations Column -->
+      <ng-container matColumnDef="operations">
+          <th *matHeaderCellDef mat-sort-header > Операции </th>
+          <td *matCellDef = "let row" class = "users_btns">
+            <button matTooltip = "Написать сообщение" class = "message_btn margin-5"
+              (click)="goToChat(row)">
+            </button>
+            <button matTooltip = "{{getTooltip(row.enabled)}}" (click) = "changeEnable(row)"
+              [ngClass] = {block_link:!row.enabled} class="connect_link">
+            </button>
+            <button matTooltip = "{{getTooltipForBlockPartner(row)}}" (click) = "blockLegalEntity(row, true)"
+              [ngClass] = {unlock_btn:!isBlockPartner(row)} class="lock_btn margin-5">
+            </button>
+            <button matTooltip = "{{getTooltipForBlockPerformer(row)}}" (click) = "blockLegalEntity(row, false)"
+              [ngClass] = {unlock_btn:!isBlockPerformer(row)} class="lock_btn">
+            </button>
+            <button id="buttonUpdateUsers_{{row.id}}" matTooltip = "Обновить пользователя" class = "buttonUpdateUsers margin-5" (click) = "updateStatus(row)"></button>
+            <!--
+            <button matTooltip = "Безопасный платеж" class = "pay_btn"></button>
+            <button matTooltip = "Заблокировать чат" class = "block_btn margin-5"></button>
+            -->
+          </td>
+       </ng-container>
+      <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
+      <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
+    </table>
+    <button *ngIf="!sendNotifMode && !replenishmentBonusesMode" matTooltip = "Разослать сообщения" class = "buttonAdd" (click) = "sendNotifMode = true">Разослать сообщения</button>
+    <button *ngIf="!replenishmentBonusesMode && !sendNotifMode" matTooltip = "Пополнить баланс" class = "buttonAdd" (click) = "replenishmentBonusesMode = true">Пополнить баланс</button>
+    <button class="buttonAdd" matTooptip="Отчёт по запросам на партнёрство" (click)="getPartershipRequestsReport()">Отчёт по запросам на партнёрство</button>
+
+    <mat-paginator
+      [pageSize]="shortLegalEntityWithCountedPages.pageableParams.size"
+      [pageSizeOptions]="[15, 40, 80]"
+      [showFirstLastButtons]="true"
+      [length]="shortLegalEntityWithCountedPages.pageableParams.countedPages"
+      [pageIndex]="shortLegalEntityWithCountedPages.pageableParams.page"
+      (page)="handlePage($event)">
+    </mat-paginator>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <app-user-operations [selectedUsers]='selectedUsers' [sendNotifMode]='sendNotifMode'
+      [replenishmentBonusesMode]='replenishmentBonusesMode' [isLegalEntities]='true'
+      (checkSelectedUsersEvent)='checkSelectedUsers()' (cancelOperationEvent)='cancelOperationHandler()' (updateSelectedUsers)='updateSelectedUsersHandler($event)'>
+    </app-user-operations>
+  </div>
+</div>

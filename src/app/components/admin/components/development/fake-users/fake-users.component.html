@@ -1,0 +1,80 @@
+<div>
+  <div class="block-corner">
+    <h1 class="h1">Боты</h1>
+    <mat-form-field class="table-filter-area">
+      <input matInput placeholder = "Поиск" (keyup)="applyFilter($event.target.value)">
+    </mat-form-field>
+
+    <table mat-table [dataSource] = "dataSource" matSort (matSortChange)="sortChange($event)" matSort class = "table_users">
+
+      <!-- Photo Column -->
+      <ng-container matColumnDef = "photo">
+        <th *matHeaderCellDef></th>
+        <td *matCellDef = "let row">
+          <div class="fake_user">
+            <img src="/api/admin/development/partner/photo/{{row.id}}">
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Id Column -->
+      <ng-container matColumnDef = "id">
+        <th *matHeaderCellDef mat-sort-header> ID </th>
+        <td *matCellDef = "let row"> {{row.id}} </td>
+      </ng-container>
+
+      <!-- Username Column -->
+      <ng-container matColumnDef = "username">
+        <th *matHeaderCellDef> Пользователь </th>
+        <td *matCellDef = "let row"> {{row.username}} </td>
+      </ng-container>
+
+      <!-- FIO Column -->
+      <ng-container matColumnDef = "fio">
+        <th *matHeaderCellDef> ФИО </th>
+        <td *matCellDef = "let row"> {{row.fio}} </td>
+      </ng-container>
+
+      <!-- Role Column -->
+      <ng-container matColumnDef = "roles">
+        <th *matHeaderCellDef>Роли</th>
+        <td *matCellDef = "let row">
+          <span *ngFor="let roles of row.roles" matTooltip={{roleTitleDisplay[roles]}}
+          [ngClass] = "{
+            green_z:roles === 'PARTNER',
+            orange_i:roles === 'PERFORMER'
+          }">
+            {{roleDisplay[roles]}}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- PhoneNumber Column -->
+      <ng-container matColumnDef="phoneNumber">
+        <th *matHeaderCellDef> Телефон </th>
+        <td *matCellDef="let row" > {{row.phoneNumber}} </td>
+      </ng-container>
+
+      <!-- Operations Column -->
+      <ng-container matColumnDef="operations">
+          <th *matHeaderCellDef> Операции </th>
+          <td *matCellDef = "let row" class = "users_btns">
+            <button matTooltip = "Обновить бота" class = "buttonUpdateUsers margin-5" (click) = "editFakePartner(row)"></button>
+            <button matTooltip = "Обновить фото" class = "buttonUpdateUsers photo margin-5" (click) = "changeFakePhoto(row)"></button>
+          </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
+      <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
+    </table>
+    <button matTooltip = "Создание бота" class = "buttonAdd" (click) = "addFakePartner()">Создание бота</button>
+    <mat-paginator
+      [pageSize]="fakePartnersWithCountedPages.pageableParams.size"
+      [pageSizeOptions]="[15, 40, 80]"
+      [showFirstLastButtons]="true"
+      [length]="fakePartnersWithCountedPages.pageableParams.countedPages"
+      [pageIndex]="fakePartnersWithCountedPages.pageableParams.page"
+      (page)="handlePage($event)">
+    </mat-paginator>
+  </div>
+</div>

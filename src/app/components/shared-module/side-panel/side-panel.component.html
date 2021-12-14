@@ -1,0 +1,142 @@
+<button type="button" class="open_menu" [ngClass]="{'pulse': isNewNotification}" data-toggle="modal" data-target="#myModal">
+    <span></span>
+    <span></span>
+	<span></span>
+	<div *ngIf="(isLoggedIn$ | async)">
+		<div class="kruzhok kruzhok_mobile">{{countNonReadable}}</div>
+	</div>
+</button>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  	<div class="modal-content">
+			<div class="admin_block_mob" [ngClass]="{'admin_block_mob_auth': (isLoggedIn$ | async)}">
+
+				<button type="button" class="close" data-dismiss="modal" id ="closeModal"  aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+
+				<a *ngIf="!(isLoggedIn$ | async)" class="enter_link"  (click)="openLogin()">Вход</a>
+				<a *ngIf="!(isLoggedIn$ | async)" class="reg_link" (click)="openRegistration()">Регистрация</a>
+
+				<div class="admin paddingi">
+					<div *ngIf="(isLoggedIn$ | async)">
+						<div (click)="openProfile()"style="display: flex;">
+							<img style="width: 50px; height: 50px;" src="/api/partner/info/photo/{{userId}}">
+							<a class="admin_link" style="cursor: pointer;">{{username}}</a>
+						</div>
+
+						<div [ngClass]="{'pulse': isNewNotification}" data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#myModalNotification" (click)="isNewNotification = false">
+							<div class="top-kuku">
+								<button class="exit" >
+									Уведомления
+								</button>
+							</div>
+							<div class="kruzhok" [ngClass]="{'kruzhok_pulse': isNewNotification}">{{countNonReadable}}</div>
+						</div>
+
+						<div class="top-kuku">
+							<button class="exit" style="margin-top: -10px;" (click)="logout()">
+								<i class="kuku-icon"></i>
+								Выйти
+							</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+    <a *ngIf="isJobNav; else jobSwitch" (click)="changeNav()" class="switch_nav">Перейти в Gooddeal.Услуги</a>
+    <ng-template #jobSwitch>
+      <a class="switch_nav" (click)="changeNav()">Перейти в Gooddeal.Работа</a>
+    </ng-template>
+
+		<nav *ngIf="!isJobNav; else jobNav" class="nav_mob">
+		  <a class="def-href-point" (click)="openCreateTask()">Создать задание</a>
+		  <a class="def-href-point" (click)="openFindTask()">Найти задание</a>
+		  <a class="def-href-point" (click)="openPerformers()">Найти исполнителя</a>
+		</nav>
+
+    <ng-template #jobNav>
+      <nav class="nav_mob">
+        <a class="def-href-point" (click)="openCreateVacancy()">Создать вакансию</a>
+        <a class="def-href-point" (click)="openFindVacancies()">Найти работу</a>
+        <a class="def-href-point" (click)="openFindResume()">Найти работника</a>
+        <a class="def-href-point" (click)="openCreateResume()">Создать резюме</a>
+      </nav>
+    </ng-template>
+
+    <nav class="nav_mob">
+      <a class="def-href-point" (click)="openAboutUs()">О компании</a>
+      <a class="def-href-point" (click)="openPromotions()">Акции</a>
+		  <a class="def-href-point" (click)="openOurPartners()">Партнеры</a>
+		  <a class="def-href-point" (click)="openOurNews()">Новости</a>
+		</nav>
+
+		<nav class="nav_dop_mob">
+		  <a class="def-href-point" (click)="openSupport()">Служба поддержки</a>
+		  <a class="def-href-point" (click)="openFAQ()">F. A. Q.</a>
+		  <a class="def-href-point" (click)="openReasonsBlocking()">Причины блокировки аккаунтов</a>
+		  <a class="def-href-point" (click)="openMotivationProgramm()">Мотивационная программа</a>
+		  <a class="def-href-point" (click)="openCommission()">Условия формирования комиссии</a>
+		  <a class="def-href-point" (click)="openPricing()">Условия ценообразования</a>
+		  <a class="def-href-point" target="_blank" href="/terms_of_user">
+			Публичная оферта
+		  </a>
+		  <a class="def-href-point" target="_blank" href="/privacy_policy">
+			Политика конфеденциальности
+      </a>
+      <a target="_blank" href="../../../../assets/Партнёрское соглашение с GoodDeal.docx">
+				Партнёрское соглашение с GoodDeal
+		  </a>
+		</nav>
+
+		<!--<p class="telephone_footer">8800-757-75-75</p>!-->
+		<p class="mt10">Следите за&nbsp;нами в&nbsp;соц.&nbsp;сетях:</p>
+		<!--
+		 <a class="mob_soc mob_tw" href=""></a>
+		 <a class="mob_soc mob_insta" href=""></a>
+		 -->
+		 <!--
+		 <a class="mob_soc mov_ok" href=""></a>
+		 -->
+
+		<a class="icon_vk" href="https://vk.com/public196725756" target="_blank"></a>
+		<a class="icon_instagram" target="_blank" href="https://www.instagram.com/gooddeal.online/"></a>
+		<a class="icon_facebook" target="_blank" href="https://www.facebook.com/GoodDealFB"></a>
+		<a class="icon_youtube" target="_blank" href="https://www.youtube.com/channel/UCaGunnMSwgV4kXqWSa_AHag?view_as=subscriber"></a>
+
+		<div style="margin-top: 30px;">
+			<div>
+				<a href="https://play.google.com/store/apps/details?id=com.keeneye.gd" target="_blank" class="google_play_link"></a>
+			</div>
+			<div style="margin-top: 10px;">
+				<a href="https://apps.apple.com/ru/app/gooddeal/id1507809289" target="_blank" class="apple_store_link"></a>
+			</div>
+		</div>
+
+		 <p class="copyright_mob">©&nbsp;2021 GoodDeal. Все права защищены.</p>
+
+	  </div>
+	</div>
+</div>
+
+<div class="modal fade" id="myModalNotification" tabindex="-1"  role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="admin_block_mob">
+				<span class="notifications">Уведомления</span>
+				<button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#myModal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<button type="button" class="close" id ="closeNotific" data-dismiss="modal" aria-label="Close">
+				</button>
+			</div>
+			<div>
+				<app-notification-display (updateCountNonReadable)="updateCountNonReadableHandler($event)"
+					(navigateByUrl)="navigateByUrlHandler($event)">
+				</app-notification-display>
+			</div>
+		</div>
+	</div>
+</div>

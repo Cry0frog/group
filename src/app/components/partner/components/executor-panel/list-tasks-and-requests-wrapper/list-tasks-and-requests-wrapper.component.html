@@ -1,0 +1,19 @@
+<div class="section-content" (scroll)="scrollHandler($event)">
+  <p *ngIf=isPartnerMode() class="h1">Мои заказы</p>
+    <p *ngIf=isPerformerMode() class="h1">Мои задания</p>
+    <p *ngIf=isCommonMode() class="h1">Мои запросы</p>
+
+    <div class="tabs1 mode-tasks-area">
+
+        <input id="tab10" class="my-tasks" type="radio" name="tabs1" (click)="switchToPartnerRequstsMode()">
+        <label *ngIf="activeButton" class="cust-label" for="tab10">Я заказчик</label>
+        <input *ngIf=isPerformerUser() id="tab20" class="executor-tasks" type="radio" name="tabs1" (click)="switchToPerformerMode()">
+        <label *ngIf="isPerformerUser() && activeButton" class="isp-label" style="margin-right: 15px;" for="tab20">Я исполнитель</label>
+        <input id="tab30" class="executor-panel" type="radio" name="tabs1" (click)="switchToCommonMode()">
+        <label *ngIf="isPerformerUser() && activeButton" class="zakaz-labe" for="tab30">Мои запросы</label>
+        <label *ngIf="!isPerformerUser() && activeButton" class="zakaz-labe-partner" for="tab30">Стать исполнителем</label>
+
+        <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
+    </div>
+
+</div>

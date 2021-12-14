@@ -1,0 +1,27 @@
+<div class="wrapper content">
+	<div class="width_66 paddingi">
+		<p class="date-news">{{currentNews.dateCreated | date:'dd.MM.yyyy'}}</p>
+    <h1 class="novost_zagolovok">{{currentNews.title}}</h1>
+    <p class="novost_podzagolovok">{{currentNews.shortDescription}}</p>
+    <img class="novost_content_img" src="/api/news/photo/{{currentNews.id}}">
+    <div class="summernote" [ngxSummernoteView]="currentNews.description"></div>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<div class="news_dop_block">
+	<div class="wrapper">
+		<h2 class="h2_news_dop_block paddingi">Последние новости</h2>
+		<div class="flex">
+			<div *ngFor="let news of lastNews" class="new_block">
+				<div class="new_block_content">
+					<a href="/our_news/{{news.id}}" target="_blank">
+            <img src="/api/news/photo/{{news.id}}"/>
+          </a>
+					<p class="date-news" style="margin: 0px;">{{news.dateCreated | date:'dd.MM.yyyy'}}</p>
+					<a class="new_link_index" href="/our_news/{{news.id}}" target="_blank">{{news.title}}</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

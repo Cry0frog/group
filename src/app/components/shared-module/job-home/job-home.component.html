@@ -1,0 +1,149 @@
+<div class="block_zag_index">
+	<div class="wrapper paddingi">
+
+		<div class="left_index_black">
+			<h1 class="big_h1">Мы работаем - вы отдыхаете</h1>
+			<p class="podh1_index">Поможем найти лучшего исполнителя ваших заданий!</p>
+			<div class="search_div">
+				<div>
+
+					<input type="search" [(ngModel)]="findVacancy.filterName" class="search-input" (keydown.enter)="sendFindVacancy($event)"
+					(focus)="innerInputFocussed()" (blur)="innerInputBlurred()">
+					<div *ngIf="isVisiblePlaceholder()" class="placeholder_search_input" (click)="clickOnPlaceholder()">
+						<p>{{textInTheSearchBar}}</p>
+					</div>
+
+				</div>
+				<button type="submit" class="search-submit" (click)="routerFindVacancy()" ></button>
+				<p class="primer" style="color: white;">
+					Например:
+					<a (click)="findVacancy.filterName='Менеджер по финансам'; routerFindVacancy()"
+						class="example-task-name"
+					>
+						Менеджер по финансам
+					</a> или
+					<a (click)="findVacancy.filterName='Бухгалтер'; routerFindVacancy()"
+						class="example-task-name"
+					>
+						Бухгалтер
+					</a>
+				</p>
+			</div>
+
+		</div>
+		<div class="right_index_block"></div>
+			<a class="create-zadanie def-href-point" (click)="openCreateVacancy()">
+				Создать вакансию
+			</a>
+	</div>
+</div>
+
+<div class="category_index">
+	<div class="wrapper">
+		<h2 class="h2_index paddingi">Найди себе работу по душе</h2>
+		<p class="podh2_index paddingi">Мы предоставляем возможность найти работу в любой сфере</p>
+
+    <app-job-categories></app-job-categories>
+
+    <div class="margin_top_100">
+      <app-job-why-us></app-job-why-us>
+    </div>
+
+    <div *ngIf="lastThreeVacancy.length != 0" class="last_created_tasks_margin">
+      <h2 class="h2_index paddingi">Последние опубликованные вакансии </h2>
+      <p class="podh2_index paddingi">Успей откликнуться первым</p>
+      <div class="wrapper">
+		  	<div class="flex">
+		  		<div *ngFor="let vacancy of lastThreeVacancy" class="category_block">
+		  			<div class="category_block_new">
+		  				<a target="_blank" href="/user/{{vacancy.creatorId}}">
+		  					<img src="/api/partner/info/photo/{{vacancy.creatorId}}"/>
+		  				</a>
+		  				<a class="zag-create" href="/user/{{vacancy.creatorId}}" target="_blank"> {{vacancy.creatorName}}</a>
+		  				<div class="non-focused-label" style="cursor: pointer;"
+		  				  (click)="openFindLastVacancy(vacancy)">
+		  					<span *ngIf='vacancy.salary' class="zag-create-span">
+		  						{{vacancy.salary}}₽
+		  					</span>
+		  					<p>Создана {{vacancy.createdAt | date: "dd.MM.yyyy"}}</p>
+		  					<p class="desc-create">{{vacancy.name}}</p>
+		  				</div>
+		  			</div>
+		  		</div>
+		  	</div>
+		  </div>
+
+	    <div>
+	    	<a class="see_cat" (click)="openVacancyList()">
+	    	  Подробнее
+	    	</a>
+      </div>
+    </div>
+
+    <div class="margin_top_100 margin_bottom_for_special_abilities">
+      <app-job-special-abilities></app-job-special-abilities>
+    </div>
+
+    <div class="abilities_margin">
+      <app-job-advantages></app-job-advantages>
+    </div>
+
+    <div *ngIf="lastThreeResume.length != 0" class="margin_top_for_order_price">
+      <app-job-resume [lastThreeResume]="lastThreeResume"></app-job-resume>
+    </div>
+
+    <div class="margin_top_for_order_price">
+      <app-job-navigate-service></app-job-navigate-service>
+    </div>
+
+    <div *ngIf="threeLastNews.length != 0" class="padding_top_for_news promotions margin_top_for_order_price">
+      <div>
+        <h2 class="h2_index">Будь в курсе наших новостей</h2>
+        <p class="podh2_index paddingi">Самые актуальные новости о нас и наших партнёрах</p>
+        <div class="screen_for_news">
+          <div *ngFor='let news of threeLastNews'>
+            <div style="display: flex;">
+              <a (click)="routerGoToNews(news.id)" class="news_block">
+                <div class="category_block_content">
+                  <div>
+                    <p class="name_category_index">{{news.title}}</p>
+                  </div>
+                  <div class="category-photo">
+                    <img class="photo-position" src="/api/news/photo/{{news.id}}">
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div>
+            <a class="see_cat see_cat_news center_element" (click)="openOurNews()">
+              Посмотреть все
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="mobile_store">
+  <div style="display: flex;">
+    <p class="orange_podzag">Скачайте наше приложение и пользуйтесь GoodDeal, где бы вы не находились.</p>
+  </div>
+  <div style="display: table; margin-right: auto; margin-left: auto;">
+    <div class="display_mobile_store">
+      <div>
+        <div class="store-block" style="margin-right: 5px;">
+          <a href="https://play.google.com/store/apps/details?id=com.keeneye.gd" target="_blank" class="google_play_link"></a>
+        </div>
+      </div>
+      <div>
+        <div class="store-block">
+          <a href="https://apps.apple.com/ru/app/gooddeal/id1507809289" target="_blank" class="apple_store_link"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

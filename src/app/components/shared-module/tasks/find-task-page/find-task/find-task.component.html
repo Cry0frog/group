@@ -1,0 +1,192 @@
+<div (scroll)="scrollHandler($event)">
+    <div class="bottom-chat">
+        <input class="textarea-chat" placeholder="Поиск"
+            [(ngModel)]="filterTask.filterName" (keydown.enter)="search()"
+            [ngClass]="{'textarea-chat-with-clear': !filterTask.isEmpty()}"
+        />
+        <button *ngIf="!filterTask.isEmpty()" class="clear-button"
+            (click)="clearFilter()" matTooltip="Очистить настройки"></button>
+        <button class="settings-button">
+            <div class="ku-ku setting-window">
+                <h1 class="h1">Дополнительная фильтрация</h1>
+
+                <div class="filter-prop">
+                    <div class='name_option'>
+                        <p class="text">Цена больше</p>
+                    </div>
+                    <div class="with_field right-align" style="width: auto;">
+                        <input class="input-hard-size" id="price-zdn" type="number" [(ngModel)]="filterTask.byCostMore">
+                    </div>
+                </div>
+
+                <div class="datetime-interval-section filter-prop">
+                    <div class="datetime-section-title">
+                        <p class="new_width title-left-align text date-span-height">
+                            Дата создания больше
+                        </p>
+                    </div>
+                    <div class="datetime-section right-align">
+                        <p-calendar class="datetime-date" readonlyInput="true" [(ngModel)]="filterTask.byCreatedAtMore"
+                            dateFormat="dd.mm.yy" placeholder="Выберите дату" [locale]="ru_calendar">
+                        </p-calendar>
+                    </div>
+                </div>
+
+                <div class="datetime-interval-section filter-prop" *ngIf="filterTask.isShowDateProp">
+                    <div class="datetime-section-title">
+                        <p class="new_width text title-left-align date-span-height" style="line-height: 20px;">
+                            Предполагаемая дата начала больше
+                        </p>
+                    </div>
+                    <div class="datetime-section right-align">
+                        <p-calendar class="datetime-date" readonlyInput="true" [(ngModel)]="filterTask.byStartDateMore"
+                            dateFormat="dd.mm.yy" placeholder="Выберите дату" [locale]="ru_calendar">
+                        </p-calendar>
+                    </div>
+                </div>
+
+                <div class="filter-prop" style="margin-top: 5px;">
+                    <div class='name_option'>
+                        <p class="text">Выберите город</p>
+                    </div>
+                    <div class="with_field right-align city-section" style="width: auto;">
+                        <p-dropdown class="city-choose" [options]="cities" [(ngModel)]="filterTask.selectedCity"
+                            (keyup)="onChangeCity($event)" [filter]="true" placeholder="Выберите город"
+                            emptyFilterMessage="Не найдено">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <div class="filter-prop">
+                    <div class='name_option'>
+                        <p class="text">Место оказания услуги</p>
+                    </div>
+                    <div class="with_field right-align city-section" style="width: auto;">
+                      <p-dropdown class="city-choose" [options]="locations" [(ngModel)]="filterTask.locationType"
+                        placeholder="Выберите место">
+                      </p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf="isAutorizedUser()" class="cb-div">
+                    <input type="checkbox" id="c1_onlyMyCountry" [(ngModel)]="filterTask.onlyMyCity"/>
+                    <label class="label-job text" for="c1_onlyMyCountry">
+                        <span></span>Искать только в моём городе
+                    </label>
+                </div>
+
+                <div class="cb-div">
+                    <input type="checkbox" id="c1_onlySafetyPay" [(ngModel)]="filterTask.onlySafetyPay"/>
+                    <label class="label-job text" for="c1_onlySafetyPay">
+                        <span></span>
+                        <p></p>Только безопасный платеж
+                    </label>
+                    <div class="gd-hint" (click)="getTooltipMobile(hintSecurePay)"
+                      [matTooltipDisabled]="isMobileMode" matTooltip="{{hintSecurePay}}"
+                    >
+                      ?
+                    </div>
+                </div>
+
+                <div class="cb-div">
+                    <input type="checkbox" id="c1_onlyStandardPay" (click)="dischargePayoutTypes()" [(ngModel)]="filterTask.onlyStandardPay"/>
+                    <label class="label-job text" for="c1_onlyStandardPay">
+                        <span></span>
+                        <p>Только обычный платеж</p>
+                    </label>
+                    <div class="gd-hint" (click)="getTooltipMobile(hintUsualPay)"
+                      [matTooltipDisabled]="isMobileMode" matTooltip="{{hintUsualPay}}"
+                    >
+                      ?
+                    </div>
+                </div>
+
+                <div *ngIf="filterTask.onlyStandardPay" class="cb-div" style="display: flex;">
+                    <div>
+                        <p class="text">Способ оплаты</p>
+                    </div>
+                    <div class="select-block_sz right-align">
+                        <select class="select-sz input-hard-size" [(ngModel)]="filterTask.payoutType" style="width: auto;">
+                            <option *ngFor="let payoutType of regularCategoryPropertyPayoutTypes" [value]="payoutType.value">
+                                {{payoutType.viewValue}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="cb-div">
+                    <input type="checkbox" id="c1_onlyFastCategory" [(ngModel)]="filterTask.onlyFastCategory"/>
+                    <label class="label-job text" for="c1_onlyFastCategory">
+                        <span></span>
+                        <p>Только категории с гибким тарифом</p>
+                    </label>
+                    <div class="gd-hint" (click)="getTooltipMobile(fastCategory)"
+                      [matTooltipDisabled]="isMobileMode" matTooltip="{{fastCategory}}"
+                     >
+                      ?
+                    </div>
+                </div>
+
+                <div class="cb-div">
+                    <input type="checkbox" id="c1_onlyUsualCategory" [(ngModel)]="filterTask.onlyUsualCategory"/>
+                    <label class="label-job text" for="c1_onlyUsualCategory">
+                        <span></span>
+                        <p>Только категории без гибкого тарифа</p>
+                    </label>
+                    <div class="gd-hint" (click)="getTooltipMobile(usualCategory)"
+                      [matTooltipDisabled]="isMobileMode" matTooltip="{{usualCategory}}"
+                    >
+                      ?
+                    </div>
+                </div>
+
+                <div class="task-request-operation-container" style="display: flex;">
+                    <button class="orange_btn poluchit-btn margin-5 request-handling-btn"
+						            (click)="clearFilter()">
+					            Очистить фильтр
+                    </button>
+
+                    <button class="orange_btn poluchit-btn margin-5 request-handling-btn right-align"
+                            (click)="search()">
+                        Применить фильтр
+                    </button>
+                </div>
+            </div>
+        </button>
+        <button class="search-button" (click)="search()"></button>
+    </div>
+    <div class="clear"></div>
+
+    <div class="filter_category_mob paddingi" style="padding-top: 20px;">
+        <div>
+          <p class="h1">Выберите категорию</p>
+          <div class="category" style="height: 170px; overflow-y: auto; display: block;">
+            <app-filter-categories [categories]="categories" [choosenCategories]="choosenCategories"
+              [choosenCategoryIds]="choosenCategoryIds" [isMobileMode]="true" (toggleCategoryEvents)="toggleCategoryHandler($event)">
+            </app-filter-categories>
+          </div>
+      </div>
+  </div>
+
+    <div style="display: flex; margin-top: 20px;">
+        <div>
+            <p>Сортировать: </p>
+        </div>
+        <div style="display: flex; margin-left: 10px;" (click)="changeSort('createdAt')">
+            <a style="cursor: pointer;" [ngClass]="{'active_mode': isDateSortMode()}">по дате</a>
+            <div *ngIf="isDateSortMode()" class="sort_block" [ngClass]="{'sort_block_rotate': !isDescType()}"></div>
+        </div>
+        <div style="display: flex; margin-left: 10px;" (click)="changeSort('totalPay')">
+            <a style="cursor: pointer;" [ngClass]="{'active_mode': isPriceSortMode()}">по цене</a>
+            <div *ngIf="isPriceSortMode()" class="sort_block" [ngClass]="{'sort_block_rotate': !isDescType()}"></div>
+        </div>
+    </div>
+
+    <div *ngIf='!filterTask.isEmpty()'>
+      <a (click)="openHistoryTasks()" style="cursor: pointer;">Посмотреть историю заказов</a>
+    </div>
+
+    <app-list-tasks [isLoaded]="isLoaded" [taskInfos]="taskInfos"
+        [mode]="getTaskMode()" (taskSelectionEvent)="taskSelectionEvent($event)">
+    </app-list-tasks>
+</div>

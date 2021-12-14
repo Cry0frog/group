@@ -1,0 +1,49 @@
+<div (scroll)="scrollHandler($event)">
+  <h1 class="h1">Отклики на акцию</h1>
+  <mat-form-field class="table-filter-area">
+      <input matInput (keyup) = "applyFilter($event.target.value)" placeholder = "Поиск">
+  </mat-form-field>
+  <table mat-table [dataSource] = "dataSource" matSort class = "table_users">
+      <!-- Username Column -->
+      <ng-container matColumnDef = "username">
+          <th *matHeaderCellDef> Пользователь </th>
+          <td *matCellDef = "let row" style="display: flex; align-items: center; height: 50px;">
+              <div [ngClass]="{'friends': row.isFriend()}" style="display: flex;align-items: center;height: 50px;">
+                  <mat-icon *ngIf="!row.isFriend() && !isEmptyFriends(row)" (click)="onRootDirectoryClick(row)">
+                      {{row.isExpanded ? 'keyboard_arrow_down' : 'keyboard_arrow_right'}}
+                  </mat-icon>
+                  {{row.username}}
+              </div>
+          </td>
+      </ng-container>
+      <!-- Code Column -->
+      <ng-container matColumnDef = "code">
+          <th *matHeaderCellDef> Промо код </th>
+          <td *matCellDef = "let row">
+              <div *ngIf="!row.isFriend()">
+                  {{row.generatedCode}}
+              </div>
+          </td>
+      </ng-container>
+      <!-- Name promotion Column -->
+      <ng-container matColumnDef="name_promotion">
+          <th *matHeaderCellDef> Название акции </th>
+          <td *matCellDef = "let row">
+            {{row.promotion.name}}
+          </td>
+      </ng-container>
+      <!-- Name promotion Column -->
+      <ng-container matColumnDef="status">
+          <th *matHeaderCellDef> Статус </th>
+          <td *matCellDef = "let row">
+            <div *ngIf="row.folder" style="display: flex;">
+              <div *ngIf="row.conditionsMet" matTooltip="Пользователь заполнил информацию (ФИО, номер телефона, email, город)" class="green_ok_icon"></div>
+              <div class="cash_payment_svg" matTooltip="{{getTooltipForStatus(row.confirmPayment)}}" [ngClass]="{'approved_cash_payment_svg': row.confirmPayment}" (click)="changeStatusPayment(row)"></div>
+            </div>
+          </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
+      <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
+  </table>
+  <div class="clear"></div>
+</div>

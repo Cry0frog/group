@@ -1,0 +1,59 @@
+::ng-deep .summernote .note-video-clip {
+  width: 490px !important;
+}
+
+::ng-deep .summernote  table {
+  width: 100%;
+}
+
+::ng-deep .summernote  table,
+::ng-deep .summernote  tr,
+::ng-deep .summernote  td {
+  border: 1px solid black;
+}
+
+@media(max-width: 1220px) {
+  ::ng-deep .summernote .note-video-clip {
+    width: 380px !important;
+    height: 255px !important;
+  }
+}
+
+@media(max-width: 700px) {
+  ::ng-deep .summernote .note-video-clip {
+    width: 270px !important;
+    height: 180px !important;
+  }
+}
+
+.novost_content_img {
+  max-width: 250px;
+  height: 250px;
+  object-fit: fill;
+  border-radius: 150px;
+}
+
+.new_block_content img {
+  width: 150px;
+  height: 150px;
+  border-radius: 80px;
+  object-fit: fill;
+}
+
+.h2_news_dop_block {
+  margin-bottom: 10px;
+}
+
+.news_dop_block {
+  padding-top: 25px;
+}
+
+.novost_podzagolovok {
+  font-size: 25px;
+}
+
+@media (max-width: 480px) {
+  .novost_podzagolovok {
+    font-size: 20px;
+  }
+}

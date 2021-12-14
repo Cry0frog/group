@@ -1,0 +1,9 @@
+<div class="section-content" (scroll)="scrollHandler($event)">
+    <div class="tabs1 mode-tasks-area">
+        <app-list-tasks [isLoaded]="isLoaded" [taskInfos]="taskInfos"
+            [mode]="getTaskMode()" [status]="filterStatusCommonType"
+            (eventFilter)="handleEventFilter($event)">
+        </app-list-tasks>
+    </div>
+
+</div>

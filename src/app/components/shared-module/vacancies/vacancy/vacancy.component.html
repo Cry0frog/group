@@ -1,0 +1,297 @@
+<div class="flex">
+  <div class="section-content" style="width: 100%;">
+    <div class="top-zakaza">
+      <a class="back-link" [routerLink]="['../']">
+        <span class="back-icon"></span> назад
+      </a>
+      <div class="task-condition-bar">
+        <div *ngIf="isYourVacancy() && vacancy.isShowEditVacancy()">
+          <button matTooltip="Редактировать вакансию" class="edit-password" (click)="editVacancy()"></button>
+        </div>
+        <div *ngIf="!isYourVacancy() && isShowMarkVacancy() && isAuthenticated() && vacancy.id != null && !isAdmin()">
+          <button class="empty_star" [ngClass]="{'filled_star': vacancy.favoriteVacancy}" (click)="markVacancy()"></button>
+        </div>
+        <div *ngIf="isYourVacancy() && isCommonMode()">
+          <p class="status-zakaza st-process task-condition-element">
+            Ваша вакансия
+          </p>
+        </div>
+        <div *ngIf="vacancy.isHide() || vacancy.isPublished() || vacancy.isNotPay()">
+          <p class="status-zakaza st-process task-condition-element" [ngClass]="{'status-on-hold': vacancy.isHide() || vacancy.isNotPay()}">
+            {{vacancyStatusTranslates[vacancy.status]}}
+          </p>
+        </div>
+      </div>
+    </div>
+    <p class="zagolovok-super-new">{{vacancy.name}}</p>
+
+    <!-- <p class="primer" style="margin-bottom: 0px">
+      Сфера деятельности:
+      <a *ngIf="vacancy.fieldActivity.root != null" class="example-task-name">
+        {{vacancy.fieldActivity.root.name}}
+      </a>
+    </p> -->
+    <p class="primer">
+      Сфера деятельности:
+      <a class="example-task-name">
+        {{vacancy.fieldActivity.name}}
+      </a>
+    </p>
+  </div>
+
+  <table class="table-zakaz">
+    <tbody>
+      <tr>
+        <td class="left-table-zakaz">
+          <span class="zakaz-icon"></span>Описание
+        </td>
+        <td *ngIf="vacancy.city != null" class="right-table-zakaz">
+          <span class="big_descr">{{vacancy.description}}</span>
+        </td>
+      </tr>
+
+      <tr *ngIf="vacancy.minAge || vacancy.maxAge">
+        <td class="left-table-zakaz">
+          Возраст
+        </td>
+        <td class="right-table-zakaz">
+          <span *ngIf="vacancy.minAge">от {{vacancy.minAge}} лет </span>
+          <span *ngIf="vacancy.maxAge">до {{vacancy.maxAge}} лет </span>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="left-table-zakaz">
+          Требования
+        </td>
+        <td class="right-table-zakaz">
+          <span class="big_descr">{{vacancy.requirements}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="left-table-zakaz">
+          Тип занятости
+        </td>
+        <td class="right-table-zakaz">
+          <span>{{employmentTypeTranslate[vacancy.employmentType]}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="left-table-zakaz">
+          <span class="zakaz-icon"></span>График работы
+        </td>
+        <td class="right-table-zakaz">
+          <span>{{scheduleTypeTranslate[vacancy.scheduleType]}}</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="left-table-zakaz">
+          <span class="education zakaz-icon"></span>Образование
+        </td>
+        <td class="right-table-zakaz">
+          <span>{{educationTypeTranslate[vacancy.educationType]}}</span>
+        </td>
+      </tr>
+
+      <tr *ngIf="vacancy.education">
+        <td class="left-table-zakaz">
+          Специальность
+        </td>
+        <td class="right-table-zakaz">
+          <span class="big_descr">{{vacancy.education}}</span>
+        </td>
+      </tr>
+
+      <tr *ngIf='!isRequiredWorkExperience()'>
+        <td class="left-table-zakaz">
+          <span class="work_experience zakaz-icon"></span> Опыт работы
+        </td>
+        <td class="right-table-zakaz">
+          <span>{{experienceTypeTranslafe[vacancy.experienceType]}}</span>
+        </td>
+      </tr>
+
+      <tr *ngIf="vacancy.workExperienceValue && isRequiredWorkExperience()">
+        <td class="left-table-zakaz">
+          Опыт работы от
+        </td>
+        <td class="right-table-zakaz">
+          <span>{{vacancy.workExperienceValue}} лет</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="left-table-zakaz">
+          Тип места работы
+        </td>
+        <td class="right-table-zakaz">
+          <span>{{placeWorkTypeTranslate[vacancy.placeWorkType]}}</span>
+        </td>
+      </tr>
+
+      <tr *ngIf='vacancy.businessTrips'>
+        <td class="left-table-zakaz">
+          Возможность коммандировки
+        </td>
+        <td class="right-table-zakaz">
+          <span class="zakaz-process">{{vacancy.getBusinessTripsDescr()}}</span>
+        </td>
+      </tr>
+
+      <tr *ngIf='vacancy.moving'>
+        <td class="left-table-zakaz">
+          Возможность переезда
+        </td>
+        <td class="right-table-zakaz">
+          <span class="zakaz-process">{{vacancy.getMoving()}}</span>
+        </td>
+      </tr>
+
+      <tr *ngIf='vacancy.addressMoving'>
+        <td class="left-table-zakaz">
+          Адрес переезда
+        </td>
+        <td class="right-table-zakaz">
+          <span class="big_descr">{{vacancy.addressMoving}}</span>
+        </td>
+      </tr>
+
+      <tr *ngIf="vacancy.points.length != 0">
+        <ng-container>
+          <td class="left-table-zakaz" style="padding-left: 5px;padding-top: 15px;padding-bottom: 0px; max-width: inherit;" colspan="2">
+            <span>Адрес офиса</span>
+            <div style="padding: 10px 0;">
+              <div>
+                <div *ngFor="let point of vacancy.getPointsSortedByOrder()">
+                  <div class="address_otkuda point-green">
+                    <i class="location_icon"></i>
+                    {{point.addr}}
+                  </div>
+                </div>
+              </div>
+
+              <app-map-vacancy-handler [mapMode]="getMapMode()"
+                [mapPoints]="vacancy.points">
+              </app-map-vacancy-handler>
+            </div>
+          </td>
+        </ng-container>
+      </tr>
+
+      <tr>
+        <td class="left-table-zakaz">
+          <span class="zakaz-icon"></span>Город
+        </td>
+        <td class="right-table-zakaz">
+          <span class="zakaz-process">{{vacancy.city.state}}, {{vacancy.city.name}}</span>
+        </td>
+      </tr>
+
+      <tr *ngIf="vacancy.salary">
+        <td class="left-table-zakaz">
+          <span class="zakaz-icon"></span>Зарплата
+        </td>
+        <td class="right-table-zakaz">
+          <span class="zakaz-process">от {{vacancy.salary}}₽</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="left-table-zakaz" colspan="2">
+          <div *ngIf="(isLogged() | async)" class="align-center">
+            <div *ngIf="isYourVacancy()">
+              <div *ngIf="vacancy.isPublished()">
+                <div  style="display: flex;">
+                  <button type="button" class="orange_btn" (click)="offerVacancy()">
+                    Предложить вакансию соискателю
+                  </button>
+                </div>
+                <div *ngIf="isPartnerMode()" style="display: flex;">
+								  <button type="button" class="status-on-hold complete_zakaz"
+								  	(click)="switchToStatus(vacancyStatus.HIDE)">
+                    Скрыть
+								  </button>
+                </div>
+              </div>
+              <div *ngIf="(vacancy.isHide() || vacancy.isNotPay()) && isPartnerMode()">
+                <div style="display: flex;">
+                  <button type="button" class="complete_zakaz"
+                    (click)="switchToStatus(vacancyStatus.PUBLISHED)">
+                      Опубликовать
+                  </button>
+                </div>
+              </div>
+
+              <div style="margin-top: 20px;">
+                <p>Количество просмотров: {{vacancy.countedViewing}}</p>
+                <p>Количество добавлений в избранное: {{vacancy.countedFavorite}}</p>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-container *ngIf="(isLogged() | async)">
+    <div class="description-block bm50" style="width: 100%;">
+      <p class="zag-profile">Поданные резюме:</p>
+      <div>
+        <div class="feedback-block" *ngFor="let resume of submittedResumes">
+          <div *ngIf="isCreatorResume(resume)">
+            <div class="delete_btn_for_mobile">
+              <button type="button" class="close" style="float: right; transform: translateY(-20px);" (click)='deleteResume(resume)'>
+                <span>&times;</span>
+              </button>
+            </div>
+          </div>
+          <div class="link_user not_fast_link_user">
+            <div>
+              <a href="/user/{{resume.creatorId}}" style="display: block; cursor: pointer;">
+                <img class="feedback-img not_fast_img" src="api/partner/info/photo/{{resume.creatorId}}" />
+              </a>
+            </div>
+            <div class="feedback-block-content">
+              <a href="/user/{{resume.creatorId}}" style="cursor: pointer;"
+                class="feedback-zag">{{resume.fio}}</a>
+            </div>
+          </div>
+          <div class="display_on_mobile">
+            <div class="speach-time" style="display: flex; float: right; padding-top: 60px;">
+              {{resume.dateOfCreation | date:'dd.MM.yyyy HH:mm'}}
+            </div>
+          </div>
+
+          <!-- Resume section -->
+          <div class="request-handling-section" *ngIf="(isLogged() | async)">
+            <div class="task-request-operation-container"
+              *ngIf="isYourVacancy(); else notYourVacancy_ResumeSection">
+              <button class="orange_btn poluchit-btn margin-5 request-handling-btn" (click)='viewResume(resume)'>
+                Просмотр резюме
+              </button>
+            </div>
+            <ng-template #notYourVacancy_ResumeSection>
+              <div *ngIf="isCreatorResume(resume)" class="task-request-operation-container">
+                <div class="delete_btn_for_web">
+                  <button (click)='deleteResume(resume)'
+                    class="orange_btn poluchit-btn margin-5 request-handling-btn remove-task-request">
+                    Удалить
+                  </button>
+                </div>
+                <button class="orange_btn poluchit-btn margin-5 request-handling-btn" (click)='viewResume(resume)'>
+                  Редактировать
+                </button>
+              </div>
+            </ng-template>
+          </div>
+          <!-- end of Resume section -->
+        </div>
+      </div>
+    </div>
+    <div style="display: flex; width: 100%;" *ngIf="!isAdmin() && !isYourVacancy() && !isResumeSubmitted() && vacancy.id != null">
+      <button type="button" class="orange_btn" (click)="submitResume()">Подать резюме</button>
+    </div>
+  </ng-container>
+</div>

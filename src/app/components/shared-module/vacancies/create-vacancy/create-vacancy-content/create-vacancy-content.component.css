@@ -1,0 +1,344 @@
+
+.datetime-task {
+  display: -webkit-box;
+  width: auto;
+}
+
+.date-time-property-area {
+  width: 100%;
+  position: relative;
+}
+
+.with_field_50 {
+  padding: 0;
+}
+
+.date-time-property-area > div:last-child {
+  margin-bottom: 0;
+}
+
+.wrap-calc-choosen-prop {
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.wrap-calc-choosen-prop-el {
+  margin-bottom: 5px;
+}
+
+.datetime-section-title {
+  min-width: 120px;
+  max-width: 120px;
+  display: -webkit-inline-box;
+  position: relative;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 24px;
+}
+
+.select_execution_mode{
+  display: flex;
+}
+
+.datetime-interval-section {
+  display: flex;
+  position: relative;
+  width: 100%;
+}
+
+:host /deep/ .datetime-section input.ui-inputtext {
+  background: #F7F7F7 !important;
+
+  padding: 0 25px;
+  border: 0;
+  line-height: 50px;
+  border-radius: 25px;
+}
+
+:host /deep/ .datetime-date input.ui-inputtext {
+  width: 160px;
+  margin-right: 2px;
+  padding-left: 55px;
+}
+
+:host /deep/ .datetime-date.with-time input.ui-inputtext {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.title-left-align {
+  margin-top: auto;
+  text-align: center;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+:host /deep/ .datetime-date .ui-calendar::before {
+  position:absolute;
+  content:'';
+  font-family:'fontello';
+  font-size:20px;
+  text-align:center;
+  line-height:20px;
+  width:20px;
+  height:20px;
+  left:25px;
+  top:15px;
+  color:#888
+}
+
+::ng-deep .ui-calendar {
+  display: block;
+}
+
+::ng-deep .datetime-section input.ui-inputtext {
+  width: 100%;
+}
+
+.radio-container > div {
+  margin-right: 5px;
+}
+
+.radio-container > div:last-child {
+  margin-right: 0px;
+}
+
+.radio-container .radio-btn label {
+  padding: 10px 14px;
+}
+
+.shift_15 {
+  padding: 0 15px;
+}
+
+.select_cat {
+  margin: 0 0 10px;
+}
+
+.date-span-height {
+  /*line-height: 0;*/
+}
+
+.mt20 {
+  margin-top: 20px;
+}
+
+.mt30 {
+  margin-top: 30px;
+}
+
+.mb10 {
+  margin-top: 10px;
+}
+
+:host /deep/ .city-section .ui-dropdown {
+  width: 50%;
+  height: 50px;
+  border: 0;
+
+  min-width: 7.8em !important;
+}
+
+
+:host /deep/ .city-section .ui-dropdown-label-container {
+  background: #F7F7F7 !important;
+
+  padding: 0 25px;
+  border: 0;
+  line-height: 50px;
+  border-radius: 25px;
+}
+
+:host /deep/ .city-section .ui-dropdown-label.ui-inputtext {
+  background: #F7F7F7 !important;
+  height: 50px;
+
+  color: black;
+  font-size: 16px;
+  font-family: 'Roboto',sans-serif;
+  padding: 0;
+  color: #888;
+}
+
+:host /deep/ .city-section .ui-dropdown-trigger.ui-state-default {
+  background: #F7F7F7 !important;
+  position: absolute;
+  right: 15px;
+}
+
+:host /deep/ .city-choose .ui-dropdown-label-container {
+  width: 100%;
+  margin-right: 2px;
+}
+
+:host /deep/ #price-zdn input {
+  max-width: 230px;
+}
+
+:host /deep/ #price-zdn button {
+  display: none;
+}
+
+.datetime-section{
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.datetime-date-time{
+  display: table;
+  position: relative;
+  width: 100%;
+}
+
+::ng-deep .select-sz .mat-select-trigger {
+  width: 100%;
+}
+
+::ng-deep .select-sz .mat-select-arrow {
+  visibility: hidden;
+}
+
+::ng-deep .select-sz .mat-select-value-text span {
+  color: #888;
+}
+
+::ng-deep .mat-select-panel{
+  border-radius: 30px !important;
+  padding: 20px !important;
+
+}
+
+@media (min-width: 778px) {
+  ::ng-deep .mat-select-panel{
+      max-width: 460px !important;
+  }
+}
+
+@media (max-width: 766px) {
+  :host /deep/ .city-section .ui-dropdown {
+      min-width: -webkit-fill-available !important;
+  }
+}
+
+.my-mat-option {
+  display: table;
+  width: -webkit-fill-available;
+  line-height: 2em !important;
+  height: 2em !important;
+}
+
+::ng-deep .mat-select-panel::-webkit-scrollbar-button{width: 28px; height: 30px;}
+
+
+::ng-deep .ui-dropdown-filter-container {
+  border-top-left-radius: 20px !important;
+  border-top-right-radius: 20px !important;;
+}
+
+::ng-deep .ui-dropdown-panel {
+  border-radius: 20px !important;
+}
+
+::ng-deep .ui-dropdown-item {
+  border-bottom-right-radius: 20px !important;
+  border-bottom-left-radius: 20px !important;
+}
+
+.background_btn {
+  background: gray;
+}
+
+.gruz-block,
+.cb-div {display: flex;}
+
+.disabled_btn {
+background: gray;
+}
+
+@media (max-width: 450px) {
+  .datetime-interval-section {display: initial;}
+  .datetime-section {margin-top: 10px;}
+}
+
+::ng-deep .mat-tooltip  {
+  white-space: pre-line !important;
+}
+
+.flex_display {
+  display: flex;
+}
+
+@media(max-width: 768px) {
+  .flex_display {display: block;}
+}
+
+.max_with_field {
+  max-width: 250px;
+}
+
+@media(max-width: 600px) {
+
+  .geolocation {
+    line-height: 40px;
+    font-size: 35px;
+    width: 35px;
+  }
+
+  .cordinate_block > .geolocation {
+     margin: auto !important;
+   }
+
+  .orange_btn {
+    margin-top: 10px;
+  }
+
+   ::ng-deep .geoposition .ui-dropdown .ui-dropdown-label {font-size: 12px !important;}
+}
+
+@media(max-width: 449px) {
+  .form-item {
+    display: grid;
+    line-height: 16px;
+  }
+}
+
+@media(max-width: 500px) {
+  ::ng-deep .geoposition .ui-dropdown .ui-dropdown-label {
+    white-space: break-spaces;
+    line-height: normal;
+    padding-top: 5px !important;
+  }
+}
+
+@media(max-width: 350px) {
+  .buttonDeleteUsers {
+    width: 30px;
+  }
+
+  .geoposition {width: 75%;}
+
+  ::ng-deep .geoposition .ui-dropdown .ui-dropdown-label {
+    padding-top: 10px !important;
+  }
+
+  ::ng-deep .geoposition .ui-dropdown .ui-dropdown-label {font-size: 10px !important;}
+}
+
+.cordinate_block {
+  display: flex;
+  width: 100%;
+}
+
+@media (min-width: 1000px) {
+  .card-signature {
+      display: none;
+  }
+}
+
+@media (max-width: 1000px) {
+  .card-signature {
+      font-size: 85%;
+      text-align: center;
+  }
+}

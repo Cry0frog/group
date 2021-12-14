@@ -1,0 +1,3 @@
+<ng-container (scroll)="scrollHandler($event)">
+  <app-list-vacancies [status]="filterStatusVacancy" [shortVacancies]="vacancyInfos" [vacancyComponentMode]='taskMode' (eventFilter)="handleEventVacancyFilter($event)"></app-list-vacancies>
+</ng-container>

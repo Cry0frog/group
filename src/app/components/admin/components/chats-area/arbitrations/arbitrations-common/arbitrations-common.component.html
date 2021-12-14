@@ -1,0 +1,71 @@
+<div class="wrapper content paddingi admin-area-table">
+    <div class="block-corner">
+        <h1 class="h1" *ngIf="isAll">Все арбитражи</h1>
+        <h1 class="h1" *ngIf="!isAll">Мои арбитражи</h1>
+        <mat-form-field class="table-filter-area">
+            <input matInput (keyup) = "applyFilter($event.target.value)" placeholder = "Поиск">
+        </mat-form-field>
+
+        <table mat-table [dataSource]="dataSource" (matSortChange)="sortChange($event)" matSort class="table_users">
+            <ng-container matColumnDef = "id">
+                <th *matHeaderCellDef mat-sort-header>ID</th>
+                <td *matCellDef = "let row"> {{row.id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef = "initiator">
+                <th *matHeaderCellDef>Инициатор чата</th>
+                <td *matCellDef = "let row"> {{row.initiator.username}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="participant">
+                <th *matHeaderCellDef>Участник</th>
+                <td *matCellDef="let row" > {{row.participant.username}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="lastActiveInitiator">
+              <th *matHeaderCellDef mat-sort-header>Дата активности инициатора</th>
+              <td *matCellDef="let row">{{row.dateLastActivityInitiator | date:'dd.MM.yyyy HH:mm'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="lastActiveParticipant">
+              <th *matHeaderCellDef mat-sort-header>Дата активности участника</th>
+              <td *matCellDef="let row">{{row.dateLastActivityParticipant | date:'dd.MM.yyyy HH:mm'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="creationDate">
+                <th *matHeaderCellDef mat-sort-header>Дата создания чата</th>
+                <td *matCellDef="let row">{{row.creationDate | date:'dd.MM.yyyy HH:mm'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th *matHeaderCellDef>Статус</th>
+                <td *matCellDef="let row">{{chatArbitrationDisplay[row.status]}}</td>
+            </ng-container>
+
+            <!-- Operations Column -->
+            <ng-container matColumnDef="operations">
+               <th *matHeaderCellDef >Операции</th>
+               <td *matCellDef = "let row" class = "users_btns operations-area">
+                    <button title="Посмотреть арбитраж" class="status_btn preview_icon"
+                        (click)="goToArbitration(row)">
+                    </button>
+                    <button *ngIf="row.isAdminNotAssigned()" title="Присоединиться к арбитражу" class="status_btn join-to-arbitration"
+                        (click)="adminJoinedToArbitration(row)">
+                    </button>
+               </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
+            <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator
+          [pageSize]="arbitrationsWithCountedPages.pageableParams.size"
+          [pageSizeOptions]="[15, 40, 80]"
+          [showFirstLastButtons]="true"
+          [length]="arbitrationsWithCountedPages.pageableParams.countedPages"
+          [pageIndex]="arbitrationsWithCountedPages.pageableParams.page"
+          (page)="handlePage($event)">
+      </mat-paginator>
+    </div>
+</div>

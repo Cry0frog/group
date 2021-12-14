@@ -1,0 +1,40 @@
+<div class="main_block">
+  <div class="block_zag_index about_block">
+  	<div class="wrapper paddingi">
+  		<div class="left_index_black" [ngClass]="{'appearance': isAppearanceText}">
+        <div class="heading">
+          <h1 class="big_h1">Добро пожаловать<br>в&nbsp;GoodDeal!</h1>
+          <p class="podh1_about">GoodDeal - это современное и удобное приложение, которое будет полезно каждому!</p>
+        </div>
+        <div style="display: flex;">
+          <p style="margin-left: auto; margin-right: auto;" class="podh1_about">GoodDeal даст Вам:</p>
+        </div>
+
+  			<div class="list">
+  				<ul class="about_ul">
+  					<li>Возможность найти специалистов любого профиля и уровня;</li>
+  					<li>Возможность избавить себя от повседневных дел;</li>
+  					<li>Возможность решать любые проблемы с логистикой;</li>
+  					<li>Возможность обезопасить себя от мошенников в сфере услуг;</li>
+  				</ul>
+
+  				<ul class="about_ul pl_80">
+  					<li>Возможность работать в удобное для Вас время;</li>
+  					<li>Возможность зарабатывать в тех сферах, где Вы сами хотите;</li>
+  					<li>Возможность выполнять работу, не требующую особых умений, образования и даже транспорта.</li>
+  				</ul>
+  			</div>
+
+  			<div class="footer_last paddingi" [ngClass]="{'appearance_btn' : isAppearanceBtn}">
+  				<a href="https://play.google.com/store/apps/details?id=com.keeneye.gd" target="_blank" class="google_play_link"></a>
+  				<a href="https://apps.apple.com/ru/app/gooddeal/id1507809289" target="_blank" class="apple_store_link"></a>
+  			</div>
+
+  			<div style="display: flex; width: 100%; padding-top: 50px;">
+  				<button (click)="activeHref()" class="orange_btn" [ngClass]="{'appearance_btn' : isAppearanceBtn}">Запустить приложение</button>
+  			</div>
+  		</div>
+  		<div class="right_index_block gd-image" [ngClass]="{'appearance_img': isAppearanceImg}"></div>
+  	</div>
+  </div>
+</div>

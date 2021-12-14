@@ -1,0 +1,51 @@
+<header class="header">
+	<div class="wrapper">
+		<div class="logo paddingi">
+			<a class="logo_icon" href="/"></a>
+		</div>
+
+		<nav class="nav mob_unvis">
+			<a (click)="openUsers()" style="cursor: pointer;">Пользователи</a>
+			<a (click)="openPromotion()" style="cursor: pointer;">Акции</a>
+			<a (click)="openDevelopment()" style="cursor: pointer;">Развитие</a>
+			<a (click)="openCategories()" style="cursor: pointer;">Категории</a>
+			<a (click)="openTasksMonitoring()" style="cursor: pointer;">Задачи</a>
+			<a (click)="openJobs()" style="cursor: pointer;">Работа</a>
+			<a (click)="openRates()" style="cursor: pointer;">Тарифы</a>
+			<a (click)="openPayouts()" style="cursor: pointer;">Выплаты</a>
+			<!--
+			<a (click)="openCommissions()" style="cursor: pointer;">Комиссии</a>
+		-->
+			<a (click)="openArbitrations()" style="cursor: pointer;">Арбитражи</a>
+			<a (click)="openStatistics()" style="cursor: pointer;">Статистика</a>
+      <a (click)="openAdvertises()" style="cursor: pointer;">Реклама</a>
+      <a (click)="openNews()" style="cursor: pointer;">Новости</a>
+		</nav>
+
+		<div class="admin mob_unvis paddingi">
+			<a class="admin_link" style="cursor: pointer;">{{username}}</a>
+			<img src="/api/partner/info/photo/{{userId}}">
+
+			<div class="kruzhok">{{countNonReadable}}</div>
+
+			<div class="ku-ku">
+				<div class="top-kuku">
+					<button class="exit" (click)="logout()">
+						<i class="kuku-icon"></i>
+						Выйти
+					</button>
+					<button class="prof" (click)="openDefaultPage()">
+						<i class="kuku-icon"></i>
+						Профиль
+					</button>
+				</div>
+				<div class="notification-bar">
+					<app-notification-display (updateCountNonReadable)="updateCountNonReadableHandler($event)"
+						(navigateByUrl)="navigateByUrlHandler($event)">
+					</app-notification-display>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</header>

@@ -1,0 +1,63 @@
+<div class="statistic-50-content">
+    <div class="top-stat">
+        <p class="zag-stat">{{etalonChartConfig.title}}</p>
+        <p class="kolvo-stat">
+            <span class="red-color" *ngIf="etalonChartConfig.titleValueFirst != null"
+                    [ngStyle]="{'color': etalonChartConfig.lineChartColors[0].borderColor}">
+                {{etalonChartConfig.titleValueFirst}}
+            </span> 
+            <ng-container *ngIf="etalonChartConfig.titleValueSecond != null">
+                / 
+                <span class="siniy-color" [ngStyle]="{'color': etalonChartConfig.lineChartColors[1].borderColor}">
+                    {{etalonChartConfig.titleValueSecond}}
+                </span>
+            </ng-container>
+        </p>
+    </div>
+
+    <div>
+        <canvas baseChart [datasets]="workingChartConfig.barChartData" 
+            [labels]="workingChartConfig.barChartLabels" 
+            [options]="workingChartConfig.barChartOptions"
+            [plugins]="barChartPlugins" 
+            [legend]="workingChartConfig.legend" 
+            [chartType]="workingChartConfig.chartType"
+            [colors]="workingChartConfig.lineChartColors">
+        </canvas>
+    </div>
+
+    <div>
+        
+    </div>
+    <div class="stat-bottom">
+        <div style="display: grid;">
+            <button class="orange_btn poluchit-btn margin-5 request-handling-btn ng-star-inserted"
+                *ngIf="etalonChartConfig.isAvailableReport" (click)="loadReport()"
+            >
+                Отчет
+            </button>
+
+            <button style="margin-top: 5px;" class="orange_btn poluchit-btn margin-5 request-handling-btn ng-star-inserted"
+                *ngIf="etalonChartConfig.isAvailableFullReport" (click)="loadFullReport()"
+            >
+                Полныйотчет
+            </button>
+        </div>
+        <div class="diagram-type-area">
+            <div>
+                <span class='type-diagram'>Внешний вид диаграммы</span>
+            </div>
+            <div>
+                <mat-select class="custom-mat-select select-sz diagram-type-select" [(ngModel)]="workingChartConfig.chartType"
+                        (selectionChange)="onTypeChange()">
+                    <mat-option *ngFor="let chartType of chartTypes" [value]="chartType.value" >
+                        {{chartType.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </div>
+        </div>
+        
+    </div>
+
+    
+</div>

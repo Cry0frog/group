@@ -1,0 +1,27 @@
+<div>
+  <div *ngIf="!isOneTimePayments">
+    <mat-slide-toggle class="zag-sz margin-top-30" [(ngModel)]="adminSetting.enablePaidSubscriptionJob" (change)="changeShowButton()">
+      Оформление подписки
+    </mat-slide-toggle>
+  </div>
+  <div *ngIf="isOneTimePayments">
+    <mat-slide-toggle class="zag-sz margin-top-30" [(ngModel)]="adminSetting.enablePaidPostingVacancies" (change)="changeShowButton()">
+      Плата за размещения вакансий
+    </mat-slide-toggle>
+  </div>
+  <div *ngIf="isOneTimePayments">
+    <mat-slide-toggle class="zag-sz margin-top-30" [(ngModel)]="adminSetting.enablePaidShowResume" (change)="changeShowButton()">
+      Плата за показ резюме
+    </mat-slide-toggle>
+  </div>
+  <mat-form-field *ngIf="isOneTimePayments" class="zag-sz" style="width: 30%;" appearance="fill">
+    <mat-label>Сумма за показ резюме</mat-label>
+    <input matInput type="number" [(ngModel)]="adminSetting.amountValueShowResume" (change)="changeShowButton()" required>
+  </mat-form-field>
+  <div *ngIf="isChange" style="margin-bottom: 30px; padding-left: 20px;">
+    <button matTooltip = "Изменение настроек" class = "buttonAdd"
+      (click) = "editSetting()">
+        Изменить
+    </button>
+  </div>
+</div>

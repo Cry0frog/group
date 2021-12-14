@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Оплата резюме</h1>
+<p class="with_field text-position">Для показа контактов соискателя необходимо провести оплату. Оплата будет проходить через списание средств на Вашем бонусном счете. Если у вас недостаточно бонусов на счету, следует пополнить его.</p>
+<div mat-dialog-content class="with_field">
+
+    <div>
+        <p class="zag-sz margin-top-30">Сумма: {{amountValue}}</p>
+    </div>
+</div>
+
+<div mat-dialog-actions style="display: flex; justify-content: space-between;">
+  <button class="orange_btn" (click)="onPayClick()">Оплатить</button>
+</div>

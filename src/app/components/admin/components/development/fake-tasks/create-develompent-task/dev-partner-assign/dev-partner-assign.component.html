@@ -1,0 +1,99 @@
+<div class="block-corner" style="min-height: 650px;">
+
+    <div class="with_field_50 text-height">
+        <p class="zag-sz margin-top-30">Создатель задачи</p>
+    </div>
+    <div class="planned-partner-area">
+        <div class="with_field_50">
+            <mat-select class="select-sz" [(ngModel)]="choosenPartner">
+                <mat-option *ngFor="let partner of getSortDevelopmentPartner(developmentPartners)" class="my-mat-option" [value]="partner">
+                    {{partner.fio}} {{partner.partnerId}}
+                </mat-option>
+            </mat-select>
+        </div>
+        <div class="with_field_50 text-height fake_creatore">
+            <app-datetime *ngIf="choosenPartner != null" [dateTimeObj]="choosenPartner">
+            </app-datetime>
+        </div>
+    </div>
+
+
+    <div class="with_field_50 text-height">
+        <p class="zag-sz margin-top-30">Добавление участников</p>
+    </div>
+    <div class="planned-partner-area">
+        <div class="with_field_50">
+            <mat-select class="select-sz" [(ngModel)]="choosenRequesters" multiple>
+                <mat-option *ngFor="let partner of getDevPartnersWithoutCreator()" class="my-mat-option" [value]="partner">
+                    {{partner.fio}} {{partner.partnerId}}
+                </mat-option>
+            </mat-select>
+        </div>
+    </div>
+
+
+    <div class="planned-partner-area" style="display: block;">
+        <div *ngFor="let partner of choosenRequesters" style="width: 100%; display: block;">
+            <div style="display: -webkit-box; width: 100%;">
+                <div class="with_field_50 text-height">
+                    <p class="zag-sz margin-top-30">
+                        {{partner.fio}} {{partner.partnerId}}
+                    </p>
+                </div>
+                <div class="with_field_50 text-height fake_performer">
+                    <app-datetime [dateTimeObj]="partner"></app-datetime>
+                </div>
+            </div>
+            <div style="display: -webkit-box; width: 100%; margin-top: 10px;">
+                <div class="with_field_50 text-height"></div>
+                <div class="with_field_50 text-height">
+                    <div class="with_field mb30">
+                        <input type="text" [(ngModel)]="partner.message" style="width: 330px"
+                            placeholder="Название задачи">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="planned-partner-area" style="display: block;">
+        <div style="width: 100%;display: -webkit-box;">
+            <div class="with_field_50 text-height">
+                <p class="zag-sz margin-top-30">
+                    Время выбора исполнителя
+                </p>
+            </div>
+            <div class="with_field_50 text-height">
+                <app-datetime [dateTimeObj]="timeToSelectingPerformer"></app-datetime>
+            </div>
+        </div>
+    </div>
+
+    <div class="planned-partner-area" style="display: block;">
+        <div style="width: 100%;display: -webkit-box;">
+            <div class="with_field_50 text-height">
+                <p class="zag-sz margin-top-30">
+                    Время начала выполнения задачи
+                </p>
+            </div>
+            <div class="with_field_50 text-height">
+                <app-datetime [dateTimeObj]="timeTaskToInProgress"></app-datetime>
+            </div>
+        </div>
+    </div>
+
+    <div class="planned-partner-area" style="display: block;">
+        <div style="width: 100%;display: -webkit-box;">
+            <div class="with_field_50 text-height">
+                <p class="zag-sz margin-top-30">
+                    Время завершения задачи
+                </p>
+            </div>
+            <div class="with_field_50 text-height">
+                <app-datetime [dateTimeObj]="timeToFinishingTask"></app-datetime>
+            </div>
+        </div>
+    </div>
+
+</div>

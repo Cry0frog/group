@@ -1,0 +1,5 @@
+export enum ChatType {
+  COMMON = "COMMON",
+  ARBITRATION = "ARBITRATION",
+  DELETED="DELETED"
+}

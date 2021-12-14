@@ -1,0 +1,15 @@
+.zakaz4ik_info img {
+    height: 80px;
+    border-radius: 50px;
+    object-fit: fill;
+}
+
+.kruzhok {
+  line-height: 19px;
+  right: 52px;
+  bottom: 3px;
+}
+
+.zakaz4ik_name {
+  font-size: 20px;
+}

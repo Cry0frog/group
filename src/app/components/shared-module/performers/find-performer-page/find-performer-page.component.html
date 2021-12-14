@@ -1,0 +1,42 @@
+<div class="block_zag">
+	<div class="wrapper paddingi">
+		<p class="big_h1">Выберите своего исполнителя</p>
+		<div class="search_div">
+      <a href="support/faq#reliable-performer" style="color: #007ad9;" target="_blank">Как выбрать надёжного исполнителя и не быть обманутым?</a>
+		</div>
+	</div>
+</div>
+<div class="wrapper content">
+
+    <ul class="mb10" [ngClass]="{'block_flex breadcrumb':true}">
+        <li class="breadcrumb-item">
+            <a (click)="removeAllFilters()">Найти исполнителя</a>
+        </li>
+        <li *ngIf="checkForMissingCategories() == true" class="breadcrumb-item active">{{selectedCity}}</li>
+        <li *ngIf="checkForMissingCategories() == false" class="breadcrumb-item">
+            <a (click)="deleteCategories()">{{selectedCity}}</a>
+        </li>
+        <span class="breadcrumb-item active right-info-performer-item">{{getCategoriesNames()}}</span>
+
+    </ul>
+
+    <div class="width_66">
+        <div class="block-corner">
+            <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
+        </div>
+    </div>
+
+    <div class="width_33 paddingi">
+        <div class="block-corner mob_unvis categories-section" style="height: -webkit-calc(100vh - 165px);">
+            <p class="h1">Выберите категорию</p>
+            <div class="category" style="height: -webkit-calc(100vh - 285px); overflow-y: auto; display: block;">
+              <app-filter-categories [categories]="categories" [choosenCategories]="choosenCategories"
+                [choosenCategoryIds]="choosenCategoryIds" [isMobileMode]="false" (toggleCategoryEvents)="toggleCategory($event)">
+              </app-filter-categories>
+            </div>
+        </div>
+
+        <app-display-advertising [place]="place"></app-display-advertising>
+    </div>
+    <div class="clear"></div>
+</div>

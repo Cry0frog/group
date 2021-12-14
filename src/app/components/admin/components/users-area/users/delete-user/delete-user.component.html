@@ -1,0 +1,5 @@
+<h1 mat-dialog-title>Вы действительно хотите удалить пользователя?</h1>
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+    <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+    <button class="orange_btn" [mat-dialog-close]="data"> Удалить </button>  
+</div>

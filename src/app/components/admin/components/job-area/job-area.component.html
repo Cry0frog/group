@@ -1,0 +1,22 @@
+<div class="wrapper content paddingi">
+  <div class="width_100 paddingi">
+
+      <div class="common-tabs tabs user-panel">
+          <input id="tab1" class="users_vacancies" type="radio" name="tabs" checked>
+          <label class="non-focused-label" for="tab1" (click)="switchToVacancies()">
+              <i class="tavs-icon"></i>
+              <span>Вакансии</span>
+          </label>
+
+          <input id="tab2" class="users_resume" type="radio" name="tabs">
+          <label class="non-focused-label" for="tab2" (click)="switchToResume()">
+              <i class="tavs-icon"></i>
+              <span>Резюме</span>
+          </label>
+
+          <div class="block-corner">
+              <router-outlet></router-outlet>
+          </div>
+      </div>
+  </div>
+</div>

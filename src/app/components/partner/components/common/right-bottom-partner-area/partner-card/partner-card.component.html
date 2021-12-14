@@ -1,0 +1,29 @@
+<div class="block-corner block-s-zayavkami" *ngIf="isLoaded && customerInfo != null">
+    <div class="zakaz4ik_info">
+        <a href="/user/{{customerInfo.partnerId}}" style="cursor: pointer; display: block;">
+            <img src="api/partner/info/photo/{{customerInfo.partnerId}}" />
+        </a>
+        <p class="grey-little-p" *ngIf="isPerformer()">
+            Заказчик
+        </p>
+        <p class="grey-little-p" *ngIf="isPartner()">
+            Исполнитель
+        </p>
+        <p class="grey-little-p" *ngIf="isVacancy()">
+          Создатель вакансии
+        </p>
+        <a class="zakaz4ik_name" href="/user/{{customerInfo.partnerId}}">{{customerInfo.username}}</a>
+        <p class="rg-p" style="display: grid;">
+            <span *ngIf="customerInfo.phone">Телефон: {{customerInfo.phone}}</span>
+        </p>
+        <p class="rg-p" style="display: grid;">
+          <span *ngIf="customerInfo.email">Почта: {{customerInfo.email}}</span>
+        </p>
+    </div>
+    <div *ngIf="isShowChatBtn()" style="text-align: center;">
+        <button class="write_chat_btn orange-btn-color" (click)="openChat()">
+            Чат
+            <div class="kruzhok">{{customerInfo.countNewMessage}}</div>
+        </button>
+    </div>
+</div>

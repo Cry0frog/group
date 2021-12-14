@@ -1,0 +1,67 @@
+<div class="setting-block paddingi">
+    <h1 class="h1">Cтатистика</h1>
+</div>
+<div class="flex">
+    <div class="statistic-50 paddingi">
+        <div *ngIf="configCountReg != null">
+            <app-statistic-chart #countReg [etalonChartConfig]="configCountReg"
+                (eventLoadReport)="getStatisticReportForReg($event)"
+                (eventLoadFullReport)="getStatisticFullReportForReg($event)"
+            >
+            </app-statistic-chart>
+        </div>
+    </div>
+    <div class="statistic-50 paddingi">
+        <div *ngIf="configActivityUsers != null">
+            <app-statistic-chart #userActivityChart [etalonChartConfig]="configActivityUsers">
+            </app-statistic-chart>
+        </div>
+    </div>
+    <div class="statistic-50 paddingi">
+        <div *ngIf="configCountOfOrders != null">
+            <app-statistic-chart #allOrdersChart [etalonChartConfig]="configCountOfOrders"
+                (eventLoadReport)="getStatisticByCountOfOrders($event)"
+            >
+            </app-statistic-chart>
+        </div>
+    </div>
+    <div class="statistic-50 paddingi">
+        <div *ngIf="configAverageCheck != null">
+            <app-statistic-chart #averageCheck [etalonChartConfig]="configAverageCheck"
+                (eventLoadReport)="getStatisticByAverageCheck($event)"
+            >
+            </app-statistic-chart>
+        </div>
+    </div>
+    <div class="statistic-50 paddingi">
+        <div *ngIf="configNumberOfSales != null">
+            <app-statistic-chart #numberOfSales [etalonChartConfig]="configNumberOfSales"
+                (eventLoadReport)="getStatisticByNumberOfSales($event)"
+            >
+            </app-statistic-chart>
+        </div>
+    </div>
+    <div class="statistic-50 paddingi">
+        <div *ngIf="configRevenue != null">
+            <app-statistic-chart #revenue [etalonChartConfig]="configRevenue"
+                (eventLoadReport)="getStatisticReportForRevenue($event)"
+            >
+            </app-statistic-chart>
+        </div>
+    </div>
+    <div class="statistic-50 paddingi">
+        <div *ngIf="configPayout != null">
+            <app-statistic-chart #payout [etalonChartConfig]="configPayout"
+                (eventLoadReport)="getStatisticReportForPayout($event)"
+            >
+            </app-statistic-chart>
+        </div>
+    </div>
+    <div class="statistic-50 paddingi">
+        <div *ngIf="configSurveyResult != null">
+            <app-statistic-chart #surveyResult [etalonChartConfig]="configSurveyResult">
+            </app-statistic-chart>
+        </div>
+    </div>
+</div>
+

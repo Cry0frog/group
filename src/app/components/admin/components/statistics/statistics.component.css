@@ -1,0 +1,147 @@
+.select-sz {
+  padding: 0 25px 0 25px;
+}
+
+.child-category {
+padding-left: 40px;
+}
+
+:host /deep/ .city-section .ui-dropdown {
+width: 270px;
+height: 50px;
+border: 0;
+}
+
+
+:host /deep/ .city-section .ui-dropdown-label-container {
+background: #F7F7F7 !important;
+
+padding: 0 25px;
+border: 0;
+line-height: 50px;
+border-radius: 25px;
+}
+
+:host /deep/ .city-section .ui-dropdown-label.ui-inputtext {
+background: #F7F7F7 !important;
+height: 50px;
+
+color: black;
+font-size: 16px;
+font-family: 'Roboto',sans-serif;
+padding: 0;
+color: #888;
+}
+
+:host /deep/ .city-section .ui-dropdown-trigger.ui-state-default {
+background: #F7F7F7 !important;
+position: absolute;
+right: 15px;
+}
+
+:host /deep/ .datetime-section input.ui-inputtext {
+background: #F7F7F7 !important;
+
+padding: 0 25px;
+border: 0;
+line-height: 50px;
+border-radius: 25px;
+}
+
+:host /deep/ .datetime-date input.ui-inputtext {
+width: 250px;
+margin-right: 2px;
+padding-left: 55px;
+}
+
+:host /deep/ .datetime-date .ui-calendar::before {
+position:absolute;
+content:'';
+font-family:'fontello';
+font-size:20px;
+text-align:center;
+line-height:20px;
+width:20px;
+height:20px;
+left:25px;
+top:15px;
+color:#888
+}
+
+.periods {
+display: flex;
+margin-top: 0px;
+}
+
+.period {
+height: 50px;
+}
+
+.vibor-cat-stat {
+margin-top: 0;
+}
+
+.my-mat-option {
+display: table;
+width: -webkit-fill-available;
+line-height: 2em !important;
+height: 2em !important;
+}
+
+:host /deep/ .my-mat-option .mat-pseudo-checkbox {
+top: -19px;
+}
+
+::ng-deep .mat-select-panel.my-panel-class{
+max-width: 561px !important;
+}
+
+::ng-deep .cdk-overlay-pane{
+left: 705px !important;
+}
+
+::ng-deep .mat-select-panel{
+border-radius: 30px !important;
+padding: 20px !important;
+}
+
+::ng-deep .mat-select-panel::-webkit-scrollbar-button{width: 28px; height: 30px;}
+
+::ng-deep .ui-dropdown-filter-container {
+border-top-left-radius: 20px !important;
+border-top-right-radius: 20px !important;;
+}
+
+::ng-deep .ui-dropdown-panel {
+border-radius: 20px !important;
+}
+
+::ng-deep .ui-dropdown-item {
+border-bottom-right-radius: 20px !important;
+border-bottom-left-radius: 20px !important;
+}
+
+.all_categories {
+margin: 0px 42px 32px;
+}
+
+.my-mat-option {
+display: table;
+width: -webkit-fill-available;
+line-height: 2em !important;
+height: 2em !important;
+}
+
+::ng-deep .my-mat-option .mat-pseudo-checkbox {
+top: -11px
+}
+
+::ng-deep .mat-select-panel{
+border-radius: 30px !important;
+padding: 20px !important;
+min-width: calc(100% + 115px) !important;
+max-height: 340px !important;
+max-width: 126px !important;
+}
+
+::ng-deep .mat-select-panel::-webkit-scrollbar-button{width: 28px; height: 30px;}

@@ -1,0 +1,71 @@
+.section-margin {
+    margin-bottom: 25px;
+}
+
+.payout-area {
+    display: grid;
+}
+
+.option-container {
+    margin-bottom: 15px;
+}
+
+.option-container > mat-checkbox {
+    display: block;
+}
+
+.select{
+    width: 100%;
+    line-height: 50px;
+    padding: 0 25px;
+    height: 50px;
+    border: none;
+    color: black;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    background: #F7F7F7;
+    border-radius: 25px;
+}
+
+.margin-top-30 {
+    margin-top: 30px;
+}
+
+.mat-card-actions{
+    margin-bottom: -16px;
+}
+
+.margin-top-18 {
+    margin-top: 18px;
+}
+
+.prop_btn{
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+    height: 40px;
+    padding: 0px 23px;
+    text-align: center;
+    background: rgb(255,88,0);
+    background: linear-gradient(0deg, rgba(255,88,0,1) 0%, rgba(255,170,0,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff5800",endColorstr="#ffaa00",GradientType=1);
+    border-radius: 25px;
+    margin-right: 2px;
+}
+
+.prop_btn:hover {
+    background: rgb(255,94,0);
+    background: linear-gradient(0deg, rgba(255,94,0,1) 0%, rgba(255,209,0,1) 100%);
+}
+
+.with_field {
+    width: 109%;
+}
+
+:host /deep/ .mat-checkbox-checked .mat-checkbox-background {
+    background: rgb(255,94,0) !important;
+}
+
+:host /deep/ .mat-checkbox-long .mat-checkbox-label {
+    white-space: normal;
+}

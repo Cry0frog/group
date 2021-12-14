@@ -1,0 +1,11 @@
+.send_button {
+    margin-left: 40px;
+}
+
+.textarea-chat {
+    width: 100%;
+}
+
+@media (max-width: 519px) {
+  .orange_btn {width: -webkit-fill-available; margin-bottom: 5px;}
+}

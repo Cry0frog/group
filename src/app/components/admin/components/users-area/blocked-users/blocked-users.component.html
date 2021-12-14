@@ -1,0 +1,67 @@
+<div>
+    <h1 class="h1">Заблокированные пользователи</h1>
+    <div>
+      <mat-form-field class="table-filter-area">
+        <input matInput (keyup) = "applyFilter($event.target.value)" placeholder="Поиск">
+      </mat-form-field>
+        
+      <table mat-table [dataSource] = "dataSource" matSort class = "table_users">
+    
+        <!-- Username Column -->
+        <ng-container matColumnDef = "username">
+          <th *matHeaderCellDef mat-sort-header> Пользователь </th>
+          <td *matCellDef = "let row"> {{row.username}} </td>
+        </ng-container>
+    
+        <!-- Date blocking Column -->
+        <ng-container matColumnDef = "date_blocking">
+          <th *matHeaderCellDef mat-sort-header > Дата блокировки </th>
+          <td *matCellDef = "let row"> {{row.dateBlocking | date:'dd.MM.yyyy'}} </td>
+        </ng-container>
+    
+        <!-- Count day before unlickung Column -->
+        <ng-container matColumnDef = "count_days_before_unlocking">
+          <th *matHeaderCellDef mat-sort-header>Количество дней до разблокировки</th>
+          <td *matCellDef = "let row"> {{row.countDaysBeforeUnlocking}}</td>
+        </ng-container>
+
+        <!-- Level blocking -->
+        <ng-container matColumnDef = "level_blocking">
+          <th *matHeaderCellDef mat-sort-header > Уровень блокировки </th>
+          <td *matCellDef = "let row"> {{level_blocking[row.typeBlocking]}} </td>
+        </ng-container>
+
+        <!-- Desceiption Column -->
+        <ng-container matColumnDef="description">
+            <th *matHeaderCellDef mat-sort-header > Описание </th>
+            <td *matCellDef="let row" > {{row.description}} </td>
+        </ng-container>
+    
+        <!-- Operations Column -->
+        <ng-container matColumnDef="operations">
+            <th *matHeaderCellDef mat-sort-header > Операции </th>
+            <td *matCellDef = "let row" class = "users_btns">
+            <button matTooltip = "Написать сообщение" class = "message_btn margin-5"
+              (click)="goToChat(row)">
+            </button>
+
+            <button *ngIf="isBlockPartner(row)" matTooltip = "Разблокировать заказчика" (click) = "blockUser(row, true)"
+              [ngClass] = {unlock_btn:!isBlockPartner(row)} class="lock_btn margin-5">
+            </button>
+
+            <button *ngIf="isBlockPerformer(row)" matTooltip = "Разблокировать исполнителя" (click) = "blockUser(row, false)"
+              [ngClass] = {unlock_btn:!isBlockPerformer(row)} class="lock_btn">
+            </button>
+
+            </td>
+         </ng-container>
+        <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
+        <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator 
+        [length]="100"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 100]">
+      </mat-paginator>
+    </div>
+  </div>

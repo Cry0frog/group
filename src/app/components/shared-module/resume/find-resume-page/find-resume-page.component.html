@@ -1,0 +1,20 @@
+<div class="wrapper content">
+  <div class="width_66">
+      <div class="block-corner">
+          <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
+      </div>
+  </div>
+
+  <div class="width_33 paddingi">
+    <div class="block-corner mob_unvis categories-section" style="height: -webkit-calc(100vh - 165px);">
+      <p class="h1">Выберите сферу деятельности</p>
+      <div class="category" style="height: -webkit-calc(100vh - 285px); overflow-y: auto; display: block;">
+        <app-filter-fields-activity [fieldsActivity]="fieldsActivity" [choosenFieldsActivity]="choosenFieldsActivity"
+          [choosenFieldAsctivityIds]="choosenFieldsActivityIds" [isMobileMode]="false" (toggleFieldAcivityEvents)="toggleFieldActivity($event)">
+        </app-filter-fields-activity>
+      </div>
+  </div>
+
+  </div>
+  <div class="clear"></div>
+</div>

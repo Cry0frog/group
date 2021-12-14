@@ -1,0 +1,31 @@
+<ul *ngIf="!isDeletePointMode(); else deleteMode">
+  <li (click)="handlerMapActions('CENTRE')" class="context_icon" style="background-image:url(https://cdn.jsdelivr.net/gh/jonataswalker/ol-contextmenu@604befc46d737d814505b5d90fc171932f747043/examples/img/center.png)">
+    <span>Центрировать</span>
+  </li>
+  <li *ngIf="isAddPointMode()" (click)="handlerMapActions('ADD_POINT')" class="context_icon" style="background-image:url(assets/map/pin_green.png)">
+    <span>Добавить адрес</span>
+  </li>
+  <li *ngIf="isAddPathMode()" (click)="handlerMapActions('ADD_START')" class="context_icon" style="background-image:url(assets/map/pin_green.png)">
+    <span>Добавить точку отправки</span>
+  </li>
+  <li *ngIf="isAddPathMode()" (click)="handlerMapActions('ADD_END')" class="context_icon" style="background-image:url(assets/map/pin_red.png)">
+    <span>Добавить точку назначения</span>
+  </li>
+  <li (click)="handlerMapActions('DELETE_ALL')" class="context_icon" style="background-image:url(assets/map/pin_red.png)">
+    <span>Отчистить всё</span>
+  </li>
+  <li (click)="handlerMapActions('ZOOM_IN')" class="context_icon" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAABaUlEQVQ4T72U7VHCQBCGn90GtAMuNGCswFiBWIFQgWMFxg6wArECsQKhArEBiB1Qwa1zgQn5IAYcxv13k71n3919L8KJQ07M47+BzgG9TRfZ/JBuWhS6BJFHRJICYrZGZIz3z5Ct2+B7gG6I6kt+wewdkQVwjtkAkR5mC8yu26A1oItR/cTsOweQBdgutD8G7jGm2PJ2n8oqUKIpIjd4HxTM8gvaT/F+AlmWnyWaIXKF95eNguFzTYFhNsdWu9kFgFlaFMANUH3D8wDLoLgSTSD2il8NCe2ZXQBxWDGwxmyUzzOMBZ7wy7Qb2K0wQfXjMOBuhlFpZtNty5sFaTQBuTusZdymeqs1SpYKcO9HkE3KbTd9WFijMHJQ5hBNEAYNq5Qd0dhyke0GiE4QzjqfW23mHT8Hl4DG4Lce3FPE7AtbBSdsbNqpoJLgYkRnNeUV+xwJDHTnUEkxHGbhBXUs5TjJjew/KPy94g+NRaIVRYmMXwAAAABJRU5ErkJggg==);">
+    <span>Zoom In</span>
+  </li>
+  <li (click)="handlerMapActions('ZOOM_OUT')" class="context_icon" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAABU0lEQVQ4T72U7VECMRRFz3sNaAdkacC1AtcKxApcKnCsQOwAK3CtQKxAqEBsANYOqCDPyTIC+8WCw5jfybn33dxEOPGSE/P4b6BzQG89RT47ZJoWhy5B5BGRZAMxWyEyxvtnyFdt8AagS1F9KQ6YvSMyB84xGyDSw2yO2XUbtAJ0MaqfmH0XAPIA2y7tj4F7jAm2uG1yWQZKNEHkBu+Dg2njWBJNEbnC+8uaIFRuWfuG2QxbbrOrUd0A1Tc8D7AIjkur7DAAsVf8MiWMZ3ZR2m02LPIMscATfjHqBnY7TFD9OAy4zTCCPG/MUKMM5O6wkXFr9dZq7FQqqHk/hDzbFa73cFONTZFDdRyiCcKg5rrSiLaXkiI6RjjrfG6VzDs+B5eAxuDXeYpmNRGzL2wZ/wof+du4GNFpBVqqz5HA4MM5VEYYDrOs+1I6Q9u/4Q8O9wN/AGgWjBVqQjjgAAAAAElFTkSuQmCC);">
+    <span>Zoom Out</span>
+  </li>
+</ul>
+
+<ng-template #deleteMode>
+  <ul *ngIf='!isAddPathMode()'>
+    <li (click)="handlerMapActions('DELETE')">
+      Удалить
+    </li>
+  </ul>
+</ng-template>

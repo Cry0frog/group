@@ -1,0 +1,43 @@
+<div >
+  <h1 *ngIf="rateJobType == 'ONCE'" class="h1">Разовые платежи</h1>
+  <h1 *ngIf="rateJobType == 'SUBSCRIPTION'" class="h1">Подписки</h1>
+
+  <table mat-table [dataSource] = "dataSource" matSort class = "table_users">
+      <ng-container matColumnDef = "id">
+        <th *matHeaderCellDef mat-sort-header>ID</th>
+        <td *matCellDef = "let row"> {{row.id}} </td>
+      </ng-container>
+      <ng-container matColumnDef = "countDays">
+        <th *matHeaderCellDef>Период</th>
+        <td *matCellDef = "let row">{{rateJobDays[row.countDays]}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef = "amountValue">
+        <th *matHeaderCellDef mat-sort-header>Сумма</th>
+        <td *matCellDef = "let row"> {{row.amountValue}} </td>
+      </ng-container>
+
+      <!-- Operations Column -->
+      <ng-container matColumnDef="operations">
+          <th *matHeaderCellDef>Операции</th>
+          <td *matCellDef = "let row" class = "users_btns" style="width: 120px;">
+            <button matTooltip = "Обновить тариф" class = "buttonUpdateUsers margin-5"
+            (click) = "addOrUpdateRateJob(row)">
+            </button>
+            <button matTooltip = "Удалить тариф" class="buttonDeleteUsers"
+            (click) = "deleteRateJob(row)">
+            </button>
+          </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
+      <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
+  </table>
+  <button matTooltip = "Создание тарифа" class = "buttonAdd"
+    (click) = "addOrUpdateRateJob(null)">
+      Создать тариф
+  </button>
+  <mat-paginator
+  [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
+</div>

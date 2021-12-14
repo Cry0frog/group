@@ -1,0 +1,22 @@
+<p class="h1">Перемещение категории</p>
+<div class="select_by_type_categories" *ngIf="isRootNull">
+    <mat-select [(value)]="selectedCategory" placeholder="Выберите категорию, в которую хотите переместить">
+        <mat-option *ngFor="let folder of sortedArray" [value]="folder">
+            {{folder.name}}
+        </mat-option>
+    </mat-select>
+</div>
+
+<div class="select_by_type_categories" *ngIf="!isRootNull">
+    <mat-select class="custom-mat-select select-sz" [(value)]="selectedCategory" placeholder="Выберите категорию, в которую хотите переместить">
+        <mat-option value="option1">Открепить от категории</mat-option>
+        <mat-option *ngFor="let folder of sortedArray" [value]="folder">
+            {{folder.name}}
+        </mat-option>
+    </mat-select>
+</div>
+
+<div mat-dialog-actions style="display: flex; justify-content: space-between; margin-top: 30px;">
+    <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+    <button class="orange_btn" (click)="saveSelect()" [mat-dialog-close]="data">Переместить</button>
+</div>

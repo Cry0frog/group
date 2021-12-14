@@ -1,0 +1,56 @@
+<h1 class="h1">Категории работы</h1>
+<mat-form-field class="table-filter-area">
+    <input matInput (keyup) = "applyFilter($event.target.value)" placeholder = "Поиск">
+</mat-form-field>
+
+<table mat-table [dataSource] = "dataSource" matSort class = "table_users">
+
+  <!-- Name Column -->
+  <ng-container matColumnDef = "name">
+      <th *matHeaderCellDef mat-sort-header> Название </th>
+      <td *matCellDef = "let row" style="display: flex; align-items: center; height: 50px;">
+          <div style="display: flex;align-items: center;height: 50px;">
+            <div class="category">
+                <img src="/api/field_activity/photo/{{row.id}}">
+            </div>
+            <mat-icon *ngIf="row.folder" (click)="onRootDirectoryClick(row)">
+              {{row.isExpanded ? 'keyboard_arrow_down' : 'keyboard_arrow_right'}}
+          </mat-icon>
+          {{row.name}}
+        </div>
+      </td>
+  </ng-container>
+
+  <!-- Operations Column -->
+  <ng-container matColumnDef="operations">
+      <th *matHeaderCellDef mat-sort-header > Операции </th>
+      <td *matCellDef = "let row" class = "cat_btns">
+        <button title="Добавить подкатегорию" *ngIf="row.folder" class="status_btn green_plus"
+          (click)="addFieldActivityForFolder(row)">
+        </button>
+        <button title="Редактировать" class="edit_btn margin-5"
+          (click)="updateFieldActivity(row)">
+            
+        </button>
+        <button matTooltip = "Обновить фото" class = "buttonUpdateUsers photo" (click)="updatePhoto(row)"></button>
+        <button title="Удалить категорию" class="delete_btn"
+                (click)="deleteFieldActivity(row.id)">
+            
+        </button>
+      </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
+  <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
+</table>
+<div class="mt50">
+    <div class="width_60">
+        <!-- <button class="orange_btn" (click)="addFolder()" style="margin-right: 15px;">
+            Создать раздел
+        </button> -->
+        <button class="orange_btn" (click)="addFieldActivity()">
+            Создать категорию работы
+        </button>
+    </div>
+    <div class="clear"></div>
+</div>

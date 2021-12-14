@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>Пополнение баланса</h1>
+<div mat-dialog-content>
+    <div *ngIf="!isStartLoading">
+        <div class="with_field mt10 mb20">
+            <input id="price-zdn" type="text" pKeyFilter="pint"
+                [(ngModel)]="summ" maxlength="6">
+            <span class="price-span">Укажите сумму</span>
+            <p class="podpis-wf" *ngIf="isMessageAvailable()">
+                {{getMessage()}}
+            </p>
+        </div>
+        
+        <button class="orange_btn" (click)="requestPayout()">
+            Пополнить
+        </button>
+    </div>
+    
+
+    <div *ngIf="isStartLoading && !isLoaded">
+        <p>Пожалуйста, подождите, идет инициализация оплаты задачи</p>
+    </div>
+    
+    <div id="payment-form"></div>
+    
+</div>

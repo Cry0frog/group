@@ -1,0 +1,18 @@
+<div class="wrapper content">
+  <div id="top"></div>
+	<div class="width_66 paddingi" *ngIf="isChatNotEmpty">
+        <div class="block-corner chat-block">
+            <app-chat-template (eventSetArbitration)="handleSetArbitrations($event)">
+            </app-chat-template>
+        </div>
+    </div>
+
+    <div class="width_33 mt_20 paddingi" [ngClass]="{'width_full' : !isChatNotEmpty}">
+        <app-chat-contact-list [commonChats]="chats" [deletedChats]="deletedChats" [isLoadAll]='isLoadAll'
+            (eventCallRefreshArbitration)="handleCallRefreshArbitration($event)"
+            (eventLoadingMore)="handleEventLoadingMore($event)">
+        </app-chat-contact-list>
+    </div>
+
+    <div class="clear"></div>
+</div>

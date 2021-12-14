@@ -1,0 +1,9 @@
+.error_input input {
+    border-color: red;
+    color: red;
+    border: solid;
+}
+
+.frgt {
+    font-size: 15px;
+}

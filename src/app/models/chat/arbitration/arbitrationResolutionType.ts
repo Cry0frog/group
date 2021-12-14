@@ -1,0 +1,4 @@
+export enum ArbitrationResolutionType {
+  IN_FAVOR_CUSTOMER = 'IN_FAVOR_CUSTOMER',
+  IN_FAVOR_PERFORMER = 'IN_FAVOR_PERFORMER'
+}

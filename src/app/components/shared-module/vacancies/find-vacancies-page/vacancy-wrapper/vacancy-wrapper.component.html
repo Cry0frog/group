@@ -1,0 +1,4 @@
+<app-vacancy [vacancy]="vacancy" [mode]="getVacancyMode" [submittedResumes]='listResume'
+  (markVacancyEvent)='markVacancyHandler($event)' (eventRefrashResumeVacancy)='refrashResumeVacancyHandler($event)'
+  (eventDeleteResume)='deleteResumeHandler($event)'>
+</app-vacancy>

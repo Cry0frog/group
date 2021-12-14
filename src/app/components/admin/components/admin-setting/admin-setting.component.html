@@ -1,0 +1,11 @@
+<div class="block-corner">
+    <p class="h1">Настройки главной страницы</p>
+    <div>
+        <mat-checkbox [(ngModel)]="setting.enableTimerOnHomePage" (change)="changeSetting()" class="full-width-input">
+            Включить счетчик выполненных задач на главной странице
+        </mat-checkbox>
+    </div>
+    <div *ngIf="isChangeSetting" style="margin-top: 30px;">
+        <button class="orange_btn" (click)="editSetting()">Сохранить</button>
+    </div>
+</div>

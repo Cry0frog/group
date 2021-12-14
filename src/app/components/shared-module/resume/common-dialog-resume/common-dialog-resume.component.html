@@ -1,0 +1,19 @@
+<app-resume-editor [hideContactInfo]='true' [resume]='resume' [childFieldsActivity]='childFieldsActivity'
+  (markResumeEvent)="markResumeHandler($event)">
+</app-resume-editor>
+<app-validation-error-template [errorHandler]="resume"
+  [commonMessage]="'Вы не заполнили/заполнили некорректно некоторые поля'">
+</app-validation-error-template>
+<div mat-dialog-actions *ngIf="!isNotCreated(); else closeBtn" class="margin-top-20 resume_window_btn">
+    <button class="orange_btn" [mat-dialog-close]="null">Отмена</button>
+    <button *ngIf="resume.id == null; else idIsNotNull" class="orange_btn" (click)="createDefaultResume()">Сохранить
+    </button>
+    <ng-template #idIsNotNull>
+        <button class="orange_btn" (click)="updateDefaultResume()">Изменить
+        </button>
+    </ng-template>
+</div>
+
+<ng-template #closeBtn>
+  <button class="orange_btn" style="margin-top: 10px;" [mat-dialog-close]="null">Закрыть</button>
+</ng-template>

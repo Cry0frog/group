@@ -1,0 +1,52 @@
+<div>
+  <p *ngIf="isEditProfileInfo" class="h1">Редактирование профиля</p>
+  <div *ngIf="isEditProfileInfo">
+    <p class="zag-sz">Название организации</p>
+    <input matInput type="text" placeholder="Название организации"
+        [(ngModel)]="data.nameOrganization" required>
+  </div>
+  <div class="block_city_number">
+    <div class="right_div city-section">
+        <p class="zag-sz margin-top-30">Город</p>
+        <p-dropdown class="city-choose" [options]="cities" [(ngModel)]="data.city"
+            (keyup)="onChangeCity($event)" [filter]="true"
+            placeholder="Выберите город" emptyFilterMessage="Не найдено">
+        </p-dropdown>
+    </div>
+    <div class="edit_number">
+        <p class="zag-sz margin-top-30">Номер телефона генерального директора</p>
+        <p-inputMask mask="+7 (999) 999-9999" placeholder="Номер телефона" [(ngModel)]="data.phoneNumber"></p-inputMask>
+    </div>
+  </div>
+  <div *ngIf="isEditProfileInfo">
+    <p class="zag-sz margin-top-30">Адрес</p>
+    <input matInput type="text" placeholder="Адрес"
+        [(ngModel)]="data.address" required>
+  </div>
+  <div class="edit_email">
+    <p class="zag-sz margin-top-30">Почта</p>
+    <input matInput type="text" placeholder="Почта"
+        [(ngModel)]="data.email" required>
+  </div>
+  <div *ngIf="isEditProfileInfo" class="block_inn_ogrn">
+    <div>
+        <p class="zag-sz margin-top-30">ИНН</p>
+        <input matInput type="text" placeholder="ИНН"
+            [(ngModel)]="data.inn" required>
+    </div>
+    <div class="ogrn">
+        <p class="zag-sz margin-top-30">ОГРН</p>
+        <input matInput type="text" placeholder="ОГРН"
+            [(ngModel)]="data.ogrn" required>
+    </div>
+  </div>
+  <div>
+    <p class="zag-sz margin-top-30">О компании</p>
+    <textarea matInput type="textarea" maxlength="1000" placeholder="Укажите информацию: - Кратко об  оказываемых услугах; - Опыт работы; - Граффик работы; -Примерную стоимость работ; - Ваши положительные качества."
+        [(ngModel)]="data.aboutCompany" required>
+    </textarea>
+  </div>
+  <div class="margin-top-30">
+    <mat-checkbox [(ngModel)]='data.getNotificationsAboutNewTaskMyCity'>Получать уведомления о новых задачах только в моём городе</mat-checkbox>
+  </div>
+</div>

@@ -1,0 +1,117 @@
+<div *ngIf="!isOpenOnlineConsultantChat" style="display: flex;height: 40px;">
+    <div>
+        <a class="back-link" (click)="goBack()">
+            <span class="back-icon"></span> назад
+        </a>
+    </div>
+    <div class="right-align" style="display: flex;height: 40px;">
+        <div style="margin-right: 15px;">
+
+            <p class="h1" *ngIf="chat == null || chat.isCommon()">Чат</p>
+
+            <div *ngIf="chat != null && chat.isArbitration()">
+                <div class="status_arbitrations">
+                    <p class="h1 location_of_arbitration_title">Арбитраж</p>
+                </div>
+                <div class="status_arbitrations">
+                    <p *ngIf="getArbitrations().isSuccess()"
+                        class="status-zakaza st-process task-condition-element arbitration-action location_of_arbitration_description"
+                        style="margin-bottom: 0;">
+                        {{chatArbitrationStatusTranslate[getArbitrations().status]}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="!isAdmin()" [ngClass]="{'link_user': !isOpenOnlineConsultantChat,'link_user_after_status': isFinishedArbitration()}">
+    <div *ngIf="!isOpenOnlineConsultantChat" class="block-chat">
+        <a href="/user/{{getUser(chat).id}}" style="cursor: pointer; display: initial; ">
+            <img src="api/partner/info/photo/{{getUser(chat).id}}">
+        </a>
+        <p class="chat-client">{{getUser(chat).username}}</p>
+
+        <div class="clear"></div>
+    </div>
+</div>
+<div *ngIf="isAdmin()" class="parameters_block_chat">
+    <div class="block-chat">
+        <div style="display: -webkit-box;">
+            <a href="/user/{{getInitiator(chat).id}}" style="cursor: pointer; display: initial; ">
+                <img src="api/partner/info/photo/{{getInitiator(chat).id}}">
+            </a>
+            <p class="chat-client">{{getInitiator(chat).username}}</p>
+        </div>
+        <div style="display: -webkit-box; margin-top: 10px;">
+            <a href="/user/{{getParticipant(chat).id}}" style="cursor: pointer; display: initial; ">
+                <img src="api/partner/info/photo/{{getParticipant(chat).id}}">
+            </a>
+            <p class="chat-client">{{getParticipant(chat).username}}</p>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div style="height: calc(100% - 95px);" [ngClass]="{'pt59': isAdmin(), 'pt8': !isAdmin() && !isOpenOnlineConsultantChat}">
+    <div class="height-window">
+        <div id="scroll_div" class="chat-content" [ngClass]="{'online-consultant-chat-content': isOpenOnlineConsultantChat, 'chat_template': isFinishedArbitration()}">
+            <div [ngClass]="{'chat-content-content padding-window': !isOpenOnlineConsultantChat}">
+                <ng-container *ngFor="let msg of getSortedMessages(messages)">
+                    <div class="speach" [ngClass]="{'client-speach': !isCurrent(msg),
+                                'author-speach': isCurrent(msg)}">
+                        <img src="api/partner/info/photo/{{msg.author.id}}" *ngIf="!isCurrent(msg)&&isAdmin()">
+                        <img src="api/partner/info/photo/{{msg.author.id}}" *ngIf="!isCurrent(msg)&&!isAdmin()">
+                        <div class="speech-login" *ngIf="!isCurrent(msg)" style="display: contents;">
+                            <span [ngClass]="{'font_size_12': isOpenOnlineConsultantChat}">{{msg.author.username}}</span>
+                        </div>
+
+                        <div class="msg-align">
+                            <div>
+                                <div *ngIf="msg.isAttachment()" class="chat-document" (click)="loadFile(msg)">
+                                </div>
+                            </div>
+
+                            <!-- <div class="speach-text">
+                                    {{msg.message}}
+                                </div> -->
+
+                            <div *ngIf="!isSummernoteText(msg.message); else summernote_block" class="speach-text" [ngClass]="{'font_size_14': isOpenOnlineConsultantChat}">
+                                {{msg.message}}
+                            </div>
+                            <ng-template #summernote_block>
+                                <div class="summernote speach-text" [ngClass]="{'font_size_14': isOpenOnlineConsultantChat}" [ngxSummernoteView]="msg.message"></div>
+                            </ng-template>
+
+                        </div>
+
+                        <div class="clear"></div>
+                        <div class="speach-time" [ngClass]="{'font_size_12': isOpenOnlineConsultantChat}">{{msg.creationDate | date:'dd.MM.yyyy HH:mm'}}</div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+
+        <div *ngIf="!isOpenOnlineConsultantChat" class="bottom-chat">
+            <ng-container *ngIf="isClosed == false && !chat.isDeleted()">
+                <div>
+                    <button class="attach clip_button" (click)="callFileChoosing()"></button>
+                    <input id="fileInputUloadResource" name="file" type="file"
+                        (change)="fileChanged($event.target.files)" style="display: none;">
+                </div>
+                <textarea maxlength="2000" class="textarea-chat" placeholder="Введите сообщение" (keyup)="autogrow()"
+                    (keydown.enter)="sendMessage($event)" [(ngModel)]="curMessage.message">
+                    </textarea>
+                <button class="send_button" (click)="sendMessage(null)"></button>
+            </ng-container>
+            <div *ngIf="isClosed == true" class="close_arbitration">
+                <span>Арбитраж закрыт, Вы больше не можете отправлять сюда сообщения</span>
+            </div>
+            <div *ngIf="chat.isDeleted()">
+                Чат закрыт
+            </div>
+        </div>
+    </div>
+</div>
+<p *ngIf="!isOpenOnlineConsultantChat" class="podpredz">Размер файла не должен превышать 3МБ</p>
+<app-validation-error-template [errorHandler]="curMessage">
+</app-validation-error-template>

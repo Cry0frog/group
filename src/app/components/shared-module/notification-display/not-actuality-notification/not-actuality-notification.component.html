@@ -1,0 +1,15 @@
+<div [ngSwitch]="data.type">
+  <ng-container *ngSwitchCase="isTaskNotification()">
+    <h1 mat-dialog-title>На данный момент задача не актуальна</h1>
+  </ng-container>
+  <ng-container *ngSwitchCase="isVacancyNotification()">
+    <h1 mat-dialog-title>На данный момент вакансия не актуальна</h1>
+  </ng-container>
+  <ng-container *ngSwitchDefault>
+    <h1 mat-dialog-title>На данный момент уведомление не актуально</h1>
+  </ng-container>
+</div>
+
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+    <button class="orange_btn" [mat-dialog-close]> Хорошо </button>
+</div>

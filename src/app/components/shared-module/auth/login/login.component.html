@@ -1,0 +1,51 @@
+<div class="registration" (keydown.enter)="login($event)">
+	<div class="registration_content">
+		<div class="logo_reg"></div>
+		<h1 class="reg_h1">Вход</h1>
+		<div class="block_input name_input" [ngClass]="{'error_input': errorAuth}">
+			<input matInput class="white-caret-cursor" type="text" placeholder="Аккаунт"
+			  	[(ngModel)]="credential.username">
+		</div>
+		<div class="block_input mail_password" [ngClass]="{'error_input': errorAuth}">
+			<input matInput class="white-caret-cursor" type="password" placeholder="Пароль"
+			  [(ngModel)]="credential.password">
+		</div>
+		<div *ngIf="errorAuth" style="margin-bottom: 25px; color: red">
+			Неправильное имя или пароль
+		</div>
+		<div *ngIf="errorConfEmail" style="margin-bottom: 25px; color: red">
+			Аккаунт с такой почтой уже существует
+		</div>
+		<div *ngIf="errorConfPhoneNumber" style="margin-bottom: 25px; color: red">
+			Аккаунт с таким номером телефона уже существует
+		</div>
+		<a routerLink="/password_recovery" class="frgt">Забыли пароль?</a>
+
+		<div class="reg_socseti">
+			<p class="mb10">Войти через соц. сети</p>
+			<p>
+				<!--
+				<a class="soc_btn mail_btn" href=""></a>
+				-->
+				<a class="soc_btn vk_btn" href="{{urlLoginVK}}"></a>
+				<a class="soc_btn fb_btn" href="{{urlLoginFacebook}}"></a>
+				<a class="soc_btn google_btn" href="{{urlLoginGoogle}}"></a>
+				<a class="soc_btn yandex_btn" href="{{urlLoginYandex}}"></a>
+
+				<!--
+				<a class="soc_btn ok_btn" href=""></a>
+
+				-->
+			</p>
+		</div>
+
+		<button class="orange_btn" (click)="login(null)">
+			Войти
+		</button>
+		<p class="account_p">У вас нет аккаунта?
+      <a class="orange_link" routerLink="/registration">Зарегистрируйтесь</a>
+      <a class="orange_link" routerLink="/registration/legal_entity">Зарегистрируйтесь как организация</a>
+		</p>
+	</div>
+</div>
+<app-side-panel [isJobNav]='false'></app-side-panel>

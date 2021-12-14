@@ -1,0 +1,45 @@
+.zadanie-block-price {
+  color: #ff8000;
+}
+
+.zadanie-link {
+  margin-top: 0px;
+}
+
+.zadanie-block{
+	background:#fcfcfc;
+	padding:20px;
+	min-height:100px;
+	position:relative;
+	margin-bottom:5px;
+}
+
+.ball{
+	position:absolute;
+  top: auto;
+  bottom: 0;
+  height: 30px;
+  width:30px;
+  color: white;
+  background: linear-gradient(0deg, rgba(255,88,0,1) 0%, rgba(255,170,0,1) 100%);
+}
+@media (max-width: 686px){
+  .righttop{
+    position:relative;
+    top:auto;
+    right:auto;
+    text-align:left;
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .ball{
+    position:relative;
+  }
+}
+
+.zadanie-block-date {
+  float: right;
+  margin: 0;
+}

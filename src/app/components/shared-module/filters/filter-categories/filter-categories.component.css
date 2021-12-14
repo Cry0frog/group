@@ -1,0 +1,9 @@
+.choosen-child {
+  font-weight: 900;
+  color: #FF8000;
+}
+
+a:last-of-type {
+  /* width: 223px; */
+  width: 90%;
+}

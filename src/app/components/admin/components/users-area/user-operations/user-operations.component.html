@@ -1,0 +1,89 @@
+  <!---->
+  <div *ngIf="sendNotifMode" class="block-corner margin-top-30">
+    <div *ngIf="selectedUsers.length != 0">
+      <p class="zag-sz margin-top-30">Выбранные пользователи:</p>
+      <div *ngFor="let user of selectedUsers" style="margin-left: 115px;">
+        {{user.username}}
+      </div>
+    </div>
+
+    <!-- <div class="with_field">
+      <textarea matInput type="textarea" class="margin-top-30" placeholder="Введите сообщение"
+        [(ngModel)]="sendingNotificationOfAdmin.message.message">
+      </textarea>
+    </div> -->
+
+    <div class="summernote with_field">
+      <p class="zag-sz margin-top-30">Описание</p>
+      <div [(ngModel)]="sendingNotificationOfAdmin.message.message"
+        [ngxSummernote]="config">
+      </div>
+    </div>
+
+    <div class="margin-top-30" style="display: flex;">
+      <div class="select_roles">
+        <mat-select [(ngModel)]="selectedUser" required>
+            <mat-option *ngFor="let role of filterRoles" [value]="role.value" [disabled]="isDisableRole(role.value)">
+              {{role.viewValue}}
+            </mat-option>
+        </mat-select>
+      </div>
+
+      <div>
+        <button class="buttonAdd" style="height: 46px;" [disabled]="isDisabledMessageOperation" [ngClass]="{'disable': isDisabledMessageOperation}"
+        (click)="selectAllUsers()">Добавить</button>
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: space-between">
+      <button class="buttonAdd" [disabled]="isDisabledMessageOperation" [ngClass]="{'disable': isDisabledMessageOperation}"
+        (click)="sendAllMessagesOrder(null)">Отправить</button>
+      <button class="buttonAdd" [disabled]="isDisabledMessageOperation" [ngClass]="{'disable': isDisabledMessageOperation}"
+        (click)=cancelOperation()>Отмена</button>
+    </div>
+
+    <div *ngIf="isDisabledMessageOperation" style="padding-top: 10px;">
+      <mat-progress-bar mode="determinate" value="{{ eventProgress }}"></mat-progress-bar>
+    </div>
+  </div>
+
+  <!---->
+  <div *ngIf="replenishmentBonusesMode" class="block-corner margin-top-30">
+    <div *ngIf="selectedUsers.length != 0">
+      <p class="zag-sz margin-top-30">Выбранные пользователи:</p>
+      <div *ngFor="let user of selectedUsers" style="margin-left: 115px;">
+        {{user.username}}
+      </div>
+    </div>
+
+    <div class="with_field">
+      <p class="zag-sz margin-top-30">Количество бонусов</p>
+      <input matInput style="width: 25%;" type="number" [(ngModel)]="replenishmentBonusesOfAdmin.value">
+    </div>
+
+    <div class="margin-top-30" style="display: flex;">
+      <div class="select_roles">
+        <mat-select [(ngModel)]="selectedUser" required>
+            <mat-option *ngFor="let role of filterRoles" [value]="role.value" [disabled]="isDisableRole(role.value)">
+              {{role.viewValue}}
+            </mat-option>
+        </mat-select>
+      </div>
+
+      <div>
+        <button class="buttonAdd" style="height: 46px;" [disabled]="isDisabledMessageOperation" [ngClass]="{'disable': isDisabledMessageOperation}"
+        (click)="selectAllUsers()">Добавить</button>
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: space-between">
+      <button class="buttonAdd" [disabled]="isDisabledAmountOperation" [ngClass]="{'disable': isDisabledAmountOperation}"
+        (click)="accrualBonusesOrder(null)">Начислить</button>
+      <button class="buttonAdd" [disabled]="isDisabledAmountOperation" [ngClass]="{'disable': isDisabledAmountOperation}"
+        (click)=cancelOperation()>Отмена</button>
+    </div>
+
+    <div *ngIf="isDisabledAmountOperation" style="padding-top: 10px;">
+      <mat-progress-bar mode="determinate" value="{{ eventProgress }}"></mat-progress-bar>
+    </div>
+  </div>

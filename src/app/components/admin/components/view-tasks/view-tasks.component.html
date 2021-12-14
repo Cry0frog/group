@@ -1,0 +1,80 @@
+<div class="wrapper content paddingi">
+    <div class="block-corner">
+      <h1 class="h1">Задачи</h1>
+      <div class="vibor">
+          <a class="def-href-point" (click)="filterAll()" [ngClass]="{'active-vibor': isAllStatus()}">
+              Все
+          </a>
+          <a class="vipolneno-vibor def-href-point" (click)="filterFinished()" [ngClass]="{'active-vibor': isFinishedStatus()}">
+              Выполненные
+          </a>
+          <a class="vprocesse-vibor def-href-point" (click)="filterInProgress()" [ngClass]="{'active-vibor': isInProgressStatus()}">
+              В процессе
+          </a>
+          <a class="chernovik-vibor def-href-point" (click)="filterHide()" [ngClass]="{'active-vibor': isHideStatus()}">
+              Скрытые
+          </a>
+          <a class="trouble-vibor def-href-point" (click)="filterTrouble()" [ngClass]="{'active-vibor': isTroubleStatus()}">
+              Проблемные
+          </a>
+      </div>
+
+      <mat-form-field class="table-filter-area">
+        <input matInput (keyup) = "applyFilter($event.target.value)" placeholder = "Поиск">
+      </mat-form-field>
+
+        <table mat-table [dataSource] = "dataSource" (matSortChange)="sortChange($event)" matSort class = "table_users">
+
+          <!-- Id Column -->
+          <ng-container matColumnDef = "id">
+              <th *matHeaderCellDef mat-sort-header> ID </th>
+              <td *matCellDef = "let row">
+                  <a (click)="linkToTask(row.id)" class="link">{{row.id}}</a>
+              </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef = "name">
+              <th *matHeaderCellDef mat-sort-header> Название </th>
+              <td *matCellDef = "let row"> {{row.name}} </td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef = "status">
+              <th *matHeaderCellDef mat-sort-header > Статус </th>
+              <td *matCellDef = "let row"> {{taskStatusTranslate[row.status]}} </td>
+          </ng-container>
+
+          <!-- Date create Column -->
+          <ng-container matColumnDef = "createdAt">
+              <th *matHeaderCellDef mat-sort-header > Дата создания </th>
+              <td *matCellDef = "let row"> {{row.createdAt | date:'dd.MM.yyyy HH:mm'}} </td>
+          </ng-container>
+
+          <!-- Date create Column -->
+          <ng-container matColumnDef = "dateTransitionProcessing">
+              <th *matHeaderCellDef mat-sort-header > Дата перехода в статус "В процессе" </th>
+              <td *matCellDef = "let row"> {{row.dateTransitionProcessing | date:'dd.MM.yyyy HH:mm'}} </td>
+          </ng-container>
+
+          <!-- Operations Column -->
+          <ng-container matColumnDef="operations">
+              <th *matHeaderCellDef mat-sort-header > Операции </th>
+              <td *matCellDef = "let row" class = "users_btns">
+                  <button matTooltip = "Удалить задачу" class = "buttonDeleteUsers " (click) = "deleteTask(row)"></button>
+              </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
+          <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator
+        [pageSize]="shortTasksWithCountedPages.pageableParams.size"
+        [pageSizeOptions]="[15, 40, 80]"
+        [showFirstLastButtons]="true"
+        [length]="shortTasksWithCountedPages.pageableParams.countedPages"
+        [pageIndex]="shortTasksWithCountedPages.pageableParams.page"
+        (page)="handlePage($event)">
+      </mat-paginator>
+    </div>
+</div>

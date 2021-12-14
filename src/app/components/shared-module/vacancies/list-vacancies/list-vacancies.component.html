@@ -1,0 +1,60 @@
+<div class="section-content">
+  <div class="vibor" *ngIf="isPartner()">
+      <a class="def-href-point" (click)="filterAll()" [ngClass]="{'active-vibor': isAllFilterStatus()}">
+          Все
+      </a>
+      <!-- <a class="vipolneno-vibor def-href-point" (click)="filterFavorite()" [ngClass]="{'active-vibor': isFavoriteFilterStatus()}">
+        Избранные
+      </a> -->
+      <!-- <a class="vprocesse-vibor def-href-point" (click)="filterFound()" [ngClass]="{'active-vibor': isFoundStatus()}">
+          Закрытые
+      </a> -->
+      <a class="chernovik-vibor def-href-point" (click)="filterHide()" [ngClass]="{'active-vibor': isHideFilterStatus()}">
+          Скрытые
+      </a>
+  </div>
+  <div class="zadanie-block" *ngFor="let shortVacancy of shortVacancies" style="width: 100%;">
+    <div class="zadanie-block-content">
+      <div style="display: flex;">
+        <a class="zadanie-block-img" target="_blank" href="/user/{{shortVacancy.creatorId}}">
+            <img class="ispolnitel_img" src="/api/partner/info/photo/{{shortVacancy.creatorId}}"/>
+        </a>
+        <a class="ispolnitel_name" href="/user/{{shortVacancy.creatorId}}" target="_blank">
+            {{shortVacancy.creatorName}}
+        </a>
+      </div>
+
+      <div class="non-focused-label" style="cursor: pointer;"
+          (click)="openVacancy(shortVacancy)"
+      >
+        <div class="righttop">
+          <p style="font-size: 12px; margin: 0px;">
+            Создана {{shortVacancy.createdAt | date:'dd.MM.yyyy'}}
+          </p>
+        </div>
+
+        <div *ngIf="isPartner()" class="margin-5-p-area display_flex_status_zakaza">
+          <span class="zadanie-block-date"
+              [ngClass] = "{
+                  'task-not-available-status-color': shortVacancy.isHideStatus() || shortVacancy.isNotPay(),
+                  'task-published-status-color': shortVacancy.isPublishedStatus()}">
+              {{vacancyStatusTranslate[shortVacancy.status]}}
+          </span>
+      </div>
+
+        <p class="zadanie-link zadanie-block-name">
+            {{shortVacancy.name}}
+        </p>
+
+        <div style="float: right; margin-top: 10px;">
+          <span *ngIf="shortVacancy.salary" class="zadanie-block-price" >
+            от {{shortVacancy.salary}}₽
+          </span>
+        </div>
+      </div>
+
+    </div>
+    <div *ngIf="shortVacancy.favorite" class="ball"></div>
+  </div>
+</div>
+

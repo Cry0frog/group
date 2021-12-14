@@ -1,0 +1,101 @@
+<!--
+<div class="section-content">
+    <p>payments works!</p>
+
+    <div class="zadanie-block" style="width: 100%;">
+        <div class="zadanie-block-content"></div>
+    </div>
+</div>
+-->
+<div class="vibor">
+    <a class="def-href-point" (click)="filterAll()" [ngClass]="{'active-vibor': isAllStatus()}">
+        Все
+    </a>
+    <a class="vprocesse-vibor def-href-point" (click)="filterAvailableToPayout()" [ngClass]="{'active-vibor': isAvailableToPayoutStatus()}">
+        Доступно на вывод
+    </a>
+    <a class="podtvergdeno-vibor def-href-point" (click)="filterByPayoutInProgress()" [ngClass]="{'active-vibor': isPayoutInProgress()}">
+        В процессе вывода
+    </a>
+    <a class="vipolneno-vibor def-href-point" (click)="filterBySuccess()" [ngClass]="{'active-vibor': isPayoutSuccess()}">
+        Средства получены
+    </a>
+</div>
+
+<div *ngIf="isStillOneForPayout()">
+    <div class="with_field mt10 mb20">
+        <span class="price-span" style="margin-left: 0px;">К выплате</span>
+        <input id="price-zdn" type="text" [value]="calcChoosenSumm()" readonly>
+        <span class="price-span">Комиссия</span>
+        <input id="price-zdn" value="60 Р" type="text" readonly>
+        <div class="gd-hint" matTooltip="Комиссия изымается сервисом, осуществляющим выплаты. Комиссия 60 рублей изымается за одну выплату, для экономии рекомендуем Вам объединять выплаты по нескольким задачам">
+            ?
+        </div>
+    </div>
+    <div class="with_field mt10 mb20">
+        <button class="orange_btn poluchit-btn margin-5 request-handling-btn"
+            *ngIf="isCanPay()" (click)="requestPayout()"
+        >
+            Получить выплату
+        </button>
+        <div *ngIf="!isCanPay()" style="display: -webkit-box;">
+            <p class="task-waiting-condition-element status-zakaza st-process task-condition-element"
+                style="cursor: pointer;" matTooltip="Сумма для вывода должна быть больше 60 Р"
+            >
+                Получить выплату
+            </p>
+        </div>
+    </div>
+</div>
+
+<table mat-table [dataSource]="dataSource" matSort class="table_users"
+        matSortActive="createdAt" matSortDirection="desc">
+    <ng-container matColumnDef="createdAt">
+        <th *matHeaderCellDef mat-sort-header style="width: 175px;">Дата оплаты</th>
+        <td *matCellDef = "let row">
+            <mat-checkbox *ngIf="isPayoutable(row)" [(ngModel)]="row.choosen" class="full-width-input" 
+                matTooltip="К оплате">
+            </mat-checkbox>
+            {{row.createdAt | date:'dd.MM.yyyy HH:mm'}}
+        </td>
+    </ng-container>
+          
+    <ng-container matColumnDef="amount">
+        <th *matHeaderCellDef mat-sort-header>Сумма</th>
+        <td *matCellDef = "let row"> {{row.amount.value}} Р </td>
+    </ng-container>
+            
+    <ng-container matColumnDef="paymentType">
+        <th *matHeaderCellDef mat-sort-header>Тип платежа</th>
+        <td *matCellDef="let row">{{paymentTypeTranslates[row.paymentType]}}</td>
+    </ng-container>
+            
+    <ng-container matColumnDef="status">
+        <th *matHeaderCellDef>Статус платежа</th>
+        <td *matCellDef="let row">{{paymentStatusTranslates[row.status]}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+        <th *matHeaderCellDef>Описание</th>
+        <td *matCellDef="let row">{{row.description}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="operations">
+        <th *matHeaderCellDef>Операции</th>
+        <td *matCellDef="let row" class="users_btns" style="width: 120px;">
+            <button matTooltip="Оплатить" class = "buttonUpdateUsers margin-5" 
+                (click)="payFinished(row)" *ngIf=row.isPending()>
+            </button>
+
+            <button matTooltip="Проверить статус" class="gd-hint margin-5" 
+                (click)="checkPaymentDeal(row)" *ngIf=row.isPayoutInProgress()>
+                ?
+            </button>
+        </td>
+    </ng-container>
+          
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+

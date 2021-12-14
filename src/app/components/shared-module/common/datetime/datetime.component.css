@@ -1,0 +1,33 @@
+
+.datetime-date-time {
+  display: flex;
+}
+
+:host /deep/ .datetime-section input.ui-inputtext {
+  background: #F7F7F7 !important;
+  
+  padding: 0 25px;
+  border: 0;
+  line-height: 50px;
+  border-radius: 25px;
+}
+
+.datetime-date.with-time {
+  margin-right: 10px;
+}
+
+:host /deep/ .datetime-date.with-time input.ui-inputtext {
+  border-top-right-radius: 25px !important;
+  border-bottom-right-radius: 25px !important;
+  width: 180px;
+}
+
+:host /deep/ .datetime-time input.ui-inputtext {
+  border-top-right-radius: 25px !important;
+  border-bottom-right-radius: 25px !important;
+  width: 140px;
+}
+
+::ng-deep .ui-datepicker {
+  top: -56.227px;
+}

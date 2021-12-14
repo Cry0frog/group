@@ -1,0 +1,30 @@
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.display_flex_block_pasport_info {
+	display: flex;
+}
+
+.block_pasport_info {
+	display: flex;
+}
+
+.department_code {
+	margin-left: 46px;
+	display: flex;
+}
+
+@media (max-width: 500px) {
+	.department_code {margin-left: 0px;}
+	.block_pasport_info {display: block;}
+}
+
+@media (max-width: 660px) and (min-width: 600px) {
+	.display_flex_block_pasport_info {
+		display: block;
+	}
+	.department_code {
+		display: block;
+	}
+}

@@ -1,0 +1,22 @@
+<div>
+  <h1 *ngIf="!isCreateVacancy; else createVacancy" mat-dialog-title style="line-height: 1.2em; margin-bottom: 5px;">Предложите пользователю вакансию</h1>
+  <ng-template #createVacancy>
+    <h1 mat-dialog-title>У вас нет вакансий, которые Вы могли бы предложить другим исполнителям.
+        Пожалуйста, создайте вакансию.
+    </h1>
+</ng-template>
+  <div mat-dialog-content>
+      <app-list-vacancies [vacancyComponentMode]='getVacancyMode()' [shortVacancies]='vacancies'
+        (eventChooseVacancy)="handleChooseVacancy($event)">
+      </app-list-vacancies>
+  </div>
+  <div mat-dialog-actions style="display: flex; justify-content: space-between">
+      <button class="orange_btn" [mat-dialog-close]="null">
+          Отмена
+      </button>
+      <button class="orange_btn" (click)="linkToNewVacancy()">
+        Создать вакансию
+    </button>
+  </div>
+</div>
+

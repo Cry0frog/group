@@ -1,0 +1,73 @@
+<h1 mat-dialog-title>Добавление рекламы</h1>
+<div mat-dialog-content class="with_field">
+    <div>
+        <p class="zag-sz">Поставщик рекламы</p>
+        <input matInput type="text" [(ngModel)]="data.publicAdvertising.adProvider" required>
+    </div>
+
+    <div class="margin-top-30">
+        <p class="zag-sz">Категория</p>
+        <div class="select_roles">
+            <mat-select [(ngModel)]="selectCategoryId" (selectionChange)="selectCategory($event.value)">
+                <mat-option [value]="-1" >
+                    Открепить от категории
+                </mat-option>
+                <mat-option *ngFor="let category of rootCategories" class="my-mat-option" [value]="category.id" [disabled]="disabledCategory(category.id)">
+                    {{category.name}}
+                </mat-option>
+            </mat-select>
+        </div>
+        <p class="podpis-wf">При указании категории реклама будет появляться при выборе соответствующей категории.
+          Если категория не выбрана, то реклама будет статичной.
+        </p>
+    </div>
+
+    <div class="margin-top-30">
+        <p class="zag-sz">Место рекламы</p>
+        <div class="select_roles">
+            <mat-select [(ngModel)]="data.publicAdvertising.placeAdvertising" (selectionChange)="selectPlace($event.value)" required >
+                <mat-option *ngFor="let place of addPlaces" [value]="place.value" [disabled]="disabledPlace(place.value)">
+                  {{place.viewValue}}
+                </mat-option>
+            </mat-select>
+        </div>
+    </div>
+
+    <div *ngIf="isVisibleSelectionPriority()" class="margin-top-30">
+        <p class="zag-sz">Приоритет</p>
+        <div class="select_roles">
+            <mat-select [(ngModel)]="data.publicAdvertising.priority">
+                <mat-option *ngFor="let priority of sortedPriority" class="my-mat-option" [value]="priority" >
+                    {{priority}}
+                </mat-option>
+            </mat-select>
+        </div>
+    </div>
+
+    <div>
+      <p class="zag-sz margin-top-30">Ссылка для перехода</p>
+      <textarea matInput type="textarea" placeholder="Ссылка для перехода"
+          [(ngModel)]="data.publicAdvertising.href">
+      </textarea>
+  </div>
+
+    <div>
+        <p class="zag-sz margin-top-30">Ссылка рекламы</p>
+        <textarea matInput type="textarea" placeholder="Ссылка рекламы"
+            [(ngModel)]="data.publicAdvertising.advertising" required>
+        </textarea>
+    </div>
+    <p class="podpis-wf">Ссылка на рекламу должна оканчиваться на расширение файла (.png; .jpeg и тд).
+      Размер отображаемой рекламы должен быть 300x500</p>
+</div>
+
+
+<div class="margin-top-30" mat-dialog-actions style="display: flex; justify-content: space-between">
+    <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+    <div *ngIf = "data.publicAdvertising.id == null">
+        <button class="orange_btn" (click)="changeCategoryId()" [mat-dialog-close]="data.publicAdvertising" >Добавить</button>
+    </div>
+     <div *ngIf="data.publicAdvertising.id != null" >
+        <button class="orange_btn" (click)="changeCategoryId()" [mat-dialog-close]="data.publicAdvertising" >Изменить</button>
+     </div>
+</div>

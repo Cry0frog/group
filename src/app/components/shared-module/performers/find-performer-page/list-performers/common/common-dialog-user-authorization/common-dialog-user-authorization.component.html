@@ -1,0 +1,12 @@
+<h1 mat-dialog-title style="line-height: 1.2em;">Предложите пользователю задачу</h1>
+<div mat-dialog-content>
+    Уважаемый пользователь, Вы можете предложить задачу только после авторизации
+</div>
+<div mat-dialog-actions style="display: flex; justify-content: space-between;">
+    <button class="orange_btn" (click)="cancel()">
+        Отмена
+    </button>
+    <button class="orange_btn" (click)="userAuthorization()">
+      Продолжить
+    </button>
+</div>

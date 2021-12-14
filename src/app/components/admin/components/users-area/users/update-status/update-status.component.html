@@ -1,0 +1,17 @@
+<ng-container *ngIf="data.enabled == true">
+    Вы действительно хотите отключить пользователя?
+</ng-container>
+<ng-container *ngIf="data.enabled == false">
+    Вы действительно хотите подключить пользователя?
+</ng-container>
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+    <button mat-stroked-button color="primary" (click)="onNoClick()">Отмена</button>
+    <ng-container *ngIf="data.enabled == true">
+        <button class="right-align" mat-stroked-button color="primary"
+        (click)="isChangeStatus(data.enabled)" [mat-dialog-close]="data"> Отключить </button>
+    </ng-container>
+    <ng-container *ngIf="data.enabled == false">
+        <button class="right-align" mat-stroked-button color="primary"
+            (click)="isChangeStatus(data.enabled)" [mat-dialog-close]="data" > Подключить </button>
+    </ng-container>
+</div>

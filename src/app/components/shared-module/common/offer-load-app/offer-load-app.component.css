@@ -1,0 +1,24 @@
+@media (max-width: 450px) {
+  .orange_btn {width: -webkit-fill-available; margin-bottom: 5px;}
+}
+
+.orange_btn {
+  height: 30px;
+}
+
+a {
+  text-decoration: underline;
+  color: #888;
+  font-size: smaller;
+  margin: auto;
+}
+
+.offer_content{
+  background-image: url(../../../../../assets/img/S_telefonom2.png);
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  margin: auto;
+  max-width: 265px;
+}

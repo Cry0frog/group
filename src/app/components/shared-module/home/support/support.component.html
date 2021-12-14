@@ -1,0 +1,45 @@
+<div class="registration" [ngClass]="{'reg_online_consult': isOnlineConsultant}">
+	<div *ngIf="!isVisible" class="registration_content" [ngClass]="{'reg_content_online_consult': isOnlineConsultant}">
+
+    <div *ngIf="!isOnlineConsultant">
+        <div class="logo_reg"></div>
+        <h1 class="reg_h1">Служба поддержки</h1>
+    </div>
+
+    <div class="block_input" [ngClass]="{'block_input_online_consultant': isOnlineConsultant}">
+			<input matInput class="white-caret-cursor" type="text" placeholder="Ваше имя"
+				[(ngModel)]="requestSupport.fio">
+			<app-validation-error-template [errorHandler]="requestSupport" [propertyTemplate]="'fio'">
+			</app-validation-error-template>
+		</div>
+		<div class="block_input" [ngClass]="{'block_input_online_consultant': isOnlineConsultant}">
+			<input matInput class="white-caret-cursor" type="text" placeholder="Ваша электронная почта"
+				  [(ngModel)]="requestSupport.email">
+			<app-validation-error-template [errorHandler]="requestSupport" [propertyTemplate]="'email'">
+			</app-validation-error-template>
+        </div>
+
+        <div class="block_input" [ngClass]="{'block_inputMark': isOnlineConsultant}">
+			<p-inputMask class="registration-phone" mask="+7 (999) 999-9999" placeholder="Номер телефона"
+				[(ngModel)]="requestSupport.phoneNumber">
+			</p-inputMask>
+        </div>
+
+        <div class="block_textarea" [ngClass]="{'block_textarea_online_consultant': isOnlineConsultant}">
+            <textarea matInput type="textarea" placeholder="Ваше сообщение"
+                [(ngModel)]="requestSupport.message" required>
+            </textarea>
+            <app-validation-error-template [errorHandler]="requestSupport" [propertyTemplate]="'message'">
+            </app-validation-error-template>
+        </div>
+
+		<button style="margin-top: 20px;" class="orange_btn" [ngClass]="{'tech_support_btn': isOnlineConsultant}"
+		(click)="sendRequestSupport()">
+			Отправить
+		</button>
+	</div>
+	<div *ngIf="isVisible" class="registration_content">
+      <div class="logo_reg"></div>
+      <h1 class="reg_h1">Спасибо за обращение!</h1>
+	</div>
+</div>

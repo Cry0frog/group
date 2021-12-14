@@ -1,0 +1,144 @@
+<div class="section-content">
+    <div class="profile-first-block">
+        <div class="vooo-1">
+            <span>
+                <button *ngIf="isYourProfile() && !partnerInfo.isLegalEntityFull()" matTooltip="Редактировать профиль" class="edit-password" (click)="editPartnerInfo(partnerInfo)"></button>
+                <button *ngIf="isYourProfile() && partnerInfo.isLegalEntityFull()" matTooltip="Редактировать профиль" class="edit-password" (click)="editLegalEntityInfo()"></button>
+            </span>
+            <span>
+                <button *ngIf="isYourProfile()" matTooltip="Изменить пароль" class="password_btn" (click) = "changePassword(partnerInfo)"> </button>
+            </span>
+
+            <span *ngIf="isVisibleActOpenly" (click)="getTooltipMobile(tooltipGDRecommended)" matTooltip="{{tooltipActsOpenly}}" class="proveren standart_mode"></span>
+            <span *ngIf="isGoodRating() && partnerInfo.recommendedPerformer" (click)="getTooltipMobile(tooltipGDRecommended)" matTooltip="{{tooltipGDRecommended}}" class="gd_rec standart_mode"></span>
+
+            <span *ngIf="partnerInfo.isMemberPerformer()" (click)="getTooltipMobile(partnerInfo.tooltipMemberPerformer)" matTooltip="{{partnerInfo.tooltipMemberPerformer}}" class="member_performer"></span>
+            <span *ngIf="partnerInfo.isMemberAnother()" (click)="getTooltipMobile(partnerInfo.tooltipMemberAnother)" matTooltip="{{partnerInfo.tooltipMemberAnother}}" class="member_another"></span>
+            <span *ngIf="partnerInfo.isMemberStore()" (click)="getTooltipMobile(partnerInfo.tooltipMemberStore)" matTooltip="{{partnerInfo.tooltipMemberStore}}" class="member_store"></span>
+        </div>
+
+        <div *ngIf="isYourProfile() && partnerInfo.isLegalEntityFull()" class="become_member">
+          <a (click)="becomeMember()">Как стать партнёром</a>
+        </div>
+
+        <div>
+          <div class="vooo-1 mobile_mode">
+            <span *ngIf="isVisibleActOpenly" (click)="getTooltipMobile(tooltipActsOpenly)"
+              [matTooltipDisabled]="isMobileMode" matTooltip="{{tooltipActsOpenly}}" style="float: left;" class="proveren">
+            </span>
+          </div>
+          <div class="vooo-1 mobile_mode">
+            <span *ngIf="isGoodRating() && partnerInfo.recommendedPerformer" (click)="getTooltipMobile(tooltipGDRecommended)"
+             [matTooltipDisabled]="isMobileMode" matTooltip="{{tooltipGDRecommended}}" style="float: right;" class="gd_rec">
+            </span>
+          </div>
+          <div class="profile_img">
+              <img src="/api/partner/info/photo/{{partnerId}}">
+              <button matTooltip="Изменить фотографию" class="edit-profile_img" (click)="changeUserPhoto()" *ngIf="isYourProfile()"></button>
+          </div>
+        </div>
+
+        <div class="profile_name">
+            {{partnerInfo.fio}}
+        </div>
+
+        <div *ngIf='!isYourProfile() && partnerInfo.dateLastActivity'>
+          <p [ngClass]="{'is_not_online': partnerInfo.notOnline}" class="is_online">{{partnerInfo.onlineStatus}}</p>
+        </div>
+<!--
+        <div *ngIf="isMember()" style="border-radius: 20px; background-color: #FF8000; width: fit-content;">
+            <p style="color: white; padding: 0px 6px;">Партнер GD</p>
+        </div> -->
+
+        <div class="profile_db margin-top-20">
+            <span *ngIf="!partnerInfo.isLegalEntityFull()" class="profile_year">{{partnerInfo.age}}</span>
+            <span>{{partnerInfo.getCityName()}}</span>
+        </div>
+
+        <div *ngIf="partnerInfo.isLegalEntityFull()" class="profile_db margin-top-20">
+          <span >Адрес организации: {{legalEntityInfo.address}}</span>
+        </div>
+
+        <div class="profile_db margin-top-20">
+            {{partnerInfo.phoneNumber}}
+        </div>
+
+        <div *ngIf="(isYourProfile() && !partnerInfo.isLegalEntityFull()) || (!isLegalEntityMode && isAdmin())" class="profile_db margin-top-20">
+            <app-partner-info [partnerInfo]="partnerInfo"></app-partner-info>
+        </div>
+
+        <div *ngIf="(isYourProfile() && partnerInfo.isLegalEntityFull()) || (isAdmin() && isLegalEntityMode)" class="profile_db margin-top-20">
+            <app-legal-entity-info [legalEntityInfo]="legalEntityInfo" [partnerId]="partnerId"
+                (getCurrentLegalEntityInfoEvent)="getCurrentLegalEntityInfoHendler($event)">
+            </app-legal-entity-info>
+        </div>
+
+        <div class="profile_statistics margin-top-20">
+            <span>Выполнено заданий: {{partnerInfo.completedTasks}}</span>
+            <span [ngClass]="{
+                'good-rating': isGoodRating(),
+                'average-rating': isAverageRating()
+            }">
+                Средняя оценка: {{partnerInfo.averageRating | number:'1.0-1'}}
+            </span>
+            <span>Создано заданий: {{partnerInfo.createTasks}}</span>
+            <span>Обратная связь: {{partnerInfo.numberOfReviews}}</span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+
+    <div *ngIf="!isAdmin() && !isYourProfile()" class="offer" style="display: grid;">
+      <div style="display: flex;">
+        <button class="orange_btn" style="margin: 0 auto;" (click)="offerTask();">
+          Предложить задачу
+        </button>
+      </div>
+
+      <div style="display: flex;" *ngIf="isNotNullResume()">
+        <button class="orange_btn" style="margin: 10px auto 0 auto;" (click)="offerVacancy();">
+          Предложить вакансию
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="isNotNullResume() && !isYourProfile()" style="width: 100%; display: flex;">
+      <button class="orange_btn" style="margin: 10px auto 0 auto;" (click)="openMyResume()">
+        Открыть резюме
+      </button>
+    </div>
+
+    <div *ngIf="isYourProfile()" style="width: 100%; display: grid; margin-top: 20px;">
+      <button class="predz my_resume_btn_position" id="my-resume" (click)="openMyResume()">
+        Моё резюме
+      </button>
+      <button class="predz" (click)="linkToMyChats()">
+        Мои чаты
+      </button>
+    </div>
+
+    <div style="margin-top: 15px;">
+        <p *ngIf="!partnerInfo.isLegalEntityFull()" class="zag-profile">Обо мне </p>
+        <p *ngIf="partnerInfo.isLegalEntityFull()" class="zag-profile">О компании </p>
+        <p class="white_space">{{partnerInfo.aboutMe}}</p>
+    </div>
+
+    <div *ngIf="(isYourProfile() && isPerformer()) || partnerInfo.images.length != 0" id="work_examples">
+      <app-work-examples [images]='partnerInfo.images' [isOwner]='isYourProfile()' (reloadPartnerInfoEvent)='getCurrentPartnerInfo()'></app-work-examples>
+    </div>
+
+    <div *ngIf="isYourProfile() && isPerformer()">
+      <mat-slide-toggle [(ngModel)]="partnerInfo.getNotificationsAboutNewTaskMyCity"
+        (change)='changeNotificationConf($event.checked)'>
+          Получать уведомления только о заданиях, созданных в моём городе
+      </mat-slide-toggle>
+    </div>
+    <div *ngIf="!(isYourProfile() && !isPerformer())" class="margin-top-20">
+        <app-profile-perform-categories [partnerId]="partnerId"></app-profile-perform-categories>
+    </div>
+
+    <div *ngIf="isAuthenticated()" class="description-block bm50">
+      <p class="zag-profile">Отзывы:</p>
+      <app-comment-profile-wrapper [partnerId]="partnerId"></app-comment-profile-wrapper>
+    </div>
+</div>

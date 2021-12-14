@@ -1,0 +1,48 @@
+<div *ngIf="!rightNow">
+    <div *ngIf="data.isPartner">
+        <p>Вы довольны качеством выполнения задачи?</p>
+        <p>Оставьте оценку и комментарий исполнителю. Это поможет улучшить наш сервис.</p>    
+    </div>
+    <div *ngIf="!data.isPartner">
+        <p>Вы довольны выполнением договорённостей по задаче?</p>
+        <p>Оставьте оценку и комментарий заказчику. Это поможет улучшить наш сервис.</p>    
+    </div>
+    <div mat-dialog-actions style="display: flex; justify-content: space-between">
+        <button class="orange_btn" [mat-dialog-close]="data">Оставить позже</button>
+        <button class="orange_btn" (click)="addCommentRightNow()">Оставить сейчас</button>  
+    </div>
+</div>
+<div *ngIf="rightNow">
+    <div id="reviewStars-input">
+        <input id="star-4" type="radio" (click) = "isChangeStar(5)" name="reviewStars"/>
+        <label matTooltip="5" for="star-4"></label>
+    
+        <input id="star-3" type="radio" (click) = "isChangeStar(4)" name="reviewStars"/>
+        <label matTooltip="4" for="star-3"></label>
+    
+        <input id="star-2" type="radio" (click) = "isChangeStar(3)" name="reviewStars"/>
+        <label matTooltip="3" for="star-2"></label>
+    
+        <input id="star-1" type="radio" (click) = "isChangeStar(2)" name="reviewStars"/>
+        <label matTooltip="2" for="star-1"></label>
+    
+        <input id="star-0" type="radio" (click) = "isChangeStar(1)" name="reviewStars"/>
+        <label matTooltip="1" for="star-0"></label>
+    </div>
+
+    <div class = "bottom-chat">
+        <textarea matInput [(ngModel)]="newShortComment.comment" type="textarea" placeholder="Введите комментарий"
+         class="textarea-chat">
+        </textarea>
+    </div>
+    <app-validation-error-template [errorHandler]="newShortComment" [propertyTemplate]="'assessment'">
+    </app-validation-error-template>                
+    <app-validation-error-template [errorHandler]="newShortComment" [propertyTemplate]="'comment'">
+    </app-validation-error-template>
+    <app-validation-error-template [errorHandler]="newShortComment">
+    </app-validation-error-template>
+    <div mat-dialog-actions style="display: flex; justify-content: space-between">
+        <button class="orange_btn" [mat-dialog-close]="data">Оставить позже</button>
+        <button class="orange_btn" (click)="addComment()">Опубликовать</button>  
+    </div>
+</div>

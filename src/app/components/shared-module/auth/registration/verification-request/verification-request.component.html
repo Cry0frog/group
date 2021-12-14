@@ -1,0 +1,25 @@
+<div>
+    <p class="h1">Пройдите верификацию</p>
+    <p>На Ваш номер телефона отправлено смс с код подверждения регистрации.
+        Для продолжения регистрации, пожалуйста, введите код</p>
+
+    <div class="block_input with_field" style="display: flex; width: 100%;">
+        <input type="text" style="margin-left: auto; margin-right: auto; max-width: 200px;" [(ngModel)] = data.verificationToken>
+    </div>
+
+    <!-- <p *ngIf="message != null">{{message}}</p> -->
+</div>
+
+<div *ngIf="isShowTimer" id="timer" style="display: flex;">
+    <p style="margin-top: 30px; margin-left: auto; margin-right: auto;">Повторно запросить код Вы сможете через <b>{{min}}:{{sec}}</b></p>
+</div>
+<div *ngIf="repeatedRequest" style="display: flex;">
+    <button class="orange_btn" style="margin-left: auto; margin-right: auto; margin-top: 30px;" (click)="getVerificationRequest()">
+        Отправить код повторно
+    </button>
+</div>
+
+<div class="dialog-actions" mat-dialog-actions>
+    <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+    <button class="orange_btn" [mat-dialog-close]="data">Подтвердить</button>
+</div>

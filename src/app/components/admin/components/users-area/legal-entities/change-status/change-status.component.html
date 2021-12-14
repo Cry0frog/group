@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>Редактирование пользователя</h1>
+<div mat-dialog-content class="with_field">
+    <div>
+        <p class="zag-sz">Назначить партнером</p>
+        <div class="select_roles">
+            <mat-select [(ngModel)]="data.roles" [formControl]="toppings" (selectionChange)="selectRole($event.value)" multiple required>
+                <mat-option *ngFor="let role of addRolesLegalEntity" [value]="role.value" [disabled]="!isShowBtnDeact">
+                  {{role.viewValue}}
+                </mat-option>
+            </mat-select>
+        </div>
+    </div>
+    <div class="margin-top-30" *ngIf="isMember()">
+        <mat-checkbox [(ngModel)]="data.showMember" class="full-width-input">
+            Показать на странице "Партнеры"
+        </mat-checkbox>
+    </div>
+
+    <div>
+        <p class="zag-sz margin-top-30">Пароль</p>
+        <input matInput type="password" [(ngModel)]="data.password"
+            (change)="changePassword()" required>
+    </div>
+
+    <div>
+        <p class="zag-sz margin-top-30">Повторный пароль</p>
+        <input matInput type="password" [(ngModel)]="data.confirmationPassword" required>
+    </div>
+
+    <div>
+      <p class="zag-sz margin-top-30">Текущий баланс</p>
+      <input matInput type="text" [disabled]='true' [(ngModel)]="data.currentBonuses" required>
+  </div>
+</div>
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+    <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+    <button class="orange_btn" (click)="afterClose()" >Изменить</button>
+</div>

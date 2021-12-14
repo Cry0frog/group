@@ -1,0 +1,123 @@
+.block_input input {
+    padding-left: 21px;
+}
+
+.block_select {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+:host /deep/ .registration-phone input {
+    padding-left: 21px;
+}
+
+:host /deep/ .city-section .ui-dropdown {
+    width: 100%;
+    height: 50px;
+    border: 0;
+    background: rgba(255, 255, 255, 0.0);
+}
+
+
+:host /deep/ .city-section .ui-dropdown-label-container {
+    background: #F7F7F7 !important;
+
+    padding: 0 25px;
+    border: 0;
+    line-height: 50px;
+    border-radius: 25px;
+}
+
+:host /deep/ .city-section .ui-dropdown-label.ui-inputtext {
+    background: #F7F7F7 !important;
+    height: 50px;
+    font-size: 16px;
+    font-family: 'Roboto',sans-serif;
+    padding: 0;
+    background: rgba(255,255,255,0) !important;
+    text-align: initial;
+    color: #f4f4f499;
+}
+
+:host /deep/ .city-section .ui-dropdown-trigger.ui-state-default {
+    background: #F7F7F7 !important;
+    position: absolute;
+    right: 15px;
+    display: none;
+}
+
+:host /deep/ .city-choose .ui-dropdown-label-container {
+    margin-right: 2px;
+    background: rgba(255,255,255,0.1) !important;
+}
+
+:host /deep/ .city-section .ui-dropdown-filter-container {
+    background: rgb(5,39,76);
+}
+
+:host /deep/ .city-section .ng-trigger-overlayAnimation {
+    background: rgb(5,39,76);
+}
+
+:host /deep/ .city-section .ui-dropdown-item.ui-corner-all span {
+    color: white;
+}
+
+:host /deep/ .city-section .ui-dropdown-filter-container .ui-dropdown-filter.ui-inputtext {
+    padding-left: 21px;
+}
+
+::ng-deep .ui-dropdown-filter-container {
+    border-top-left-radius: 20px !important;
+    border-top-right-radius: 20px !important;;
+}
+
+::ng-deep .ui-dropdown-panel {
+    border-radius: 20px !important;
+}
+
+::ng-deep .ui-dropdown-item {
+    border-bottom-right-radius: 20px !important;
+    border-bottom-left-radius: 20px !important;
+}
+
+.not_agree_to_processing {
+    background: gray;
+}
+
+.index_link {
+  cursor: pointer;
+  display: initial;
+  color: #ff8000 !important;
+}
+
+.error_email {
+    text-align: center;
+    display: inline-block;
+    border-radius: 50%;
+    transition: transform .2s ease-in-out;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    pointer-events: none;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    background: red;
+    min-width: 22px;
+    min-height: 22px;
+    color: white;
+    margin-right: 10px;
+}
+
+.registration_content a {
+    color: white;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.registration_content a:hover {
+    text-decoration: none;
+}

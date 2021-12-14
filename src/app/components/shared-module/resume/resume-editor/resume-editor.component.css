@@ -1,0 +1,345 @@
+.margin-top-20 {
+  margin-top: 20px;
+}
+
+.kruzhok{
+  right: 50px;
+}
+
+.background_btn {
+  background: gray;
+}
+
+.margin-top-15 {
+  margin-top: 15px;
+}
+
+.margin-top-10 {
+  margin-top: 10px;
+}
+
+.margin-left-10 {
+  margin-left: 10px;
+}
+
+.section-margin {
+  margin-bottom: 25px;
+}
+
+:host /deep/ .datetime-section input.ui-inputtext {
+  background: #F7F7F7 !important;
+
+  padding: 0 25px;
+  border: 0;
+  line-height: 50px;
+  border-radius: 25px;
+}
+
+:host /deep/ .datetime-date input.ui-inputtext {
+  width: 90%;
+  margin-right: 2px;
+  padding-left: 55px;
+}
+
+:host /deep/ .datetime-date .ui-calendar::before {
+  position:absolute;
+  content:'';
+  font-family:'fontello';
+  font-size:20px;
+  text-align:center;
+  line-height:20px;
+  width:20px;
+  height:20px;
+  left:25px;
+  top:15px;
+  color:#888
+}
+
+.datetime-section{
+  position: relative;
+  display: flex;
+}
+
+.date-block-title {
+  display: -webkit-inline-box;
+  position: relative;
+  margin: auto 10px auto 0px;
+
+}
+
+.delete_prop_btn {
+  font-size: 24px;
+  color: rgb(177, 177, 177);
+  opacity: .9;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(-10px, 10px);
+}
+
+:host /deep/ .city-choose .ui-dropdown-label-container {
+  width: 100%;
+  margin-right: 2px;
+}
+
+:host /deep/ .city-section .ui-dropdown {
+  width: 270px;
+  height: 50px;
+  border: 0;
+}
+
+
+:host /deep/ .city-section .ui-dropdown-label-container {
+  background: #F7F7F7 !important;
+
+  padding: 0 25px;
+  border: 0;
+  line-height: 50px;
+  border-radius: 25px;
+}
+
+:host /deep/ .city-section .ui-dropdown-label.ui-inputtext {
+  background: #F7F7F7 !important;
+  height: 50px;
+
+  color: black;
+  font-size: 16px;
+  font-family: 'Roboto',sans-serif;
+  padding: 0;
+}
+
+::ng-deep  .city-section .ui-placeholder {
+color:#898989 !important;
+}
+
+:host /deep/ .city-section .ui-dropdown-trigger.ui-state-default {
+  background: #F7F7F7 !important;
+  position: absolute;
+  right: 15px;
+}
+
+:host /deep/ .city-choose .ui-dropdown-label-container {
+  width: 100%;
+  margin-right: 2px;
+}
+
+:host /deep/ .ui-dropdown-panel {
+  border-radius: 20px !important;
+}
+
+:host /deep/ .ui-dropdown-item {
+    font-size: 16px !important;
+}
+
+.textarea-resume {
+  width: calc(100%);
+}
+
+.with_field textarea{
+min-height:115px !important;
+}
+
+.heading_work {
+  padding-left:25px;
+margin-bottom:10px;
+  font-size: 18px;
+}
+
+.my-mat-option {
+  width: 90%;
+}
+
+.mat-dialog-title {margin: 0}
+
+:host /deep/ .mat-select-arrow {
+  border-left: 0px solid transparent !important;
+  border-right: 0px solid transparent !important;
+  border-top: 0px solid !important;
+}
+
+.margin-top-15 {
+  margin-top: 15px;
+}
+
+:host /deep/ .mat-card:not([class*=mat-elevation-z]) {
+  box-shadow:
+      1px 1px 2px 2px rgb(0 0 0 / 20%),
+      0 2px 1px 0 rgb(0 0 0 / 14%),
+      0 1px 3px 0 rgb(0 0 0 / 12%);
+}
+
+.element_center {
+  margin-right: 0px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.mat-input-element:disabled {
+  color: black;
+}
+
+::ng-deep .mat-select-disabled .mat-select-value {
+  color: black;
+}
+
+::ng-deep .ui-state-disabled, .ui-widget:disabled {
+  opacity: 1 !important;
+}
+
+:host /deep/ .city-section .ui-dropdown {
+  height: 50px;
+  border: 0;
+
+  min-width: 7.8em !important;
+}
+
+.mat-dialog-content {
+  margin: 0 -10px;
+  padding: 0 5px;
+}
+
+@media (max-width: 525px) {
+  :host /deep/ .city-section .ui-dropdown {
+      min-width: -webkit-fill-available !important;
+  }
+  :host /deep/ .city-section .ui-dropdown {
+    width: 50%;
+  }
+}
+
+@media(max-width: 465px) {
+  .datetime-section {
+    display: table;
+  }
+}
+
+@media(max-width: 810px) {
+  .datetime-section{
+    display: table;
+  }
+}
+
+@media(max-width: 320px) {
+  .zag-sz {
+    padding-left: 10px;
+  }
+}
+
+@media(max-width: 1050px){
+  .startWork,
+  .endWork{
+    min-width: 130px;
+  }
+}
+
+@media(max-width: 500px) {
+  ::ng-deep .mat-select-value {
+    line-height: 16px;
+    transform: translateY(-8px);
+    font-size: small;
+  }
+  ::ng-deep .mat-select-value-text span {
+    white-space: initial !important;
+  }
+  .select_education_block {
+    display: table-cell;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: initial;
+    line-height: 16px;
+    transform: translateY(3px);
+    font-size: small;
+  }
+  .with_field input,
+  .label-job,
+  .with_field textarea,
+  :host /deep/ .city-section .ui-dropdown-label.ui-inputtext {
+    font-size: small;
+  }
+  .mat_dialog_font_size {
+    font-size: 18px;
+  }
+}
+
+@media(max-width: 340px) {
+  ::ng-deep .mat-select-value {
+    font-size: small;
+  }
+  ::ng-deep .mat-select-panel {
+    width: 180px;
+  }
+}
+
+.additional_education_block_btn {
+  align-self: center;
+  display: block;
+  margin-top: 5px;
+}
+
+:host /deep/ .ui-datepicker-year {
+  background-color: white;
+  border-color: white;
+  margin-top: -.2em !important;
+  margin-left: 4px !important;
+  min-width: calc(30%);
+}
+
+.ui-datepicker-year option {
+  height: 40px;
+}
+
+:host /deep/ .ui-datepicker-month {
+  margin-left: 35px !important;
+}
+
+.resume_statistics_block {
+  margin-top: -20px;
+  float: right;
+  font-size: 14px;
+  line-height: 2px
+}
+
+@media (max-width: 700px) {
+  .resume_statistics_block {
+    margin-top: 15px;
+    float: initial;
+    font-size: small;
+    line-height: 16px;
+  }
+  .m_t_minus16 {
+    margin-top: -16px;
+  }
+}
+
+.startWork,
+.endWork {
+  margin-left: 5px;
+}
+
+@media(max-width: 810px) {
+  ::ng-deep .endWork input {
+    margin-top: 10px;
+  }
+
+  .startWork,
+  .endWork {
+    margin-left: 0px;
+  }
+}
+
+@media(max-width: 1050px) {
+  .startWork,
+  .endWork {
+    min-width: 130px;
+  }
+}
+
+.filled_star,
+.empty_star
+{
+  height: 25px !important;
+  background-size: 25px !important;
+  width: 25px !important;
+}

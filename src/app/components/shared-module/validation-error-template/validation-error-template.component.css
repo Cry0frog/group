@@ -1,0 +1,8 @@
+@media(max-width: 375px) {
+  .error-section {
+    padding-left: 0;
+  }
+  .error-badge-section{
+    display: table-caption;
+  }
+}

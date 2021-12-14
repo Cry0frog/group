@@ -1,0 +1,64 @@
+<div *ngFor = "let shortComment of shortComments" class = "feedback-block">
+    <div>
+        <div style="display: grid;">
+            <a href="/user/{{shortComment.idCommentator}}">
+                <img class="feedback-img" src="/api/partner/info/photo/{{shortComment.idCommentator}}"/>
+            </a>
+        </div>
+        <div>
+            <a class="name-commentator" href="/user/{{shortComment.idCommentator}}">
+                <div class = "feedback-zag">{{shortComment.nameCommentator}}</div>
+            </a>
+        </div>
+    </div>
+    <div>
+        <div *ngIf="shortComment.idCommentator==getCurrentId()">
+            <button matTooltip="Удалить" (click) = "deletePartnerComment(shortComment.id)" class = "buttonDeleteUsers"></button>
+            <button matTooltip="Редактировать" (click) = "editComment(shortComment)" class = "buttonUpdateUsers" [ngClass]="{'edit-mode-btn':isChangeComment}"></button>
+        </div>
+        <div class = "feedback-block-content">
+
+            <div class = "feedback-description">{{shortComment.comment}}</div>
+            <p class="zadanie-block-name" style="margin-top: 25px; color: #444;">
+                Задание: {{shortComment.taskName}}
+            </p>
+            <div class="speach-time" style="float: right;">
+                {{shortComment.date | date:'dd.MM.yyyy HH:mm'}}
+            </div>
+        </div>
+    </div>
+    <div class = "ball">{{shortComment.assessment}}</div>
+
+    <div>
+        <div *ngIf="isChangeComment && shortComment.id == newShortComment.id" class="margin-top">
+            <div id="reviewStars-input_1">
+                <input id="star-4" type="radio" (click) = "isChangeStar(5)" name="reviewStars"/>
+                <label matTooltip="5" for="star-4"></label>
+
+                <input id="star-3" type="radio" (click) = "isChangeStar(4)" name="reviewStars"/>
+                <label matTooltip="4" for="star-3"></label>
+
+                <input id="star-2" type="radio" (click) = "isChangeStar(3)" name="reviewStars"/>
+                <label matTooltip="3" for="star-2"></label>
+
+                <input id="star-1" type="radio" (click) = "isChangeStar(2)" name="reviewStars"/>
+                <label matTooltip="2" for="star-1"></label>
+
+                <input id="star-0" type="radio" (click) = "isChangeStar(1)" name="reviewStars"/>
+                <label matTooltip="1" for="star-0"></label>
+            </div>
+            <div class="bottom-chat">
+                <textarea [(ngModel)] = "shortComment.comment" type = "textarea"
+                  (keydown.enter)="sendRequest($event)" class="textarea-chat">
+                </textarea>
+                <button matTooltip="Обновить" (click)="updatePartnerComment(shortComment)" class="send_button"></button>
+            </div>
+            <app-validation-error-template [errorHandler]="newShortComment" [propertyTemplate]="'assessment'">
+            </app-validation-error-template>
+            <app-validation-error-template [errorHandler]="newShortComment" [propertyTemplate]="'comment'">
+            </app-validation-error-template>
+            <app-validation-error-template [errorHandler]="newShortComment">
+            </app-validation-error-template>
+        </div>
+    </div>
+</div>

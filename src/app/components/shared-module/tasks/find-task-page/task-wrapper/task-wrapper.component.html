@@ -1,0 +1,9 @@
+<app-task [task]="task" [mode]="getTaskMode()"
+  	[taskId]="taskId"
+	[taskRequests]="requests"
+	[newTaskRequest]="newRequest"
+	(sendRequestEvent)="sendRequestHandler($event)"
+	(sendHandlingRequestEvent)="sendHandlingRequestHandler($event)"
+	(removeRequestByPerformerEvent)="removeRequestByPerformerHandler($event)"
+>
+</app-task>

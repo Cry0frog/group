@@ -1,0 +1,67 @@
+<div class="zadanie-block" *ngFor="let performer of performers" style="width: 100%;">
+  <div style="background: #fcfcfc;">
+    <div class="feedback-block">
+        <div style="display: flex;">
+          <div style="display: flex;">
+              <a (click)="routerProfile(performer)" style="cursor: pointer;">
+                  <img class="feedback-img" src="/api/partner/info/photo/{{performer.idPartner}}"/>
+              </a>
+              <div class="feedback-block-content">
+                  <a (click)="routerProfile(performer)" style="cursor: pointer;">
+                      <div class="feedback-zag" style="width: 149px;">
+                          {{performer.fio}}
+                      </div>
+                  </a>
+              </div>
+          </div>
+          <div *ngIf="isShowRaiting(performer)" class="ball">{{performer.averageRating | number:'1.0-1'}}</div>
+          <div *ngIf="!isShowRaiting(performer)" class="ball"></div>
+      </div>
+      <div class="block_info">
+          <div class="margin-5-p-area right-performer-area" style="margin: 0;">
+              <div class="right-info-performer-item" style="width: 250px;">
+                  Всего выполнено задач: {{performer.completedTasks}}
+              </div>
+              <div class="right-info-performer-item">
+                  Город: {{performer.cityProperty?.name}}
+              </div>
+          </div>
+      </div>
+      <div *ngIf="!isAdmin()" class="request-handling-section">
+        <button class="orange_btn poluchit-btn margin-5 request-handling-btn"
+          (click)="offerTask(performer)" *ngIf="isNotYour(performer)">
+            Предложить задачу
+        </button>
+        <span class="task-price-color" *ngIf="!isNotYour(performer)">
+          Это Вы
+        </span>
+      </div>
+    </div>
+    <div class="block_member">
+      <div *ngIf="performer.isMemberPerformer()" (click)="getTooltipMobile(performer.tooltipMemberPerformer)" [matTooltipDisabled]="isMobileMode" matTooltip="{{performer.tooltipMemberPerformer}}" class="member_performer"></div>
+      <div *ngIf="performer.isMemberAnother()" (click)="getTooltipMobile(performer.tooltipMemberAnother)" [matTooltipDisabled]="isMobileMode" matTooltip="{{performer.tooltipMemberAnother}}" class="member_another"></div>
+      <div *ngIf="performer.isMemberStore()" (click)="getTooltipMobile(performer.tooltipMemberStore)" [matTooltipDisabled]="isMobileMode" matTooltip="{{performer.tooltipMemberStore}}" class="member_store"></div>
+    </div>
+    <div *ngIf="performer.categoriesName.length != 0" class="right-info-performer-item" [ngClass]="{'full_string': performer.isShowCategoriesNames}">
+      <p>
+        <a style="cursor: pointer;" (click)="performer.isShowCategoriesNames = controlString(performer.isShowCategoriesNames)">
+          Виды выполняемых работ:
+        </a>
+        {{getCategoriesNames(performer.categoriesName)}}
+      </p>
+    </div>
+    <div *ngIf="performer.aboutMe != null" class="right-info-performer-item" [ngClass]="{'full_string': performer.isShowAboutMe}">
+      <p>
+        <a *ngIf="!isLegalEntity(performer); else aboutCompany" style="cursor: pointer;" (click)="performer.isShowAboutMe = controlString(performer.isShowAboutMe)">
+          Обо мне:
+        </a>
+        <ng-template #aboutCompany>
+          <a style="cursor: pointer;" (click)="performer.isShowAboutMe = controlString(performer.isShowAboutMe)">
+            О компании:
+          </a>
+        </ng-template>
+        {{performer.aboutMe}}
+      </p>
+    </div>
+  </div>
+</div>

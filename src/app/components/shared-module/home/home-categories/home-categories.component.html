@@ -1,0 +1,351 @@
+<div *ngIf="!staticPageMode">
+  <div>
+    <div *ngFor="let category of sortedArray" class="flex">
+      <a (click)="routerCreateTask(category)" class="category_block">
+        <div class="category_block_content">
+          <div>
+            <p class="name_category_index">{{category.nameCategory}}</p>
+          </div>
+          <div class="category-photo">
+            <img class="photo-position" src="/api/category/photo/{{category.categoryId}}">
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div *ngIf="!isAllCategoriesMode">
+    <a class="see_cat" (click)="loadAllCategories()">
+      Посмотреть все категории
+    </a>
+  </div>
+</div>
+<div *ngIf="staticPageMode">
+  <div>
+    <div>
+      <div class="flex">
+        <a class="category_block">
+          <div class="category_block_content">
+            <div>
+              <p class="name_category_index">Грузоперевозки и услуги грузчиков</p>
+            </div>
+            <div class="category-photo">
+              <img class="photo-position" src="../../assets/img/image_static_categories/category_3109_1937982388">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="flex">
+        <a class="category_block">
+          <div class="category_block_content">
+            <div>
+              <p class="name_category_index">Курьерские доставки</p>
+            </div>
+            <div class="category-photo">
+              <img class="photo-position" src="../../assets/img/image_static_categories/category_3105_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="flex">
+        <a class="category_block">
+          <div class="category_block_content">
+            <div>
+              <p class="name_category_index">Покупка любого товара с доставкой на дом</p>
+            </div
+            ><div class="category-photo">
+              <img class="photo-position" src="../../assets/img/image_static_categories/category_3101_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="flex">
+        <a class="category_block">
+          <div class="category_block_content">
+            <div>
+              <p class="name_category_index">Попутный груз, корреспонденция</p>
+            </div>
+            <div class="category-photo">
+              <img class="photo-position" src="../../assets/img/image_static_categories/category_3116_-1132015408">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="flex">
+        <a class="category_block">
+          <div class="category_block_content">
+            <div>
+              <p class="name_category_index">Поиск попутчиков</p>
+            </div>
+            <div class="category-photo">
+              <img class="photo-position" src="../../assets/img/image_static_categories/category_3126_-1804187850">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="flex">
+        <a class="category_block">
+          <div class="category_block_content">
+            <div>
+              <p class="name_category_index">Ремонт, строительство</p>
+            </div>
+            <div class="category-photo">
+              <img class="photo-position" src="../../assets/img/image_static_categories/category_856_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="flex">
+        <a class="category_block">
+          <div class="category_block_content">
+            <div>
+              <p class="name_category_index">Красота и здоровье</p>
+            </div>
+            <div class="category-photo">
+              <img class="photo-position" src="../../assets/img/image_static_categories/category_401_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="flex">
+        <a class="category_block">
+          <div class="category_block_content">
+            <div>
+              <p class="name_category_index">Всё для автомобилей</p>
+            </div>
+            <div class="category-photo">
+              <img class="photo-position" src="../../assets/img/image_static_categories/category_446_-1280553247">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="flex">
+        <a class="category_block">
+          <div class="category_block_content">
+            <div   >
+              <p    class="name_category_index">Образование</p>
+            </div>
+            <div    class="category-photo">
+              <img    class="photo-position" src="../../assets/img/image_static_categories/category_359_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div    class="flex">
+        <a    class="category_block">
+          <div    class="category_block_content">
+            <div   >
+              <p    class="name_category_index">Юриспруденция, бухгалтерия</p>
+            </div>
+            <div    class="category-photo">
+              <img    class="photo-position" src="../../assets/img/image_static_categories/category_379_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div    class="flex">
+        <a    class="category_block">
+          <div    class="category_block_content">
+            <div   >
+              <p    class="name_category_index">Помощь с компьютерной/цифровой/свето-звуковой техникой</p>
+            </div>
+            <div    class="category-photo">
+              <img    class="photo-position" src="../../assets/img/image_static_categories/category_929_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div    class="flex">
+        <a    class="category_block">
+          <div    class="category_block_content">
+            <div   >
+              <p    class="name_category_index">Фото/видео/полиграфические услуги</p>
+            </div>
+            <div    class="category-photo">
+              <img    class="photo-position" src="../../assets/img/image_static_categories/category_559_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div    class="flex">
+        <a    class="category_block">
+          <div    class="category_block_content">
+            <div   >
+              <p    class="name_category_index">Одежда, обувь, аксессуары</p>
+            </div>
+            <div    class="category-photo">
+              <img    class="photo-position" src="../../assets/img/image_static_categories/category_9290_-1234334851">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div    class="flex">
+        <a    class="category_block">
+          <div    class="category_block_content">
+            <div   >
+              <p    class="name_category_index">Мероприятия и праздники</p>
+            </div>
+            <div    class="category-photo">
+              <img    class="photo-position" src="../../assets/img/image_static_categories/category_688_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div    class="flex">
+        <a    class="category_block">
+          <div    class="category_block_content">
+            <div   >
+              <p    class="name_category_index">Ремонт и установка бытовой/садовой/строительной техники</p>
+            </div>
+            <div    class="category-photo">
+              <img    class="photo-position" src="../../assets/img/image_static_categories/category_524_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div    class="flex">
+        <a    class="category_block">
+          <div    class="category_block_content">
+            <div   >
+              <p    class="name_category_index">Кулинария</p>
+            </div>
+            <div    class="category-photo">
+              <img    class="photo-position" src="../../assets/img/image_static_categories/category_978_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div    class="flex">
+        <a    class="category_block">
+          <div    class="category_block_content">
+            <div   >
+              <p    class="name_category_index">Помощь в уборке и домашних делах</p>
+            </div>
+            <div    class="category-photo">
+              <img    class="photo-position" src="../../assets/img/image_static_categories/category_759_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div    class="flex">
+        <a    class="category_block">
+          <div    class="category_block_content">
+            <div   >
+              <p    class="name_category_index">Разработка программного обеспечения и WEB-сервисов</p>
+            </div>
+            <div    class="category-photo">
+              <img    class="photo-position" src="../../assets/img/image_static_categories/category_606_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div    class="flex">
+        <a    class="category_block">
+          <div    class="category_block_content">
+            <div   >
+              <p    class="name_category_index">Работы с текстом</p>
+            </div>
+            <div    class="category-photo">
+              <img    class="photo-position" src="../../assets/img/image_static_categories/category_713_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div    class="flex">
+        <a    class="category_block">
+          <div    class="category_block_content">
+            <div   >
+              <p    class="name_category_index">Дизайн</p>
+            </div>
+            <div    class="category-photo">
+              <img    class="photo-position" src="../../assets/img/image_static_categories/category_631_-1601619777">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div    class="flex">
+        <a    class="category_block">
+          <div    class="category_block_content">
+            <div   >
+              <p    class="name_category_index">Реклама</p>
+            </div>
+            <div    class="category-photo">
+              <img    class="photo-position" src="../../assets/img/image_static_categories/category_663_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div    class="flex">
+        <a    class="category_block">
+          <div    class="category_block_content">
+            <div   >
+              <p    class="name_category_index">Туристические услуги</p>
+            </div>
+            <div    class="category-photo">
+              <img    class="photo-position" src="../../assets/img/image_static_categories/category_59_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div    class="flex">
+        <a    class="category_block">
+          <div    class="category_block_content">
+            <div   >
+              <p    class="name_category_index">Услуги спецтехники</p>
+            </div>
+            <div    class="category-photo">
+              <img    class="photo-position" src="../../assets/img/image_static_categories/category_734_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div    class="flex">
+        <a    class="category_block">
+          <div    class="category_block_content">
+            <div   >
+              <p    class="name_category_index">Ритуальные услуги</p>
+            </div>
+            <div    class="category-photo">
+              <img    class="photo-position" src="../../assets/img/image_static_categories/category_332_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div    class="flex">
+        <a    class="category_block">
+          <div    class="category_block_content">
+            <div   >
+              <p    class="name_category_index">Охрана и безопасность</p>
+            </div>
+            <div    class="category-photo">
+              <img    class="photo-position" src="../../assets/img/image_static_categories/category_185_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div    class="flex">
+        <a    class="category_block">
+          <div    class="category_block_content">
+            <div   >
+              <p    class="name_category_index">Контроль качества</p>
+            </div>
+            <div    class="category-photo">
+              <img    class="photo-position" src="../../assets/img/image_static_categories/category_648_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div    class="flex">
+        <a    class="category_block">
+          <div    class="category_block_content">
+            <div   >
+              <p    class="name_category_index">Услуги творческой направленности</p>
+            </div>
+            <div    class="category-photo">
+              <img    class="photo-position" src="../../assets/img/image_static_categories/category_1019_455457261">
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

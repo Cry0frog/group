@@ -1,0 +1,39 @@
+<div class="description-block mb40">
+  <p *ngIf="!isTaskImages" class="zag-profile">Примеры работ</p>
+  <div class="swiper-container swiper-edit">
+
+    <div class="swiper-wrapper" id="bestgallerys">
+      <div *ngIf="isOwner" class="swiper-slide" id="addImageBtn">
+        <button [disabled]='disabledBtn' class="plus-img" (click)='addImage()'>+</button>
+      </div>
+      <div *ngFor='let image of getSortImage()' class="swiper-slide">
+        <div *ngIf="isOwner; else notOwner" class="edit-slide">
+          <button [disabled]='disabledBtn' class="edit-img" (click)='updateImage(image)'></button>
+          <button [disabled]='disabledBtn' class="delete-img" (click)='deleteImage(image)'></button>
+        </div>
+        <ng-template #notOwner>
+          <div class="edit-slide" style="cursor: pointer;" (click)="setCurrentImage(image)" data-toggle="modal" data-target="#myModal1"></div>
+        </ng-template>
+        <img *ngIf="image.id; else addTaskImage" src="/api/partner/info/work_example/{{image.id}}" alt=""/>
+        <ng-template #addTaskImage>
+          <img [src]="image.croppedImg.imageBase64"/>
+        </ng-template>
+      </div>
+    </div>
+    <div *ngIf='images.length != 0'>
+      <div class="swiper-button-next" [ngClass]="{'swiper-button-disabled' : isDisabledSwipeNext()}" (click)="swipeNext()">
+        <span></span>
+      </div>
+      <div class="swiper-button-prev" [ngClass]="{'swiper-button-disabled' : isDisabledSwipePrev()}" (click)="swipePrev()">
+        <span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog-1" role="document">
+    <img *ngIf="currentImage.id" src="/api/partner/info/work_example/{{currentImage.id}}">
+    <button type="button" class="see_cat" data-dismiss="modal" aria-label="Close">Закрыть</button>
+  </div>
+</div>

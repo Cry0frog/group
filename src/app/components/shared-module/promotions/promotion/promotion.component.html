@@ -1,0 +1,46 @@
+<div class="section-content">
+  <div *ngIf="!partnerMode" style="margin-bottom: 20px;">
+    <a class="back-link" [routerLink]="['../']" >
+      <span class="back-icon"></span> назад
+    </a>
+  </div>
+
+  <div class="profile-first-block">
+      <div class="profile_img">
+          <img src="/api/promotion/photo/{{promoId}}">
+      </div>
+
+      <div>
+        <p class="h1">{{promotion.name}}</p>
+      </div>
+
+      <div class="summernote" [ngxSummernoteView]="promotion.description"></div>
+
+  </div>
+
+  <div *ngIf="isEmptyCode() && isEmptyPartnerPromo() && promotion.generateCode" style="display: flex;">
+    <button class="orange_btn centre" (click)="participatePromotion()">Принять участие</button>
+  </div>
+
+  <div *ngIf="!isEmptyCode()" style="display: flex;">
+    <div class="centre" style="display: flex;">
+        <a matTooltip="Ваш код" class="link">{{currentPartnerPromotion.generatedCode}}</a>
+    </div>
+  </div>
+
+  <div *ngIf="!isEmptyCode()" style="margin-top: 30px;">
+      <p class="h1">Зарегистрированные пользователи</p>
+      <div *ngFor="let friend of currentPartnerPromotion.friends" style="display: flex; margin-top: 30px;">
+        <div style="display: flex;" class="centre">
+          <div style="display: flex; width: 300px;">
+              <a href="/partner/{{friend.partnerId}}" style="font-size: 20px;" class="link vertical_centre">{{friend.username}}</a>
+          </div>
+          <div *ngIf="friend.conditionsMet" matTooltip="Пользователь заполнил информацию (ФИО, номер телефона, email, город)" class="green_ok_icon"></div>
+          <div *ngIf="!friend.conditionsMet" matTooltip="Пользователь не заполнил информацию (ФИО, номер телефона, email, город)" class="cross_icon"></div>
+        </div>
+
+      </div>
+  </div>
+
+  <p *ngIf="!isEmptyPartnerPromo()" style="margin-top: 20px;">Вы уже принимаете участие в акции. Спасибо, что воспользовались сервисом Good Deal</p>
+</div>

@@ -1,0 +1,7 @@
+<div *ngIf="promotion.id == null; else appPromotion">
+  <p class="h1">У вас пока нет личного промокода</p>
+  <app-my-list-promotions-wrapper></app-my-list-promotions-wrapper>
+</div>
+<ng-template #appPromotion>
+  <app-promotion [promoId]="promotion.id" [promotion]="promotion" [partnerMode]="true"></app-promotion>
+</ng-template>

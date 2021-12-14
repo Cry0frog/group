@@ -1,0 +1,601 @@
+<div>
+  <p *ngIf="!isUpdateTaskMode(); else updateTask" class="h1">Создать задание</p>
+  <ng-template #updateTask>
+    <p class="h1">Обновить задание</p>
+  </ng-template>
+  <div class="with_field city-section">
+      <p-dropdown class="city-choose" [options]="cities" [disabled]="isUpdateTaskMode()" [(ngModel)]="selectedCity"
+          (keyup)="onChangeCity($event)" (onChange)="onChooseCity($event)"
+          [filter]="true" placeholder="Выберите город" emptyFilterMessage="Не найдено">
+      </p-dropdown>
+  </div>
+  <div class="select_cat" style="margin: 0">
+      <div class="with_field_50">
+          <div class="select-block_sz" include="form-input()">
+              <mat-select class="select-sz" [(ngModel)]="selParentCategoryId" [disabled]="isUpdateTaskMode()"
+              [ngClass]="{'disabled_input': isUpdateTaskMode()}" [formControl]="toppingCategory"
+              (selectionChange)="onChangeParentCategory()" placeholder="Выберите категорию">
+                  <mat-option *ngFor="let category of sortById(categories)" class="my-mat-option" [value]="category.id">
+                      {{category.name}}
+                  </mat-option>
+              </mat-select>
+          </div>
+      </div>
+      <div class="with_field_50" *ngIf="childCategoriesNotEmpty()">
+  <div class="select-block_sz" include="form-input()">
+              <mat-select class="select-sz" [(ngModel)]="selCategoryId" [disabled]="isUpdateTaskMode()"
+              [formControl]="toppingChildCategory" [ngClass]="{'disabled_input': isUpdateTaskMode()}"
+              (selectionChange)="onChangeChildCategory()" placeholder="Выберите подкатегорию">
+                  <mat-option *ngFor="let childCategory of sortById(childCategories)" class="my-mat-option" [value]="childCategory.id">
+                      {{childCategory.name}}
+                  </mat-option>
+    </mat-select>
+  </div>
+      </div>
+  </div>
+<!--
+  <p class="isp-sz">
+      <strong>0 исполнителей</strong> готовы взяться за ваше задание
+  </p>
+-->
+
+  <div *ngIf="task != null" class="mt30">
+      <div class="with_field mb30">
+          <input type="text" [(ngModel)]="task.name" placeholder="Название задачи">
+          <app-validation-error-template [errorHandler]="task" [propertyTemplate]="'name'">
+          </app-validation-error-template>
+      </div>
+
+      <div class="mb20 mb30" *ngFor="let taskProp of task.getSortedPropertiesByOrder(); let i = index">
+
+          <ng-container *ngIf="taskProp.refProperty.isSimpleCategoryPropertyType()">
+              <p class="zag-sz" *ngIf="taskProp.refProperty.title != null">
+                  {{taskProp.refProperty.title}}
+              </p>
+              <div class="with_field mb10" *ngIf="taskProp.refProperty.isString()">
+                  <input type="text" [(ngModel)]="taskProp.value" placeholder="{{taskProp.refProperty.placeholder}}">
+                  <app-validation-error-template [errorHandler]="task" [propertyTemplate]="'properties[__INDEX_TEMP].value'" [index]="i">
+                  </app-validation-error-template>
+              </div>
+              <div class="with_field" *ngIf="taskProp.refProperty.isLongString()">
+                  <textarea type="textarea" [(ngModel)]="taskProp.value"
+                      placeholder="{{taskProp.refProperty.placeholder}}">
+                  </textarea>
+                  <app-validation-error-template [errorHandler]="task" [propertyTemplate]="'properties[__INDEX_TEMP].value'" [index]="i">
+                  </app-validation-error-template>
+              </div>
+              <p class="podpis-wf" *ngIf="taskProp.refProperty.exampleText != null">
+                  {{taskProp.refProperty.exampleText}}
+              </p>
+          </ng-container>
+
+          <ng-container *ngIf="taskProp.refProperty.isDateCategoryPropertyType()">
+              <p class="zag-sz ng-star-inserted mt30"> Режим выполнения заказа </p>
+              <div class="select_cat select_execution_mode mt20" *ngIf="taskProp.refProperty.allowChooseModeTaskPerform">
+                  <div class="with_field_50">
+                      <div class="select-block_sz" include="form-input()">
+                          <mat-select class="select-sz" [(ngModel)]="taskProp.modeTaskPerformer" [disabled]="disabledModeTaskPerformer()"  (selectionChange)="onChangePayable()">
+                              <mat-option *ngFor="let mode of modeTaskPerformerMapper" [value]="mode.value">
+                                  {{mode.viewValue}}
+                              </mat-option>
+                          </mat-select>
+                      </div>
+                  </div>
+                  <div class="gd-hint" (click)="getTooltipMobile(getTooltip(task.category))"
+                    [matTooltipDisabled]="isMobileMode" matTooltip="{{getTooltip(task.category)}}">
+                      ?
+                  </div>
+              </div>
+
+              <ng-container *ngIf="taskProp.isDatable()">
+                  <div *ngIf="taskProp.refProperty.isDateTime()" class="date-time-property-area">
+                      <div class="datetime-interval-section">
+                          <div class="datetime-section-title" *ngIf="taskProp.refProperty.isFirstTitleEmpty()">
+                              <span class="new_width title-left-align date-span-height">
+                                  {{taskProp.refProperty.firstTitle}}
+                              </span>
+                          </div>
+
+                          <div class="datetime-section">
+                              <div class="datetime-date-time">
+                                  <p-calendar id="date" class="datetime-date with-time" readonlyInput="true" [(ngModel)]="taskProp.date1"
+                                      dateFormat="dd.mm.yy" placeholder="Дата" [locale]="ru_calendar">
+                                  </p-calendar>
+                                  <p-calendar id="time" class="datetime-time" readonlyInput="true" [(ngModel)]="taskProp.time1" hourFormat="24"
+                                      placeholder="Время" timeOnly="true" [locale]="ru_calendar">
+                                  </p-calendar>
+                              </div>
+                          </div>
+                      </div>
+                      <app-validation-error-template [errorHandler]="task" [propertyTemplate]="'properties[__INDEX_TEMP]'" [index]="i">
+                      </app-validation-error-template>
+                  </div>
+
+                  <div class="date-time-property-area" *ngIf="taskProp.refProperty.isDateTimeInterval()">
+                      <div class="datetime-interval-section">
+                          <div class="datetime-section-title" *ngIf="taskProp.refProperty.isFirstTitleEmpty()">
+                              <span class="new_width title-left-align date-span-height">
+                                  {{taskProp.refProperty.firstTitle}}
+                              </span>
+                          </div>
+
+                          <div class="datetime-section">
+                              <div class="datetime-date-time">
+                                  <p-calendar id="date" class="datetime-date with-time" readonlyInput="true" [(ngModel)]="taskProp.date1"
+                                      dateFormat="dd.mm.yy" placeholder="Дата" [locale]="ru_calendar">
+                                  </p-calendar>
+                                  <p-calendar id="time" class="datetime-time" readonlyInput="true" [(ngModel)]="taskProp.time1" hourFormat="24"
+                                      placeholder="Время" timeOnly="true" [locale]="ru_calendar">
+                                  </p-calendar>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="datetime-interval-section">
+                          <div class="datetime-section-title">
+                              <span class="new_width title-left-align date-span-height" *ngIf="taskProp.refProperty.isSecondTitleEmpty()">
+                                  {{taskProp.refProperty.secondTitle}}
+                              </span>
+                          </div>
+                          <div class="datetime-section">
+                              <div class="datetime-date-time">
+                                  <p-calendar id="date" class="datetime-date with-time" readonlyInput="true" [(ngModel)]="taskProp.date2"
+                                      dateFormat="dd.mm.yy" placeholder="Дата" [locale]="ru_calendar">
+                                  </p-calendar>
+                                  <p-calendar id="time" class="datetime-time" readonlyInput="true" [(ngModel)]="taskProp.time2" hourFormat="24"
+                                      placeholder="Время" timeOnly="true" [locale]="ru_calendar">
+                                  </p-calendar>
+                              </div>
+                          </div>
+                      </div>
+                      <app-validation-error-template [errorHandler]="task" [propertyTemplate]="'properties[__INDEX_TEMP]'" [index]="i">
+                      </app-validation-error-template>
+                  </div>
+
+                  <div class="date-time-property-area" *ngIf="taskProp.refProperty.isDate()">
+                      <div class="datetime-interval-section">
+                          <div class="datetime-section-title" *ngIf="taskProp.refProperty.isFirstTitleEmpty()">
+                              <span class="new_width title-left-align date-span-height">
+                                  {{taskProp.refProperty.firstTitle}}
+                              </span>
+                          </div>
+                          <div class="datetime-section">
+                              <p-calendar id="date" class="datetime-date" readonlyInput="true" [(ngModel)]="taskProp.date1"
+                                  dateFormat="dd.mm.yy" placeholder="Дата" [locale]="ru_calendar">
+                              </p-calendar>
+                          </div>
+                      </div>
+                      <app-validation-error-template [errorHandler]="task" [propertyTemplate]="'properties[__INDEX_TEMP]'" [index]="i">
+                      </app-validation-error-template>
+                  </div>
+              </ng-container>
+
+          </ng-container>
+
+          <ng-container *ngIf="taskProp.refProperty.isMapCategoryPropertyType()">
+              <p class="zag-sz" *ngIf="taskProp.refProperty.title != null">
+                  {{taskProp.refProperty.title}}
+              </p>
+              <p class="card-signature" >Используйте долгое нажатие на карте для добавления новой точки. Или нажатие на старой точке для её удаления.</p>
+              <ng-container *ngIf="taskProp.refProperty.isCoordinate()">
+                  <div class="with_field" *ngIf="taskProp.refProperty.showSelectPlaceForService">
+                      <form class="form">
+                          <div class="radio-container">
+                              <div class="form-item radio-btn nth-2" *ngFor="let location of getPreparedAvailableLocationTypes(selCategory.availableLocationTypes)">
+                                  <input type="radio" name="option1" id="{{location.value}}"
+                                      [(ngModel)]="taskProp.locationType" [value]="location.value"
+                                      (click)="changeLocationType(taskProp)"
+                                      >
+                                  <label for="{{location.value}}">{{location.viewValue}}</label>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+
+                  <ng-container *ngIf="isMapAvailableToLocationStatus(taskProp)">
+                      <app-map-handler [mapMode]="getMapMode(taskProp.refProperty)"
+                          [task]="task" [mapProperty]="taskProp" [isUpdateTask]="isUpdateTaskMode()"
+                          (addAddressEvent)="addAddressHandler($event)"
+                          (updateAddressEvent)="updateAddressHandler($event)"
+                      >
+                      </app-map-handler>
+
+                      <ng-container>
+                          <div *ngFor="let point of taskProp.getPointsSortedByOrder()">
+                              <div class="with_field mb10 spec-field">
+                                  <div class="cordinate_block" style="margin-top: 20px; width: 100%;">
+                                      <div class="with_field city-section geoposition">
+                                          <p-dropdown #dd class="city-choose" [options]="point.selectedItems" [disabled]="isUpdateTaskMode()" [(ngModel)]="point.geoCityPropertyAddr"
+                                              (keyup)="onUpdateChangeAddress($event, point)"
+                                              (onClick)="onClickUpdate($event, point, dd)"
+                                              [filter]="true" filterBy="fakeFilter"
+                                              placeholder="Выберите адрес"
+                                              [style]="{'width':'100%'}"
+                                              emptyFilterMessage="Не найдено">
+                                          </p-dropdown>
+                                      </div>
+                                      <button class="geolocation" style="margin-right: 10px" (click)="goToPoint(point)"></button>
+                                      <button *ngIf="!isUpdateTaskMode()" matTooltip="Удалить адрес" class="buttonDeleteUsers"
+                                          style="background-color: #FF8000;"
+                                          (click)="deleteAddress(point)">
+                                      </button>
+                                  </div>
+                              </div>
+                          </div>
+
+                      </ng-container>
+
+                      <div *ngIf="(isCoordinateProp() && !isNotEmptyPoints() && !isUpdateTaskMode()) || addAddressMode" class="with_field city-section" style="margin-top: 20px;">
+                          <p-dropdown class="city-choose" id="addr" [options]="addresses" [(ngModel)]="selectedAddr"
+                              (keyup)="onChangeAddress($event)"
+                              (onChange)="onChooseAddress($event)"
+                              (onClick)="onClick($event)"
+                              [filter]="true" filterBy="fakeFilter"
+                              placeholder="Выберите адрес"
+                              emptyFilterMessage="Не найдено">
+                          </p-dropdown>
+                      </div>
+                      <button *ngIf="isCoordinateProp() && isNotEmptyPoints() && !isUpdateTaskMode()" matTooltip="Добавить адрес"
+                        style="height: 30px; padding: 0 15px; margin-bottom: 10px; margin-left: 30px;" class="orange_btn" (click)="addAddressMode = !addAddressMode">
+                          Добавить адрес
+                      </button>
+
+                  </ng-container>
+                  <div *ngIf="addAddressMode">
+                    <p class="podpis-wf">Поле «Выберете адрес» не является обязательным. Заполнять в случае необходимости</p>
+                  </div>
+              </ng-container>
+
+              <ng-container *ngIf="taskProp.refProperty.isCoordinatePath()">
+                  <app-map-handler [mapMode]="getMapMode(taskProp.refProperty)"
+                      [task]="task" [mapProperty]="taskProp" [isUpdateTask]="isUpdateTaskMode()"
+                      (addAddressEvent)="addAddressHandler($event)"
+                      (updateAddressEvent)="updateAddressHandler($event)"
+                      (showRouteInfoEvent)="showRouteInfoHandler($event)"
+                      (pathRefreshedEvent)="pathRefreshedHandler($event)"
+                      >
+                  </app-map-handler>
+                  <ng-container *ngIf="isShowDistance">
+                      <p class="podpis-wf">
+                          Предполагаемое расстояние {{distance}} (м)
+                      </p>
+                  </ng-container>
+
+                  <ng-container>
+                      <div *ngFor="let point of taskProp.getPointsSortedByOrder()">
+                          <div class="cordinate_block" style="margin-top: 20px; width: 100%; display: flex;">
+                              <div class="with_field city-section geoposition">
+                                  <p-dropdown #dd class="city-choose" [options]="point.selectedItems" [disabled]="isUpdateTaskMode()" [(ngModel)]="point.geoCityPropertyAddr"
+                                      (keyup)="onUpdateChangeAddress($event, point)"
+                                      (onClick)="onClickUpdate($event, point, dd)"
+                                      [filter]="true" filterBy="fakeFilter"
+                                      placeholder="Выберите адрес"
+                                      [style]="{'width':'100%'}"
+                                      emptyFilterMessage="Не найдено">
+                                  </p-dropdown>
+                              </div>
+                              <button class="geolocation" (click)="goToPoint(point)"></button>
+                              <!-- <button matTooltip="Удалить адрес" class="buttonDeleteUsers"
+                                style="margin-top: 10px;background-color: #FF8000;"
+                                (click)="deleteAddress(point)">
+                              </button> -->
+                          </div>
+                          <!--
+                          <div class="with_field inline-input">
+                              <input class="home-input" type="text" [(ngModel)]="point.home" placeholder="Дом">
+                              <input class="korpus-input" type="text" [(ngModel)]="point.corps" placeholder="Корпус">
+                              <input class="kvartira-input" type="text" [(ngModel)]="point.apartmentOrOffice" placeholder="Квартира/офис">
+                          </div>
+                          -->
+                      </div>
+                  </ng-container>
+
+                  <div *ngIf="(!isNotEmptyPoints() || addAddressMode) && !isUpdateTaskMode()" class="with_field city-section" style="margin-top: 20px;">
+                      <p-dropdown class="city-choose" [options]="addresses" [(ngModel)]="selectedAddr"
+                          (keyup)="onChangeAddress($event)"
+                          (onChange)="onChooseAddress($event)"
+                          (onClick)="onClick($event)"
+                          [filter]="true" filterBy="fakeFilter"
+                          placeholder="Выберите адрес"
+                          emptyFilterMessage="Не найдено">
+                      </p-dropdown>
+                  </div>
+                  <button *ngIf="isNotEmptyPoints() && !isUpdateTaskMode()" matTooltip="Добавить адрес" style="height: 30px; padding: 0 15px; margin-bottom: 10px; margin-left: 30px;"
+                    class="orange_btn" (click)="addAddressMode = !addAddressMode">
+                      Добавить адрес
+                  </button>
+              </ng-container>
+              <p class="podpis-wf" *ngIf="taskProp.refProperty.exampleText != null">
+                  {{taskProp.refProperty.exampleText}}
+              </p>
+
+              <div class="select_cat mt20 wrap-calc-choosen-prop"
+                  *ngIf="taskProp.refProperty.showCategoryTransport || taskProp.refProperty.showCategoryWeight || taskProp.refProperty.showCategoryProduct">
+                  <div class="with_field_50 wrap-calc-choosen-prop-el" *ngIf="taskProp.refProperty.showCategoryTransport">
+                      <div class="select-block_sz" include="form-input()">
+                          <mat-select required="" class="select-sz" [disabled]="isUpdateTaskMode()" [(ngModel)]="taskProp.transportCategory"
+                                  (selectionChange)="onChangePayable()" placeholder="Категория транспорта">
+                              <mat-option *ngFor="let tCategory of getTransportCategoryMapper()" [value]="tCategory.value">
+                                  {{tCategory.viewValue}}
+                              </mat-option>
+                          </mat-select>
+                      </div>
+                  </div>
+                  <div class="with_field_50 wrap-calc-choosen-prop-el" *ngIf="taskProp.refProperty.showCategoryWeight">
+                      <div class="select-block_sz" include="form-input()">
+                          <mat-select required="" class="select-sz" [disabled]="isUpdateTaskMode()" [(ngModel)]="taskProp.weightCategory"
+                                  (selectionChange)="onChangePayable()" placeholder="Весовая категория">
+                              <mat-option *ngFor="let wCategory of getWeightCategoryMapper()" [value]="wCategory.value">
+                                  {{wCategory.viewValue}}
+                              </mat-option>
+                          </mat-select>
+                      </div>
+                  </div>
+                  <div class="with_field_50 wrap-calc-choosen-prop-el" *ngIf="taskProp.refProperty.showCategoryProduct">
+                      <div class="select-block_sz" include="form-input()">
+                          <mat-select required="" class="select-sz" [(ngModel)]="taskProp.productCategory"
+                                  (selectionChange)="onChangePayable()" placeholder="Категория товаров">
+                              <mat-option *ngFor="let pCategory of getCategoryProductMapper()" [value]="pCategory.value">
+                                  {{pCategory.viewValue}}
+                              </mat-option>
+                          </mat-select>
+                      </div>
+                  </div>
+              </div>
+              <div class="cb-div mt20 shift_15" *ngIf="taskProp.refProperty.showPorterOption">
+                  <div class="gruz-block mr30" style="margin-top: auto; margin-bottom: auto; vertical-align: baseline;">
+                      <input type="checkbox" id="c11" name="cc" [(ngModel)]="taskProp.porterSelected" [disabled]="isUpdateTaskMode()"
+                          (change)="onChangePayable()"/>
+                      <label class="label-job" for="c11">
+                          <span></span>Наличие грузчиков
+                      </label>
+                  </div>
+                  <div class="gruz-block">
+                      <p style="margin-bottom: auto; margin-top: auto;">Количество</p>
+                      <div style="display: flex;">
+                          <input class="gruz" [style.line-height]="isMobilePhoneApple?'30px':'50px'" type="number" [(ngModel)]="taskProp.porterCount"
+                              min=1 max=10 [disabled]="!taskProp.porterSelected"
+                              (change)="onChangePayable()" />
+                          <div class="gd-hint" (click)="getTooltipMobile('Оплата за грузчиков производится отдельно на месте')"
+                          [matTooltipDisabled]="isMobileMode" matTooltip="Оплата за грузчиков производится отдельно на месте">
+                              ?
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="gruz-block mb30" *ngIf="isShowPassenger(taskProp)">
+                  <div style="display: flex;">
+                      <p style="margin-top: auto; margin-bottom: auto;">Количество пассажиров</p>
+                  </div>
+                  <div>
+                      <input class="gruz" type="number" min=1 max=30 [(ngModel)]="taskProp.passengerCount"
+                      (change)="onChangePayable()" />
+                  </div>
+              </div>
+
+              <ng-container *ngIf="!task.category.showReadyToPay || isAnyonePath()">
+
+                  <ng-container *ngIf="calcMode.AT_CHOICE == taskProp.refProperty.calcMode">
+                      <p class="zag-sz margin-top-30">Выберите на основе чего производить расчёт цены</p>
+                      <mat-select class="select-sz" [(ngModel)]="taskProp.choosenCalcMode" (selectionChange)="onChangePayable()">
+                          <mat-option *ngFor="let mode of availableCalcModeMapper" [value]="mode.value">
+                              {{mode.viewValue}}
+                          </mat-option>
+                      </mat-select>
+                  </ng-container>
+
+                  <ng-container *ngIf="taskProp.choosenCalcMode == calcMode.BASED_ON_HOUR">
+                      <div class="with_field mb20">
+                          <input id="price-zdn" type="text" pKeyFilter="pint" [disabled]="isUpdateTaskMode()" (change)="onChangePayable()"
+                              [(ngModel)]="task.hour" maxlength="2">
+                          <span class="price-span">Укажите длительность услуги (в часах)</span>
+                      </div>
+                      <p class="podpis-wf" *ngIf="hourMessage != null" style="margin-top: -10px;">
+                          {{hourMessage}}
+                      </p>
+                  </ng-container>
+
+              </ng-container>
+              <app-validation-error-template [errorHandler]="task" [propertyTemplate]="'properties[__INDEX_TEMP]'" [index]="i">
+              </app-validation-error-template>
+
+          </ng-container>
+      </div>
+
+      <div *ngIf="task.category.showImages" id="work_examples">
+        <p>При необходимости прикрепите фото</p>
+        <div>
+          <app-work-examples [disabledBtn]="isUploadFileUpdate" [images]='task.images' [isOwner]='true' [isTaskImages]='true' [taskId]='task.id'></app-work-examples>
+        </div>
+      </div>
+
+      <div *ngIf="task.category.showDocs" style="margin-bottom: 20px;">
+        <p>При необходимости прикрепите документы</p>
+        <div class="cb-div">
+          <div>
+            <input #fileInput name="file" type="file"
+              (change)="fileChanged($event.target.files[0])" style="display: none;">
+            <button class="orange_btn" [disabled]="isUploadFileUpdate" (click)="fileInput.click()">Прикрепить документы</button>
+          </div>
+          <div>
+            <div *ngFor="let doc of task.docs">
+              <div *ngIf="task.docs.length != 0" class="cb-div docs">
+                <button (click)="deleteDoc(doc)" [disabled]="isUploadFileUpdate" class='button_delete_doc' matTooltip="Удалить документ"></button>
+                <p style="margin: 0px;">{{doc.nameDoc}}</p>
+              </div>
+            </div>
+            <div *ngIf="isUploadFileUpdate" class="progress_bar">
+              <mat-progress-bar mode="determinate" value="{{eventProgress}}"></mat-progress-bar>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="zag-sz spspan">Предпочтительный способ оплаты</p>
+      <div class="with_field">
+          <form class="form">
+              <div style="display: flex;">
+                  <div class="radio-container" id="globalAvailablePayoutTypeContainer">
+                      <div *ngFor="let type of getPreparedAvailablePayoutTypes(selCategory.availablePayoutTypes)" class="form-item radio-btn nth-2">
+                          <input type="radio" name="option1" id="{{type.value}}" (click)="onPayoutSelect(type.value)">
+                          <label for="{{type.value}}">
+                              {{type.viewValue}}
+                          </label>
+                      </div>
+                  </div>
+                  <div class="gd-hint" (click)="getTooltipMobile(hintSecurePay + '\n' + hintUsualPay)"
+                    [matTooltipDisabled]="isMobileMode" *ngIf="getPreparedAvailablePayoutTypes(selCategory.availablePayoutTypes).length == 2"
+                      matTooltip="{{hintSecurePay}} &#13;{{hintUsualPay}}"
+                  >
+                      ?
+                  </div>
+              </div>
+          </form>
+
+          <div class="with_field_50 mt10 mb20" *ngIf="task.isRegularPayoutType()">
+              <div class="select-block_sz" include="form-input()">
+                  <mat-select class="select-sz" [(ngModel)]="this.task.payoutType">
+                      <mat-option *ngFor="let type of regularCategoryPropertyPayoutTypes" [disabled]="disabledRegularAccount(type)" placeholder="Выберите подкатегорию"
+                      [value]="type.value">
+                          {{type.viewValue}}
+                      </mat-option>
+                  </mat-select>
+              </div>
+          </div>
+      </div>
+
+      <div class="with_field mt10 mb20" *ngIf="!isAnyonePath() || task.category.showReadyToPay">
+          <input id="price-zdn" type="text" pKeyFilter="pint" [disabled]="isUpdateTaskMode()" (change)="onChangeReadyToPay()"
+              [(ngModel)]="task.readyToPay" maxlength="10">
+          <span class="price-span" *ngIf="task.category.isEmptyPayMessage()">Укажите примерную стоимость</span>
+          <span class="price-span" *ngIf="!task.category.isEmptyPayMessage()">{{task.category.payMessage}}</span>
+
+          <span *ngIf="task.category.minCost" class="price-span">Минимальная стоимость задачи {{task.category.minCost}}руб.</span>
+          <app-validation-error-template [errorHandler]="task" [propertyTemplate]="'readyToPay'">
+          </app-validation-error-template>
+      <!--
+          <p class="zag-sz spspan" *ngIf="this.task.commission != null">
+              Комиссия (Включена): {{this.task.commission}} р
+          </p>
+      -->
+      </div>
+
+      <ng-container *ngIf="!task.category.showReadyToPay || isAnyonePath()">
+          <ng-container *ngIf="!isCalculated && isAnyonePath() && !task.category.showReadyToPay">
+              <p class="itogo">Итого: <span>Сумма вычисляется...</span>
+              </p>
+          </ng-container>
+          <ng-container *ngIf="isCalculated || task.category.showReadyToPay">
+              <div style="display: -webkit-box; margin-top: 20px;">
+                  <div style="display: block; margin-bottom: 20px;">
+                      <p style="font-size: 20px; margin-bottom: 0px;">Итого:
+                          <span>{{task.readyToPay}} руб.</span>
+                      </p>
+                      <!--
+                      <p class="spspan" *ngIf="this.task.commission != null">
+                          Комиссия: {{this.task.commission}} р
+                      </p>
+                  -->
+                  </div>
+
+                  <!--
+                  <div class="gd-hint" matTooltip="{{calcPayWarning}}">
+                      ?
+                  </div>
+                  -->
+              </div>
+          </ng-container>
+      </ng-container>
+
+      <div class="with_field flex mb30">
+          <input id="fio" type="text" [disabled]="isUpdateTaskMode()" [ngClass]="{'disabled_input': isUpdateTaskMode()}"
+            [(ngModel)]="userInfo.name" placeholder="Как к Вам обращаться?" >
+          <p-inputMask id="phone1" mask="+7 (999) 999-9999" [disabled]="isUpdateTaskMode()" placeholder="Номер телефона"
+              [(ngModel)]="userInfo.phoneNumber"></p-inputMask>
+      </div>
+      <div *ngIf="!isUpdateTaskMode()" class="with_field_50 mt10 mb20">
+        <p class="zag-sz spspan">Статус задания</p>
+        <div class="select-block_sz" include="form-input()">
+            <mat-select class="select-sz" [(ngModel)]="this.task.status">
+                <mat-option *ngFor="let status of taskStatusMapper" [value]="status.value">
+                    {{status.viewValue}}
+                </mat-option>
+            </mat-select>
+        </div>
+      </div>
+
+      <div>
+        <p class="zag-sz spspan">Видна для</p>
+        <div class="with_field_50 mt10 mb20" style="display: block;">
+          <div class="select-block_sz" include="form-input()">
+              <mat-select class="select-sz" [(ngModel)]="this.task.visibleByRoles" placeholder="Видна для" multiple>
+                  <mat-option *ngFor="let role of visibleByRoles" [value]="role.value" (onSelectionChange)="selectVisibleRole($event.source)" [disabled]="isDisableRole(role.value)">
+                      {{role.viewValue}}
+                  </mat-option>
+              </mat-select>
+          </div>
+        </div>
+      </div>
+
+      <p *ngIf="!task.isRegularPayoutType()" style="font-size: 14px; color: red; padding-left: 25px; margin-top: -7px;">Если одна из сторон
+          является организацией, то для оплаты задания Вы можете выбрать только обычный платёж, так как расчёт может вестись
+          через договор и расчётный счёт.
+      </p>
+
+      <div *ngIf="!isAdmin">
+          <div class="cb-div mt30">
+              <input type="checkbox" id="c1" name="cc" [(ngModel)]="task.getEmailAboutNewSuggestion"/>
+              <label class="label-job" for="c1">
+                  <span></span>Получать email-уведомления о новых предложениях
+              </label>
+          </div>
+      </div>
+
+      <p *ngIf="!isSecurePayout()" class="pped">Перед началом работы рекомендуем проверить паспорт исполнителя и составить <a href="../../../../../assets/Договор об оказании услуг.docx" target="_blank" class="link">договор</a></p>
+      <p *ngIf="isBadPartner()" style="font-size: 14px; color: red;">Внимание! Вы не сможете создать задачу, так как Ваш аккаунт заблокирован</p>
+      <p *ngIf="errorStatusNotVerify" style="color: red; font-size: 14px;">Чтобы создать задачу, необходимо подтвердить номер телефона и указать Вашу почту.
+          Номер телефона вы можете подтвердить либо при создании задачи, указав свой номер, либо в личном профиле.</p>
+      <p style="color: red; font-size: 14px;">Внимание! Раздел «Создать задание» служит для создания заданий заказчиками, т.е. тех людей, которые
+          ищут исполнителей для выполнения услуги. Объявления от исполнителей будут удаляться. Вы исполнитель и у Вас остались вопросы?
+          Ознакомьтесь с <a class="link" target="_blank" href="https://www.youtube.com/watch?v=M2_QN7BHiVY">видеоинструкцией</a> для исполнителей
+      </p>
+      <div *ngIf="!isAdmin && !isUpdateTaskMode() && !isDisabledBtn">
+          <button class="orange_btn" [ngClass]="{'background_btn': isBadPartner() || isDisabledBtn}" (click)="createTask()" [disabled]="isPreview || isBadPartner() || isDisabledBtn">
+              Создать задание
+          </button>
+      </div>
+
+      <div *ngIf="isDisabledBtn" class="windows8">
+        <div class="wBall" id="wBall_1">
+          <div class="wInnerBall"></div>
+        </div>
+        <div class="wBall" id="wBall_2">
+          <div class="wInnerBall"></div>
+        </div>
+        <div class="wBall" id="wBall_3">
+          <div class="wInnerBall"></div>
+        </div>
+        <div class="wBall" id="wBall_4">
+          <div class="wInnerBall"></div>
+        </div>
+        <div class="wBall" id="wBall_5">
+          <div class="wInnerBall"></div>
+        </div>
+      </div>
+
+      <app-validation-error-template [errorHandler]="task"
+        [commonMessage]="'Вы не заполнили/заполнили некорректно некоторые поля для создания задачи, пожалуйста, исправьте и попробуйте создать задачу снова'">
+      </app-validation-error-template>
+      <app-validation-error-template [errorHandler]="task" [propertyTemplate]="'city'">
+      </app-validation-error-template>
+      <div *ngFor="let error of task.getErrorsWithoutFields(); let i = index">
+        <app-validation-error-template [errorHandler]="task" [index]="i">
+        </app-validation-error-template>
+      </div>
+
+      <p *ngIf="isSecurePayout()" class="soglasie mt30">Нажимая «Создать задание», вы соглашаетесь с правилами платёжного сервиса
+          <a class="link" target="_blank" href="/support/public_offer">«Единая касса — Безопасная Сделка» и сервиса «Перевод без риска»</a>.
+          Ваш банк может взимать дополнительную комиссию.
+      </p>
+  </div>
+</div>

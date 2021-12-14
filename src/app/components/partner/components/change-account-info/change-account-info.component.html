@@ -1,0 +1,82 @@
+<div>
+  <p *ngIf="isEditProfileInfo" class="h1">Редактирование профиля</p>
+
+  <div *ngIf="isEditProfileInfo">
+      <p class="zag-sz">Ф.И.О.</p>
+      <input matInput type="text" placeholder="Ф.И.О."
+          [(ngModel)]="dataPartnerInfo.fio" required>
+  </div>
+
+  <div>
+      <div *ngIf="isEditProfileInfo" class="left_div">
+          <p class="zag-sz margin-top-30">Возраст</p >
+          <input type="number" max="99" id="age" placeholder="Возраст"
+              [(ngModel)]="dataPartnerInfo.age" required>
+      </div>
+
+      <div class="right_div city-section">
+          <p class="zag-sz margin-top-30">Город</p>
+          <p-dropdown class="city-choose" [options]="cities" [(ngModel)]="dataPartnerInfo.cityProperty"
+              (keyup)="onChangeCity($event)" [filter]="true"
+              placeholder="Выберите город" emptyFilterMessage="Не найдено">
+          </p-dropdown>
+          <app-validation-error-template [errorHandler]="dataPartnerInfo" [propertyTemplate]="'city'">
+          </app-validation-error-template>
+      </div>
+
+  </div>
+
+  <div>
+      <p class="zag-sz margin-top-30">Номер телефона</p>
+      <p-inputMask mask="+7 (999) 999-9999" placeholder="Номер телефона" [(ngModel)]="dataPartnerInfo.phoneNumber"></p-inputMask>
+  </div>
+
+  <div>
+      <p class="zag-sz  margin-top-30">Почта</p>
+      <input matInput type="text" placeholder="Почта"
+          [(ngModel)]="dataPartnerInfo.email" required>
+  </div>
+
+  <div>
+      <p class="zag-sz margin-top-30">Обо мне</p>
+      <textarea matInput type="textarea" maxlength="1000" placeholder="Укажите информацию: - Кратко об  оказываемых услугах; - Опыт работы; - Граффик работы; -Примерную стоимость работ; - Ваши положительные качества."
+          [(ngModel)]="dataPartnerInfo.aboutMe" required>
+      </textarea>
+      <app-validation-error-template [errorHandler]="dataPartnerInfo" [propertyTemplate]="'aboutMe'">
+      </app-validation-error-template>
+  </div>
+
+  <div *ngIf="isEditProfileInfo">
+    <p class="h1 margin-top-30">Паспортные данные</p>
+    <p style="margin-top: -28px; color: red; font-size: 12px;">Обратите внимание, что Ваши паспортные данные не видны другим пользователям!</p>
+    <div>
+        <p class="zag-sz margin-top-30">Номер и серия паспорта</p>
+        <p-inputMask mask="99 99 999999" placeholder="Номер и серия паспорта"
+            [(ngModel)]="dataPartnerInfo.passportInfo.passportNumberAndSeries">
+        </p-inputMask>
+    </div>
+    <div>
+        <p class="zag-sz margin-top-30">Паспорт выдан</p>
+        <textarea matInput type="textarea" placeholder="Паспорт выдан"
+            [(ngModel)]="dataPartnerInfo.passportInfo.passportIssued" required>
+        </textarea>
+    </div>
+    <div class="passport_date">
+        <p class="zag-sz margin-top-30">Дата выдачи</p>
+        <p-inputMask mask="99.99.9999" placeholder="Дата выдачи"
+            [(ngModel)]="dataPartnerInfo.passportInfo.dateIssue">
+        </p-inputMask>
+    </div>
+    <div class="passport_code">
+        <p class="zag-sz margin-top-30">Код подразделения</p>
+        <p-inputMask mask="999-999" placeholder="Код подразделения"
+            [(ngModel)]="dataPartnerInfo.passportInfo.departmentCode">
+        </p-inputMask>
+    </div>
+  </div>
+  <app-validation-error-template [errorHandler]="dataPartnerInfo">
+  </app-validation-error-template>
+  <app-validation-error-template [errorHandler]="dataPartnerInfo"
+      [commonMessage]="'Вы не заполнили/заполнили некорректно некоторые поля.'">
+  </app-validation-error-template>
+</div>

@@ -1,0 +1,46 @@
+.vacancy-label{
+  position: initial;
+  margin-right: 10px;
+}
+
+.request-label{
+  position:initial;
+  margin-right: 10px;
+}
+
+.resume-labe{
+  position:initial;
+}
+
+.tabs1 {
+  float: right;
+}
+
+@media (max-width: 600px) {
+  .tabs1 {
+    margin-top: 0px;
+  }
+}
+
+@media (max-width: 484px){
+  .vacancy-label,
+  .request-label,
+  .resume-labe{
+		width: 70%;
+	}
+}
+
+@media (max-width: 438px){
+  .vacancy-label,
+  .request-label,
+  .resume-labe{
+		height: 40px;
+	}
+}
+
+@media (max-width: 320px){
+  .vacancy-label{
+    padding-top: 0;
+		line-height: 18px;
+	}
+}

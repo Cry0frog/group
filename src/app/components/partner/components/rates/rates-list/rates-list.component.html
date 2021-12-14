@@ -1,0 +1,12 @@
+
+<p>Небольшой текст про тарифы. Как, что и т.д. Какой процент с каждого заказа взимается, как это происходит. Какую сумму можно вывести, к примеру, и ещё много чего интересного как для заказчика, так и для исполнителя.</p>
+<div class="grey_tarifs">
+	<div class="grey_tarifs_content">
+		<div class="tarif-block" *ngFor="let commission of commissions">
+			Комиссия для сумм больше
+			<span style="font-weight: bold;">{{commission.bottomSummBorder}}р</span>
+			 составляет
+			<span class="tarif-number">{{commission.commission}}р</span>
+		</div>
+	</div>
+</div>

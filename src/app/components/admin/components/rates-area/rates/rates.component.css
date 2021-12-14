@@ -1,0 +1,12 @@
+table.mat-table {
+  border-spacing: 1px;
+}
+  
+.h1 {
+  margin-bottom: 0px;
+  text-align: left;
+}
+
+.disabled-btn {
+  background-color: gray !important;
+}

@@ -1,0 +1,41 @@
+.edit-mode-btn,
+.buttonDeleteUsers,
+.buttonUpdateUsers {
+    float: right;
+    margin-right: 5px;
+}
+
+.margin-top {
+    margin-top: 40px
+}
+
+.bottom-chat {
+    flex-wrap: initial;
+}
+
+.edit-mode-btn{
+    background-color: orange;
+}
+
+.name-commentator :hover{
+    color: #116fbf;
+}
+
+.feedback-img {
+    height: 60px;
+    object-fit: fill;
+}
+
+.name-commentator {
+    padding-left: 80px;
+}
+
+@media (max-width: 400px) {
+  .name-commentator {
+      padding-left: 0px;
+  }
+}
+
+.textarea-chat {
+  width: calc(100% - 35px);
+}

@@ -1,0 +1,8 @@
+export enum AuthProviderForUIType {
+    OK = "OK",
+    NULL_EMAIL = "NULL_EMAIL",
+    NULL_CITY = "NULL_CITY",
+    NULL_PHONE = "NULL_PHONE",
+    CONF_EMAIL = "CONF_EMAIL",
+    CONF_PHONE_NUMBER = "CONF_PHONE_NUMBER",
+}

@@ -1,0 +1,69 @@
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.width_33 {
+  float: right;
+}
+
+.partner-block {
+    padding-bottom: 15px;
+    padding-right: 30px;
+    padding-left: 0px;
+}
+
+.partner-block-content {
+    height: 100%;
+}
+
+.partner-block-content p {
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: -20px;
+}
+
+@media(max-width:440px) {
+    .partner-block-content p {font-size: 12px;}
+}
+
+.modal-dialog-1 {
+    width: 30%;
+    min-width: 300px;
+    padding: 50px 50px 20px;
+}
+
+.fio_member {
+  word-break: break-word;
+}
+
+.block_zag {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.margin-top-for-partners {
+  margin-top: 40px;
+}
+
+@media(max-width: 1000px) {
+  .partner-block {
+    padding: 0 15px 25px;
+  }
+
+  .content {
+    padding-top: 20px;
+  }
+  .block_zag {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .margin-top-for-partners {
+    margin-top: 20px;
+  }
+
+  .width_33 {
+    margin-top: 0px;
+    float: none;
+  }
+}

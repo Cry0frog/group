@@ -1,0 +1,12 @@
+.resume_window_btn {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-right: 24px;
+  padding-left: 24px;
+}
+
+@media (max-width: 500px) {
+  .orange_btn {width: -webkit-fill-available; height: 35px; margin-bottom: 5px; margin-right: 12px;}
+  .resume_window_btn { margin-top: 0px; }
+}

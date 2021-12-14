@@ -1,0 +1,107 @@
+.admin_block_mob_auth {
+    padding: 15px 30px 163px;
+}
+
+.admin {
+    float: left;
+}
+
+.admin_link {
+    margin-left: 5px;
+}
+
+.kruzhok {
+    top: 67px;
+    left: 120px;
+}
+
+.kruzhok_mobile {
+  left: 18px;
+  top: 18px;
+}
+
+.top-kuku {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.top-kuku button{
+    line-height: 50px;
+}
+
+.nav_dop_mob a {
+    line-height: normal;
+    margin-bottom: 10px;
+}
+
+.apple_store_link,
+.google_play_link {
+    background-color: black;
+}
+
+
+.icon_facebook {
+    width: 25px;
+    background-image: url(../../../../assets/icons/facebook1.svg);
+}
+
+.icon_youtube {
+    background-image: url(../../../../assets/icons/youtube_hover.svg);
+}
+
+.icon_vk{
+    background-image: url(../../../../assets/icons/vk_hover.svg);
+}
+
+.icon_instagram {
+    background-image: url(../../../../assets/icons/instagram_hover.svg);
+}
+
+.kruzhok_pulse {
+  top: 15px;
+  left: 106px;
+}
+
+.pulse {
+  animation: pulse 2s infinite
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255,209,0,1);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+.open_menu {
+  top: 0;
+}
+
+.close {
+  font-size: 24px;
+  color: rgb(255, 255, 255);
+  opacity: .9;
+}
+
+.notifications {
+  color: #D7D7D7;
+  font-family: 'Roboto',sans-serif;
+  font-size: 18px;
+  transform: translateY(10px);
+}
+
+.switch_nav {
+  text-decoration: underline;
+  color: #FF9000;
+  margin-bottom: 20px;
+}

@@ -1,0 +1,35 @@
+<h1 mat-dialog-title *ngIf="data.id == null">Добавление комиссии</h1>
+<h1 mat-dialog-title *ngIf="data.id != null">Обновление комиссии</h1>
+<div mat-dialog-content class="with_field" style="height: 475px">    
+    <div class="time-window-align">
+        <div>    
+            <p class="zag-sz">Начало временного окна</p>
+            <div class="custom-datetime">
+                <input matInput type="text" placeholder="Дата применения"
+                (focus)="onFocusDate()" (blur)="onChangeFocusDate()"
+                [value]="data.startCommission | date:'dd.MM.yyyy HH:mm'"
+                readonly/>
+            <p-calendar #calendar class="datetime-date with-time" [(ngModel)]="data.startCommission" [locale]="ru_calendar"
+                dateFormat="dd.mm.yy" showTime="true" hourFormat="24">
+            </p-calendar>
+            </div>
+        </div>
+    </div>
+    <div>    
+        <p class="zag-sz margin-top-30">Комиссия</p>
+        <input matInput type="number" [(ngModel)]="data.commission"/>
+    </div>
+    <div>    
+        <p class="zag-sz margin-top-30">Ограничение cнизу</p>
+        <input matInput type="number" [(ngModel)]="data.bottomSummBorder"/>
+    </div>
+    <p class="podpis-wf">
+        Если конечная стоимость задачи будет больше ограничения, то будет применена эта комиссия
+    </p>
+</div>
+
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+  <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+  <button *ngIf="data.id == null" class="orange_btn" [mat-dialog-close]="data">Добавить</button>
+  <button *ngIf="data.id != null" class="orange_btn" [mat-dialog-close]="data">Изменить</button>  
+</div>

@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Вы действительно хотите удалить вакансию?</h1>
+<div class="with_field">
+    <textarea matInput type="textarea" placeholder="Введите сообщение"
+        [(ngModel)]="data.message" required>
+    </textarea>
+</div>
+
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+    <button class="orange_btn" [mat-dialog-close]="null">Отмена</button>
+    <button class="orange_btn" [mat-dialog-close]="data"> Удалить </button>
+</div>

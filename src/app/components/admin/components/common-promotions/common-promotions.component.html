@@ -1,0 +1,17 @@
+<div class="wrapper content paddingi">
+  <div class="block-corner">
+    <div class="section-content">
+      <div class="tabs1 mode-tasks-area">
+          <input id="tab10" class="promotions" type="radio" name="tabs1" (click)="switchToPromotionsMode()">
+          <label class="isp-label" style="margin-right: 15px;" for="tab10">Акции</label>
+
+          <input id="tab20" class="participants" type="radio" name="tabs1" (click)="switchToParticipantsMode()">
+          <label class="zakaz-labe" for="tab20">Участники</label>
+      </div>
+
+      <div style="margin-top: 60px;">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

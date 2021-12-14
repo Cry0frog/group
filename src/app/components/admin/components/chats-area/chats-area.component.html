@@ -1,0 +1,40 @@
+<div class="wrapper content paddingi">
+    <div class="width_100 paddingi">
+
+        <div class="common-tabs tabs partner-panel">
+            <input id="tab1" class="my_arbitrations" type="radio" name="tabs" checked>
+            <label class="non-focused-label" for="tab1" [routerLink]="[getMyArbitrationRouterLink()]">
+                <i class="tavs-icon"></i>
+                <span>Мои арбитражи</span>
+            </label>
+
+            <input id="tab2" class="all_arbitrations" type="radio" name="tabs">
+            <label class="non-focused-label" for="tab2" [routerLink]="[getAllArbitrationRouterLink()]">
+                <i class="tavs-icon"></i>
+                <span>Все арбитражи</span>
+            </label>
+
+            <input id="tab3" class="chats" type="radio" name="tabs">
+            <label class="non-focused-label" for="tab3" [routerLink]="[getTaskChatsRouterLink()]">
+                <i class="tavs-icon"></i>
+                <span>Чаты для заданий</span>
+            </label>
+
+            <input id="tab4" class="chats" type="radio" name="tabs">
+            <label class="non-focused-label" for="tab4" [routerLink]="[getVacancyChatsRouterLink()]">
+                <i class="tavs-icon"></i>
+                <span>Чаты для вакансий</span>
+            </label>
+
+            <input id="tab5" class="my_chats" type="radio" name="tabs">
+            <label class="non-focused-label" for="tab5" [routerLink]="[getMyChatsRouterLink()]">
+                <i class="tavs-icon"></i>
+                <span>Мои чаты</span>
+            </label>
+
+            <div class="block-corner">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

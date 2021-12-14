@@ -1,0 +1,48 @@
+<div class="wrapper content paddingi">
+    <div class="width_100 paddingi">
+
+        <div class="common-tabs tabs rate-panel">
+            <input id="tab1" class="common_rates" type="radio" name="tabs" checked>
+            <label class="non-focused-label" for="tab1" (click)="switchToRatesMode()">
+                <i class="tavs-icon"></i>
+                <span>Тарифы</span>
+            </label>
+
+            <input id="tab2" class="region_rates" type="radio" name="tabs" checked>
+            <label class="non-focused-label" for="tab2" (click)="switchToRegionRatesMode()">
+                <i class="tavs-icon"></i>
+                <span>Региональные тарифы</span>
+            </label>
+
+            <input id="tab3" class="hour_rates" type="radio" name="tabs" checked>
+            <label class="non-focused-label" for="tab3" (click)="switchToHourRates()">
+                <i class="tavs-icon"></i>
+                <span>Часовые тарифы</span>
+            </label>
+
+             <input id="tab4" class="one_time_payments" type="radio" name="tabs" checked>
+            <label class="non-focused-label" for="tab4" (click)="switchToOneTimePayments()">
+                <i class="tavs-icon"></i>
+                <span>Разовые платежи</span>
+            </label>
+
+            <input id="tab5" class="subscriptions" type="radio" name="tabs" checked>
+            <label class="non-focused-label" for="tab5" (click)="switchSubscriptions()">
+                <i class="tavs-icon"></i>
+                <span>Подписки</span>
+            </label>
+
+            <div class="block-corner">
+                <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
+            </div>
+
+             <div *ngIf="showPayAdminSetting" class="block-corner" style="margin-top: 40px; margin-bottom: 40px;">
+              <app-pay-admin-setting [isOneTimePayments]="isOneTimePayments"></app-pay-admin-setting>
+            </div>
+
+            <div *ngIf="!showPayAdminSetting" class="block-corner" style="margin-top: 40px;">
+                <app-rate-calculator></app-rate-calculator>
+            </div>
+        </div>
+    </div>
+</div>

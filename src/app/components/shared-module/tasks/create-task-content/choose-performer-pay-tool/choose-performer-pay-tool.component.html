@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Выберите карту для получения оплаты за задачу</h1>
+<div mat-dialog-content>
+    <ng-container *ngIf="isLoaded">
+        <mat-select class="custom-mat-select select-sz" style="padding-right: 25px;"
+                (selectionChange)="onToolChange($event)" placeholder="Выберите карту для получения оплаты за задачу">
+           <mat-option *ngFor="let tool of performerTools" class="my-mat-option" [value]="tool">
+                <div style="display: -webkit-inline-box;">
+                    <div class="card-icon-area">
+                        <span class="card_icon"></span>
+                    </div>
+
+                    <span>{{tool.Mask}}</span>
+                </div>
+           </mat-option>
+           <mat-option [value]="null">
+                <button class="btn-arbitration orange_btn poluchit-btn margin-5 request-handling-btn"
+                    (click)="addPayTool()" style="padding-left: 10px;padding-right: 10px;"
+                >
+                    +
+                </button>
+                Добавить карту
+           </mat-option>
+        </mat-select>
+    </ng-container>
+    <ng-container *ngIf="!isLoaded">
+        Загружаются средства для получения выплат
+    </ng-container>
+</div>

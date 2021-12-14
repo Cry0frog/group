@@ -1,0 +1,44 @@
+<div class="wrapper content">
+  <div class="width_66 paddingi">
+    <div class="block-corner">
+      <app-create-vacancy-content></app-create-vacancy-content>
+    </div>
+  </div>
+  <div>
+      <div class="width_33 paddingi">
+          <div class="block-corner">
+              <p class="h1">Частые вопросы</p>
+              <div class="faq">
+                  <a href="/support/faq#what-is-GoodDeal-job" target="_blank">Что такое GoodDeal.работа?</a>
+                  <a href="/support/faq#how-search-job" target="_blank">Как найти работу?</a>
+                  <a href="/support/faq#how-search-person-job" target="_blank">Как найти сотрудника?</a>
+                  <a href="/support/faq#where-contact-job" target="_blank">Где отображены контакты работодателя/соискателя?</a>
+                  <a href="/support/faq#create-resume-job" target="_blank">Могу ли я создавать несколько резюме и чем они будут отличаться?</a>
+                  <a href="/support/faq#have-comission-job" target="_blank">Есть ли комиссия в GoodDeal.работа?</a>
+                  <a href="/support/faq" target="_blank">Узнать больше</a>
+              </div>
+          </div>
+      </div>
+      <div class="width_33 mt_25 card paddingi" style="float: right;">
+        <div class="block-corner padding-block-potential-performer block-s-zayavkami" *ngIf="resume != null">
+            <p class="potential_performer">Ваш потенциальный работник</p>
+            <div class="zakaz4ik_info">
+                <a href="/user/{{resume.creatorId}}" style="cursor: pointer; display: block;">
+                    <img src="api/partner/info/photo/{{resume.creatorId}}" />
+                </a>
+
+                <a class="zakaz4ik_name" href="/user/{{resume.creatorId}}">{{resume.creatorName}}</a>
+                <p class="rg-p" style="display: grid;">
+                </p>
+            </div>
+            <div style="text-align: center; margin-top: 10px;">
+                <button class="orange_btn" style="height: 40px;" (click)="cancleCreateVacancyForPartner()">
+                    Отменить создание вакансии
+                </button>
+            </div>
+        </div>
+    </div>
+
+      <div class="clear"></div>
+  </div>
+</div>

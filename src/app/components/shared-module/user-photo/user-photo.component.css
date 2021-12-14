@@ -1,0 +1,43 @@
+.input_img {
+    cursor: pointer;
+    font-size: 20px;
+    height: 36px;
+    width: 70%;
+    color: white;
+    background: linear-gradient(0deg, rgba(255,88,0,1) 0%, rgba(255,170,0,1) 100%);
+    border-radius: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input_img:hover, .input_img:focus {
+    background: linear-gradient(0deg, rgba(255,94,0,1) 0%, rgba(255,209,0,1) 100%);
+}
+
+.with_field {
+    width: 106%;
+}
+
+.mat-dialog-content{
+    overflow: inherit;
+}
+
+@media (max-width: 450px) {
+    .orange_btn{width: 119px; height: 25px; padding: 0px; margin-bottom: 5px; margin-left: auto; margin-right: auto;}
+    .input_img{font-size: 16px; height: 35px; width: 90%; margin-left: auto; margin-right: auto;}
+    .mat-dialog-content{margin: 0;}
+}
+
+p {
+  text-align: justify;
+}
+
+.progress_bar,
+.progress_bar mat-progress-bar{
+  width: 100%;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+  background-color: #FF8000;
+}
+

@@ -1,0 +1,4 @@
+export enum FilterFavoriteStatusJob {
+  FAVORITE_RESUME = 'FAVORITE_RESUME',
+  FAVORITE_VACANCIES = 'FAVORITE_VACANCIES'
+}

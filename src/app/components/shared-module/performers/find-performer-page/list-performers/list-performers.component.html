@@ -1,0 +1,12 @@
+<div class="section-content">
+  <div *ngIf="choosenTask != null">
+      <p class="h1" style="margin-top: 20px;">
+          Задача: '{{choosenTask.name}}'
+      </p>
+  </div>
+
+  <app-display-performers [performers]="shortPerformers" [choosenTask]='choosenTask'
+    (eventChooseCategoryByTaskCategory)="eventChooseCategoryByTaskCategory.emit($event)">
+  </app-display-performers>
+</div>
+

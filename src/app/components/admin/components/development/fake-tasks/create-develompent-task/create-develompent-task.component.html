@@ -1,0 +1,54 @@
+<h1 mat-dialog-title>Создание планируемой задачи</h1>
+<div mat-dialog-content>
+
+    <mat-horizontal-stepper #stepper [linear]="true">
+        <mat-step>
+            <ng-template matStepLabel>
+                Задача
+            </ng-template>
+            <div class="block-corner">
+              <app-create-task-content
+                [categories]="categories"
+                [childCategories]="null"
+                [selCategory]="null"
+                [isAdmin]="true"
+                [basedTask]="data.refTask"
+              >
+              </app-create-task-content>
+            </div>
+
+            <div>
+                <button mat-button (click)="applyTask()">Дальше</button>
+            </div>
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>
+                Задача
+            </ng-template>
+            <app-dev-partner-assign
+                [developmentPartners]="developmentPartners"
+                [plannedTask]="data"
+                style="min-height: 600px;"
+            >
+            </app-dev-partner-assign>
+            <div>
+                <button mat-button matStepperPrevious>Назад</button>
+                <button mat-button (click)="applyDevPartner()">Дальше</button>
+            </div>
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>Выполнено</ng-template>
+            <p>Убедитесь, что задача, пользователи и время активностей установлены корректно и создавайте планируемую задачу</p>
+            <div>
+                <button mat-button matStepperPrevious>Назад</button>
+                <button mat-button (click)="addDevelopmentPartners()">Создать задачу</button>
+            </div>
+        </mat-step>
+    </mat-horizontal-stepper>
+</div>
+
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+    <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+</div>

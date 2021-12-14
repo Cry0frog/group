@@ -1,0 +1,212 @@
+.task-condition-bar {
+  display: flex;
+}
+
+.feedback-block{
+  min-height: 130px;
+}
+
+.left-table-zakaz {
+  max-width: 140px;
+  width: unset;
+}
+
+.edit_btn {
+  margin-top: -5px;
+  margin-left: 10px;
+}
+
+.task-condition-bar > div {
+  margin-right: 10px;
+}
+
+.task-condition-bar > div:last-child {
+  margin-right: 0px;
+}
+
+.task-request-operation-container {
+  display: grid;
+}
+
+.task-request-operation-container > button {
+  margin-bottom: 5px;
+}
+
+.task-request-operation-container > button:last-child {
+  margin-bottom: 0px;
+}
+
+.padding-button > button {
+  margin-right: 10px;
+}
+
+.padding-button > button:last-child {
+  margin-right: 0px;
+}
+
+.gray_btn {
+  background: gray;
+}
+
+.orange_btn {
+  margin: 0 auto;
+}
+
+@media (max-width: 418px) and (min-width: 403px) {
+.orange_btn {font-size: 15px;}
+}
+
+@media (max-width: 403px) and (min-width: 400px) {
+.orange_btn {font-size: 14px;}
+}
+
+.padding_15 {
+padding: 0px 15px;
+}
+
+@media (max-width: 270px) {
+  .orange_btn {height: auto;}
+}
+
+@media (max-width: 440px) {
+  .top-zakaza p {
+      margin-top: initial;
+  }
+}
+
+@media (max-width: 694px) {
+  .task-condition-bar {margin-top: 15px}
+}
+
+.primer {
+  margin-top: 0;
+  margin-bottom: 30px;
+  padding-left: 0;
+  cursor: pointer;
+}
+
+.zagolovok-super-new {
+  margin-bottom: 0;
+}
+
+.big_descr {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.table-zakaz td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  max-width: 280px;
+}
+
+.work_experience,
+.education{
+  background-color: transparent;
+  background-repeat: no-repeat;
+  height: 20px;
+  background-size: 20px;
+  width: 20px;
+  text-align: center;
+}
+
+.work_experience,
+.education{
+  position: absolute;
+  top: 10px;
+  left: 0;
+}
+
+.work_experience {
+  background-image: url(../../../../../assets/icons/work_experience.svg);
+}
+
+.education {
+  background-image: url(../../../../../assets/icons/education.svg);
+}
+
+.point-green .location_icon {
+  color: #27C102;
+}
+
+.edit-password {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  margin-right: 0px;
+}
+
+@media(max-width: 600px) {
+  .education,
+  .work_experience{
+    text-align: left;
+    position: relative;
+    display: inline-block;
+    top: auto;
+    left: auto;
+    height: 15px;
+    background-size: 15px;
+    width: 15px;
+    margin-right: 10px;
+  }
+
+  .table-zakaz td {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+
+  .table-zakaz tr {
+    margin-bottom: 15px;
+  }
+
+  .work_experience {
+    background-image: url(../../../../../assets/icons/work_experience_gray.svg);
+  }
+
+  .education {
+    background-image: url(../../../../../assets/icons/education_gray.svg);
+  }
+
+  .primer {margin-bottom: 10px;}
+}
+
+.status-on-hold {
+  background: gray;
+}
+
+.complete_zakaz {
+  margin: 10px auto 0 auto;
+}
+
+.delete_btn_for_web button {
+  width: 100%;
+  max-width: initial;
+}
+
+@media(min-width: 600px) {
+  .delete_btn_for_web {display: block;}
+  .delete_btn_for_mobile{display: none;}
+}
+@media(max-width: 600px) {
+  .delete_btn_for_web {display: none;}
+  .delete_btn_for_mobile{display: block;}
+  .remove-task-request{max-width: 100%;}
+  .request-handling-section {position: initial !important;}
+  .feedback-img {position: initial;}
+  .feedback-block-content{padding-left: 0px;}
+}
+
+.request-handling-section {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.task-request-operation-container button{
+  margin-bottom: 5px;
+}
+
+.link_user {
+  display: flex;
+}

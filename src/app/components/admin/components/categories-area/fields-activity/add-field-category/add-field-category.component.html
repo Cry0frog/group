@@ -1,0 +1,47 @@
+<h1 *ngIf="data.folder; else child" mat-dialog-title>Добавление категории</h1>
+<ng-template #child>
+  <h1 mat-dialog-title>Добавление подкатегорий</h1>
+</ng-template>
+
+<div mat-dialog-content class="with_field">
+  <div>
+      <p class="zag-sz margin-top-30">Название</p>
+      <input matInput [(ngModel)]="data.name">
+  </div>
+
+  <div>
+    <p class="zag-sz margin-top-30">Пример названия</p>
+    <input matInput [(ngModel)]="data.nameExample">
+  </div>
+
+  <div>
+    <p class="zag-sz margin-top-30">Описание</p>
+    <input matInput [(ngModel)]="data.description">
+  </div>
+
+  <div>
+      <p class="zag-sz margin-top-30">Требования</p>
+      <input matInput [(ngModel)]="data.skills">
+  </div>
+
+  <div>
+    <mat-checkbox [(ngModel)]="data.visibleJobHome" class="full-width-input"
+                matTooltip="Если выбрана эта опция, то эта категория отобразится на главной странице">
+            Отображать на главной
+        </mat-checkbox>
+  </div>
+
+  <div>
+    <mat-checkbox [(ngModel)]='data.published'>Опубликовано</mat-checkbox>
+  </div>
+</div>
+
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+  <button class="orange_btn" [mat-dialog-close]="null" >Отмена</button>
+  <div *ngIf = "data.id == null">
+      <button class="orange_btn" [mat-dialog-close]="data" >Добавить</button>
+  </div>
+  <div *ngIf="data.id != null" >
+     <button class="orange_btn" [mat-dialog-close]="data" >Изменить</button>
+  </div>
+</div>

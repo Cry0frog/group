@@ -1,0 +1,14 @@
+<div class="section-content">
+  <div style="width: 100%; display: inline-block">
+    <div class="tabs1 mode-tasks-area">
+      <input id="tab10" class="my-vacancies" type="radio" name="tabs1" (click)="switchToPartnerMode()">
+      <label *ngIf="activeButton" class="vacancy-label" for="tab10">Мои вакансии</label>
+      <input id="tab20" class="my-resume" type="radio" name="tabs1" (click)="switchToMyResume()">
+      <label *ngIf="activeButton" class="request-label" for="tab20">Мои заявки</label>
+      <input id="tab30" class="my-favorite" type="radio" name="tabs1" (click)="switchToMyFavorite()">
+      <label *ngIf="activeButton" class="resume-labe" for="tab30">Избранное</label>
+    </div>
+  </div>
+
+  <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
+</div>

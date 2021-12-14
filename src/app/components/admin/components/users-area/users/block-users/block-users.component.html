@@ -1,0 +1,64 @@
+<h1 mat-dialog-title>Блокировка пользователя</h1>
+<div *ngIf="data.partnerMode">
+    <div *ngIf="!isBlockPartner()">
+        <p class="zag-sz">Вы действительно хотите заблокировать заказчика?</p>
+        <p class="zag-sz margin-top-30">Выберите причину блокировки</p>
+        <div class="select_roles">
+            <mat-select [(ngModel)]="data.user.reasonsBlocking" required>
+                <mat-option *ngFor="let reasonsBlocking of chooseReasonsBlockingPartner" [value]="reasonsBlocking.value">
+                  {{reasonsBlocking.viewValue}}
+                </mat-option>
+            </mat-select>
+        </div>
+    </div>
+    <div *ngIf="isBlockPartner()">
+        <p class="zag-sz">Вы действительно хотите разблокировать заказчика?</p>
+    </div>
+</div>
+
+<div *ngIf="!data.partnerMode">
+    <div *ngIf="!isBlockPerformer()">
+        <p class="zag-sz">Вы действительно хотите заблокировать исполнителя?</p>
+        <p class="zag-sz margin-top-30">Выберите причину блокировки</p>
+        <div class="select_roles">
+            <mat-select [(ngModel)]="data.user.reasonsBlocking" required>
+                <mat-option *ngFor="let reasonsBlocking of chooseReasonsBlockingPerformer" [value]="reasonsBlocking.value">
+                  {{reasonsBlocking.viewValue}}
+                </mat-option>
+            </mat-select>
+        </div>
+        <p class="zag-sz margin-top-30">Выберите тип блокировки</p>
+        <div class="select_roles">
+            <mat-select [(ngModel)]="data.user.typeBlocking" required>
+                <mat-option *ngFor="let blocking of chooseTypeBlocking" [value]="blocking.value">
+                  {{blocking.viewValue}}
+                </mat-option>
+            </mat-select>
+        </div>
+    </div>
+    <div *ngIf="isBlockPerformer()">
+        <p class="zag-sz">Вы действительно хотите разблокировать исполнителя?</p>
+    </div>
+</div>
+
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+    <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+
+    <ng-container *ngIf="data.partnerMode">
+        <ng-container *ngIf="!isBlockPartner()">
+            <button class="orange_btn" (click)="blockUser()" [mat-dialog-close]="data"> Заблокировать </button>
+        </ng-container>
+        <ng-container *ngIf="isBlockPartner()">
+            <button class="orange_btn" (click)="unlockUser()" [mat-dialog-close]="data"> Разблокировать </button>
+        </ng-container>
+    </ng-container>
+    <ng-container *ngIf="!data.partnerMode">
+        <ng-container *ngIf="!isBlockPerformer()">
+            <button class="orange_btn" (click)="blockUser()" [mat-dialog-close]="data"> Заблокировать </button>
+        </ng-container>
+        <ng-container *ngIf="isBlockPerformer()">
+            <button class="orange_btn" (click)="unlockUser()" [mat-dialog-close]="data"> Разблокировать </button>
+        </ng-container>
+    </ng-container>
+
+</div>

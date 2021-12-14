@@ -1,0 +1,12 @@
+li {
+  position: relative;
+    line-height: 20px;
+    padding: 2px 5px;
+}
+
+.context_icon {
+  text-indent: 20px;
+  background-size: 20px auto;
+  background-repeat: no-repeat;
+  background-position: left center;
+}

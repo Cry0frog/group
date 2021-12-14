@@ -1,0 +1,93 @@
+<div class="chat-block chat-contact-list-wrapper">
+
+    <div *ngIf="arbitration != null && arbitration.isArbitration() && !arbitration.isSuccess()"
+            class="block-corner block-users"
+            style="height: auto;min-height: auto; margin-bottom: 25px;">
+        <div>
+            <p class="h1" style="margin-bottom: 0;">Арбитраж по задаче:</p>
+            <p class="h1">{{arbitration.task.name}}</p>
+        </div>
+
+        <div>
+            <div *ngIf="!arbitration.isSuccess() && !arbitration.isRequestAdmin()">
+                <div class="request-to-resolution-area">
+                    <div class="action-area-bottom" *ngFor="let user of arbitration.approveToFinishInFavorPerformerUser">
+                        <img src="api/partner/info/photo/{{user.id}}" matTooltip="Пользователь '{{user.username}}' проголосовал за разрешение задачи в пользу исполнителя">
+                    </div>
+                </div>
+
+
+                <div class="request-to-resolution-area" style="margin-right: 0;margin-left: auto;">
+                    <div class="action-area-bottom" *ngFor="let user of arbitration.approveToFinishInFavorCustomerUser">
+                        <img src="api/partner/info/photo/{{user.id}}" matTooltip="Пользователь '{{user.username}}' проголосовал за разрешение задачи в пользу заказчика">
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="action-area-bottom" *ngIf="isUser()">
+            <div>
+                <button *ngIf="arbitration.isInProgress()" class="btn-arbitration orange_btn poluchit-btn margin-5 request-handling-btn"
+                        (click)="requestAdmin(arbitration.id)" style="padding: 0;">
+                    Запросить помощь администратора
+                </button>
+                <p *ngIf="arbitration.isRequestAdmin()" class="p-arbitration st-process task-condition-element arbitration-action request_admin_help">
+                    Запрошена помощь администратора
+                </p>
+                <p *ngIf="isJoinedAdmin()" class="p-arbitration st-process task-condition-element arbitration-action">
+                    Администратор присоединился к арбитражу
+                </p>
+            </div>
+            <div *ngIf="!isJoinedAdmin() && !arbitration.isRequestAdmin()" class="action-task-right-5 action-area-bottom">
+                <button *ngIf="!isYouResolveTask(arbitration)" class="btn-arbitration complete_zakaz arbitration-action poluchit-btn margin-5 request-handling-btn remove-task-request"
+                    (click)="resolveInFavorCustomer(arbitration.id)">
+                    Разрешить в пользу заказчика
+                </button>
+                <button *ngIf="!isYouResolveTask(arbitration)" class="btn-arbitration complete_zakaz arbitration-action poluchit-btn margin-5 request-handling-btn remove-task-request"
+                    (click)="resolveInFavorPerformer(arbitration.id)">
+                    Разрешить в пользу исполнителя
+                </button>
+                <button *ngIf="isYouResolveTask(arbitration)" class="btn-arbitration cancel_zakaz arbitration-action poluchit-btn margin-5 request-handling-btn remove-task-request"
+                    (click)="cancelResolutionTask(arbitration.id)">
+                    Отменить решение
+                </button>
+            </div>
+        </div>
+
+        <div class="action-area-bottom" *ngIf="!isUser()">
+            <div>
+                <button *ngIf="arbitration.isRequestAdmin()" class="btn-arbitration orange_btn poluchit-btn margin-5 request-handling-btn"
+                        (click)="adminJoinedToArbitration(arbitration)">
+                    Подключиться к арбитражу
+                </button>
+
+                <button *ngIf="arbitration.isAdminJoined()" class="btn-arbitration complete_zakaz arbitration-action poluchit-btn margin-5 request-handling-btn remove-task-request"
+                        (click)="adminResolveInFavorCustomer(arbitration)">
+                    Разрешить в пользу заказчика
+                </button>
+                <button *ngIf="arbitration.isAdminJoined()" class="btn-arbitration complete_zakaz arbitration-action poluchit-btn margin-5 request-handling-btn remove-task-request"
+                        (click)="adminResolveInFavorPerformer(arbitration)">
+                    Разрешить в пользу исполнителя
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="(isAllArbitration() && !isUser()) || !isAllArbitration()" class="block-corner block-contact chat-contact-list-second">
+        <p class="h1" *ngIf="!isAllArbitration()">Контакты</p>
+        <p class="h1" *ngIf="isAllArbitration() && !isUser()">Открытые арбитражи</p>
+
+        <div class="contact-block" (scroll)="scrollHandler($event)">
+            <div *ngIf="isNotEmptyChats(commonChats)">
+                <app-chat-list [chats]="commonChats"></app-chat-list>
+            </div>
+            <div *ngIf="isNotEmptyChats(deletedChats)" style="margin-top: 10px;">
+                <p class="h2">Закрытые чаты</p>
+                <app-chat-list [chats]="deletedChats"></app-chat-list>
+            </div>
+        </div>
+    </div>
+
+</div>

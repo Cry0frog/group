@@ -1,0 +1,19 @@
+<p class="h1">Ваши паспортные данные</p>
+<div style="display:flex">
+    <p>Серия и номер паспорта:</p>
+    <span style="margin-left: 5px;">{{partnerInfo.passportInfo.passportNumberAndSeries}}</span>
+</div>
+<div>
+    <p style="margin-bottom: 15px;">Паспорт выдан:</p>
+    <span>{{partnerInfo.passportInfo.passportIssued}}</span>
+</div>
+<div class="margin-top-20 block_pasport_info">
+    <div class="display_flex_block_pasport_info">
+        <p style="margin-bottom: 15px;">Дата выдачи:</p>
+        <span style="margin-left: 5px">{{partnerInfo.passportInfo.dateIssue}}</span>
+    </div>
+    <div class="department_code">
+        <p style="margin-bottom: 15px;">Код подразделения:</p>
+        <span style="margin-left: 5px">{{partnerInfo.passportInfo.departmentCode}}</span>
+    </div>
+</div>

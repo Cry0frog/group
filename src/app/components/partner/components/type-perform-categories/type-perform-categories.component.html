@@ -1,0 +1,59 @@
+<div>
+    <p class="zag-profile">Виды выполняемых работ</p>
+</div>
+<div *ngIf="!isProfile; else profileContent" class="type-perform-categories">
+  <div class="margin-top-10">
+    <ng-container *ngFor="let shortCategory of shortCategories">
+      <ng-container>
+        <a [ngClass]="{'child-category': shortCategory.category.isChild }">
+            {{shortCategory.nameCategory}}
+        </a>
+      </ng-container>
+      <ng-container>
+        <app-validation-error-template [errorHandler]="shortCategory" [propertyTemplate]="'nameCategory'">
+        </app-validation-error-template>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #profileContent>
+  <div class="flexxx margin-top-10">
+    <div class="flexxx-50">
+        <div *ngFor="let root of sortedArray(displayCategories)" class="cat_block" [ngClass]="{'open_block': root.isExpanded}">
+          <p class="service_name-new" (click)="root.isExpanded = !root.isExpanded">{{root.name}}:</p>
+
+          <div class="cat_inner">
+            <div *ngFor="let child of sortedArray(root.children)" class="podservice-edit">
+              <span class="service_surname">- {{child.name}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</ng-template>
+
+
+<div *ngIf="isYourProfile()">
+  <div class="margin-top-10">
+    <p class="zag-profile">Все категории</p>
+  </div>
+
+  <div class="margin-top-10">
+    <div class="select_by_type_categories">
+        <mat-select class="custom-mat-select select-sz" [formControl]="toppings" (openedChange)="closeSelect($event)"
+         (selectionChange)="selectCatigories($event)" placeholder="Выберите подкатегорию" multiple>
+            <mat-option *ngFor="let category of displaySelectCategories" class="my-mat-option" [ngClass]="{'my-mat-option-top':!isMobilePhoneApple, 'child-category': category.isChild()}" [value]="category.id">
+              <div class="name_block" [ngClass]="{'select_child': !category.isChild() && isSelectedChild(category)}">
+                  {{category.name}}
+                <div *ngIf='!category.isChild()' style="width: 30px; height: 30px; margin-left: auto;" (click)="toggleCategory(!category.isExpanded, category)">
+                  <div class="arrow_reversal" [ngClass]="{'rotate_arrow_reversal': category.isExpanded}" ></div>
+                </div>
+
+              </div>
+
+            </mat-option>
+        </mat-select>
+    </div>
+  </div>
+</div>

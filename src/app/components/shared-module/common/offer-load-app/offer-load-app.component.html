@@ -1,0 +1,11 @@
+<div style="height: 250px; display: flex;">
+  <div class='offer_content'></div>
+</div>
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+  <button class="orange_btn" [mat-dialog-close]='data'>Закрыть</button>
+  <button class="orange_btn" (click)="linkToStore()"> Перейти</button>
+</div>
+<div *ngIf='data && isAutorizedUser()' style="display: flex; padding-top: 15px;">
+  <a (click)='notOfferLoadApp()'>Больше не показывать</a>
+</div>
+

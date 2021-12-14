@@ -1,0 +1,132 @@
+.margin-top-30 {
+  margin-top: 30px;
+}
+
+.orange_btn {
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  height: 50px;
+  padding: 0 30px;
+  text-align: center;
+  background: rgb(255,88,0);
+  background: linear-gradient(0deg, rgba(255,88,0,1) 0%, rgba(255,170,0,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff5800",endColorstr="#ffaa00",GradientType=1);
+  border-radius: 25px;
+}
+
+#city {
+  width: 150%;
+}
+
+#age {
+  width: 50%;
+}
+
+.with_field textarea {
+  resize: none
+}
+
+.left_div{
+  display: inline-block;
+}
+
+.right_div{
+  display: inline-block;
+}
+
+:host /deep/ .city-section .ui-dropdown-trigger.ui-state-default {
+  background: #F7F7F7 !important;
+  position: absolute;
+  right: 15px;
+}
+
+:host /deep/ .city-choose .ui-dropdown-label-container {
+  width: 350px;
+  margin-right: 2px;
+}
+
+:host /deep/ .city-section .ui-dropdown {
+  width: 100%;
+  height: 50px;
+  border: 0;
+}
+
+
+:host /deep/ .city-section .ui-dropdown-label-container {
+  background: #F7F7F7 !important;
+
+  padding: 0 25px;
+  border: 0;
+  line-height: 50px;
+  border-radius: 25px;
+}
+
+:host /deep/ .city-section .ui-dropdown-label.ui-inputtext {
+  background: #F7F7F7 !important;
+  height: 50px;
+
+  color: black;
+  font-size: 16px;
+  font-family: 'Roboto',sans-serif;
+  padding: 0;
+  color: #888;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.h1 {
+  margin-bottom: 30px;
+}
+
+.mat-dialog-content {
+  margin: 0;
+}
+
+.passport_date {
+  display: inline-block;
+  position: relative;
+  width: 172px;
+}
+
+.passport_code {
+  margin-left: 112px;
+  position: relative;
+  display: inline-block;
+  width: 222px;
+}
+
+::ng-deep .ui-dropdown-filter-container {
+  border-top-left-radius: 20px !important;
+  border-top-right-radius: 20px !important;;
+}
+
+::ng-deep .ui-dropdown-panel {
+  border-radius: 20px !important;
+}
+
+::ng-deep .ui-dropdown-item {
+  border-bottom-right-radius: 20px !important;
+  border-bottom-left-radius: 20px !important;
+}
+
+@media (max-width: 824px) {
+  .passport_code{margin-left: 0; width: auto;}
+}
+
+@media (max-width: 627px) {
+  :host /deep/ .city-choose .ui-dropdown-label-container {width: 229px;}
+}
+
+@media (max-width: 450px) {
+  .orange_btn {width: -webkit-fill-available; margin-bottom: 5px;}
+}
+
+@media (max-width: 394px) {
+  :host /deep/ .city-choose .ui-dropdown-label-container {width: 180px;}
+}

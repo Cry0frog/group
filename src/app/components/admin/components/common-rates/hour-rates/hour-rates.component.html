@@ -1,0 +1,54 @@
+<div style="display: contents;">
+    <div *ngIf="choosen != null" class="region-v with_field city-section"
+        style="margin-top: 0;display: -webkit-box;"
+    >
+        <div>
+            <div class="with_field">
+                <p class="zag-sz">Cтоимость часа для региона: {{choosen.values_.name}} (Osm id: {{choosenHourRegionalCost.osmId}})</p>
+                <input matInput type="number" [(ngModel)]="choosenHourRegionalCost.cost">
+            </div>
+            <div class="with_field">
+                <p class="zag-sz">Описание</p>
+                <input matInput type="text"
+                    [(ngModel)]="choosenHourRegionalCost.description">
+            </div>
+            <div>
+                <button class="orange_btn" (click)="updateHourRegionalCost()">
+                    Обновить
+                </button>
+            </div>
+        </div>
+        <div style="margin-left: 5px; width: 400px;">
+            <div class="with_field">
+                <p class="zag-sz" style="margin-bottom: 29px;">Сообщение</p>
+                <input matInput type="text"
+                    [(ngModel)]="choosenHourRegionalCost.message">
+            </div>
+        </div>
+    </div>
+    
+</div>
+<div id="map" class="map">
+    <div id="info">
+    </div>
+</div>
+
+<div class="region-v with_field city-section"
+    style="margin-top: 20px;"
+>
+    <div style="display: -webkit-box;">
+        <div class="with_field">
+            <p class="zag-sz">Cтоимость часа по умолчанию:</p>
+            <input matInput type="number" [(ngModel)]="defaultHourRegionalCost.cost">
+        </div>
+        <div class="with_field">
+            <p class="zag-sz">Описание</p>
+            <input matInput type="text" [(ngModel)]="defaultHourRegionalCost.description">
+        </div>
+        <div style="margin-top: 28px;">
+            <button class="orange_btn" (click)="updateDefaultHourRegionalCost()">
+                Обновить
+            </button>
+        </div>
+    </div>
+</div>

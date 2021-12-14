@@ -1,0 +1,77 @@
+<h1 mat-dialog-title>Добавление пользователя</h1>
+<div mat-dialog-content class="with_field">
+    <div>
+        <p class="zag-sz">Роли</p>
+        <div class="select_roles">
+            <mat-select *ngIf = "data.id == null" [(ngModel)]="data.roles" multiple required >
+                <mat-option *ngFor="let role of addRoles" [value]="role.value" (onSelectionChange)="onOptionChange($event)">
+                  {{role.viewValue}}
+                </mat-option>
+            </mat-select>
+
+            <mat-select *ngIf = "data.id != null" [(ngModel)]="data.roles" multiple required [disabled]="isDisableChoosingRole()">
+                <mat-option *ngFor="let role of addRoles"
+                    [disabled]="isDisableUpdateRole(role.value)"
+                    [value]="role.value">
+                  {{role.viewValue}}
+                </mat-option>
+            </mat-select>
+        </div>
+    </div>
+
+    <div>
+        <p class="zag-sz margin-top-30">Логин</p>
+        <input matInput type="email" [disabled]="data.id != null" [(ngModel)]="data.username" required>
+    </div>
+
+    <div>
+        <p class="zag-sz margin-top-30">Пароль</p>
+        <input matInput type="password" [(ngModel)]="data.password"
+            (change)="changePassword($event)" required>
+    </div>
+
+    <div>
+        <p class="zag-sz margin-top-30">Повторный пароль</p>
+        <input matInput type="password" [(ngModel)]="data.confirmationPassword" required>
+    </div>
+
+    <div *ngIf="!isNotAdminRole(data)">
+      <mat-checkbox [(ngModel)]='data.mainAdmin'>Назначить администратора главным</mat-checkbox>
+      <p>(при удалении любого администратора все сообщения и чаты перейдут в профиль этого администратора)</p>
+    </div>
+
+    <div *ngIf="isNotAdminRole(data)" class="margin-top">
+        <div class="right_div city-section">
+            <p-dropdown class="city-choose" [options]="cities" [(ngModel)]="data.cityProperty"
+                (keyup)="onChangeCity($event)" [filter]="true"
+                placeholder="Выберите город" emptyFilterMessage="Не найдено">
+            </p-dropdown>
+        </div>
+        <div>
+            <p class="zag-sz margin-top-30">Ф.И.О.</p>
+            <input matInput type="text" [(ngModel)]="data.fio" required>
+        </div>
+        <div>
+            <p class="zag-sz margin-top-30">Телефон</p>
+            <input matInput type="text" [(ngModel)]="data.phoneNumber" required>
+        </div>
+        <div *ngIf="data.id != null">
+            <p class="zag-sz margin-top-30">Текущий баланс</p>
+            <input matInput type="text" [disabled]='true' [(ngModel)]="data.currentBonuses" required>
+        </div>
+        <div>
+            <p class="zag-sz margin-top-30">Описание</p>
+            <input matInput type="text" [(ngModel)]="data.description" required>
+        </div>
+    </div>
+</div>
+
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+    <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+    <div *ngIf = "data.id == null">
+        <button class="orange_btn" [mat-dialog-close]="data" >Добавить</button>
+    </div>
+     <div *ngIf="data.id != null" >
+        <button class="orange_btn" [mat-dialog-close]="data" >Изменить</button>
+     </div>
+</div>

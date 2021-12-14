@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Недостаточно GD бонусов</h1>
+<div mat-dialog-content class="with_field">
+    <p>Вы не можете оформить подписку, поскольку Вы не имеете достаточно средств на бонусном счете для дальнейшей оплаты</p>
+    <p>Пожалуйста пополните баланс бонусного счета на недостающую сумму в размере {{data}} руб.</p>
+</div>
+
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+  <button class="orange_btn" (click)="goToPayEnough()">
+    Пополнить бонусы
+  </button>
+  <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+</div>

@@ -1,0 +1,18 @@
+.block_novosti_img img {
+  width: 150px;
+  height: 150px;
+  object-fit: fill;
+  border-radius: 100px;
+}
+
+.block_novosti_img {
+  width: auto;
+}
+
+.paddingi {
+  padding-left: 145px;
+}
+
+@media (max-width: 1000px) {
+  .paddingi {padding-left: 0;}
+}

@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Исполнение платежа</h1>
+<div mat-dialog-content>
+    <div *ngIf="!isLoaded">
+        <p>Пожалуйста, подождите, идет инициализация оплаты</p>
+        <p>Платёж от {{data.createdAt | date:'dd.MM.yyyy HH:mm'}} на сумму {{data.amount.value}} находится в исполнении</p>
+    </div>
+    
+    <div id="payment-form"></div>
+</div>
+<div class="dialog-actions margin-top-30" mat-dialog-actions>
+    <button class="orange_btn" (click)="onNoClick()">Закрыть</button>
+</div>

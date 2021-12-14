@@ -1,0 +1,5 @@
+export enum MapMode {
+  ADD_POINT = "ADD_POINT",
+  ADD_PATH = "ADD_PATH",
+  DELETE_POINT="DELETE_POINT"
+}

@@ -1,0 +1,29 @@
+<div class="wrapper content" style=" display: flow-root;">
+  <div class="width_66 paddingi block-corner">
+
+      <p class="h1">Ответы на часто задаваемые вопросы</p>
+      <p style="font-size: 14px; color: dimgray;">Чтобы просмотреть ответы на вопросы по разделу "Gooddeal.Работа" или "Gooddeal.Услуги", переключите тумбер в навигации в нужное для Вас положение</p>
+      <a name="#faq"></a>
+
+      <div *ngFor="let faqItem of faqContent" class="aaq" [ngClass]="{'open_block': faqItem.isOpen}">
+        <div class="questiob-block" (click)="faqItem.isOpen = !faqItem.isOpen">
+          {{faqItem.title}} <div class="button"></div>
+        </div>
+        <div class="answer-block"
+          [ngxSummernoteView]="faqItem.body">
+        </div>
+      </div>
+    </div>
+    <nav class="width_33 wrapper" style="position: sticky; top: 0;">
+        <div>
+            <div *ngIf="isFavoriteQuestions" class="block-corner">
+                <p class="h1">Частые вопросы</p>
+                <div class="faq" *ngFor="let faqItem of faqContent" [ngClass]="{'open_block': faqItem.isOpen}">
+                  <a style="padding: 5px;" *ngIf="faqItem.linkName != null" href="/support/faq{{faqItem.linkName}}" (click)="faqItem.isOpen = !faqItem.isOpen">{{faqItem.title}}</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+  </div>
+
+

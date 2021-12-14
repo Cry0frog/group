@@ -1,0 +1,36 @@
+<div *ngIf='!isHideYandexAdvertising()' id="yandex_rtb_R-A-721535-1"></div>
+
+<header class="header">
+	<div class="wrapper">
+		<div class="logo paddingi">
+			<a class="logo_icon" href="{{getLinkToMainPage()}}"></a>
+		</div>
+
+		<nav class="nav mob_unvis" [ngClass]="{'job-nav': isJobNavigation}">
+			<a class="def-href-point" (click)="openFindTask()">Найти курс</a>
+    		<a class="def-href-point" (click)="openPromotion()">Акции</a>
+			<a class="def-href-point" (click)="openOurNews()">Новости</a>
+		</nav>
+
+    <app-user-account *ngIf="!isModile();else appSidePanel" [isOpenChatWithAdmin]="isOpenChatWithAdmin"
+      (loadChatWithAdminEvent)="loadChatWithAdmin($event)" (updateCountNewMessageFromAdminEvent)="updateCountNewMessageFromAdminHandler($event)">
+    </app-user-account>
+    <app-chat-support [chatWithAdmin]="chatWithAdmin"></app-chat-support>
+    <ng-template #appSidePanel >
+      <app-side-panel [chatWithAdmin]='chatWithAdmin' [isJobNav]='isJobNavigation'
+        (eventChangeNav)="changeNavHandler($event)">
+      </app-side-panel>
+    </ng-template>
+	</div>
+	<div class="clear"></div>
+</header>
+
+<div class="block_link_app">
+  <a class="body_link_app" href="{{getLinkToUpload()}}" target="_blank">
+    <div style="display: flex;">
+      <div class="phone_icon"></div>
+      <a style="color: white;">Установить приложение GoodDeal</a>
+    </div>
+    <div class="arrow_right"></div>
+  </a>
+</div>

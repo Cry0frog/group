@@ -1,0 +1,36 @@
+<div class="admin mob_unvis paddingi">
+  <a *ngIf="!(isLoggedIn$ | async)" class="reg_link"  routerLink="/registration">
+    Регистрация
+  </a>
+  <a *ngIf="!(isLoggedIn$ | async)" class="enter_link"
+      routerLink="/login">
+    Вход
+  </a>
+  <div *ngIf="(isLoggedIn$ | async)" (mouseover)="isNewNotification=false">
+    <div [ngClass]="{'pulse': isNewNotification}">
+      <a class="admin_link" style="cursor: pointer;">{{username}}</a>
+      <img style="width: 50px; height: 50px; object-fit: fill;" src="/api/partner/info/photo/{{userId}}">
+
+      <div class="kruzhok" [ngClass]="{'kruzhok_pulse': isNewNotification}">{{countNonReadable}}</div>
+    </div>
+
+    <div class="ku-ku">
+      <div class="top-kuku">
+        <button class="exit" (click)="logout()">
+          <i class="kuku-icon"></i>
+          Выйти
+        </button>
+        <button class="prof" (click)="openProfile()">
+          <i class="kuku-icon"></i>
+          Профиль
+        </button>
+      </div>
+      <div class="notification-bar">
+        <app-notification-display (updateCountNonReadable)="updateCountNonReadableHandler($event)"
+          (navigateByUrl)="navigateByUrlHandler($event)">
+        </app-notification-display>
+      </div>
+    </div>
+  </div>
+</div>
+

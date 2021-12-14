@@ -1,0 +1,31 @@
+.btn-center-align {
+  margin-right: 0px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.zadanie-block-otziv{
+  padding: 10px 20px 10px 16px;
+}
+
+.money-top-in-progress-status-color{
+  color: rgb(245, 148, 3);
+}
+
+.task-request-customer-confirmed-status-color{
+  color: rgb(255, 115, 0);
+}
+
+.task-request-under-consideration-status-color{
+  color: #D7D7D7;
+}
+
+.task-request-canceled-status-color{
+  color: red;
+}
+
+.ispolnitel_img {
+  height: 60px;
+  object-fit: fill;
+}

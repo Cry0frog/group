@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Проблема при разблокировании аккаунта</h1>
+<div mat-dialog-content class="with_field">    
+    <p>Вы не можете разблокировать аккаунт, поскольку Вы не имеете достаточно средств для снятия блокировки.</p>
+    <p>Пожалуйста, пополните баланс на недостающую сумму в размере {{data.summ}} руб.</p>
+</div>
+
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+  <button class="orange_btn" (click)="onNoClick()">Продолжить</button>
+</div>

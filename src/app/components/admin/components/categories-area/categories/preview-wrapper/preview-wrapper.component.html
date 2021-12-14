@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Предпросмотр</h1>
+<div mat-dialog-content>
+    <div class="block-corner">
+      <app-create-task-content
+        [categories]="[root]"
+        [childCategories]="child == null ? [] : [child]"
+        [selCategory]="child == null ? root: child"
+        [isPreview]="true"
+      >
+      </app-create-task-content>
+    </div>
+</div>
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+    <button class="orange_btn" (click)="onNoClick()">Выйти</button>
+</div>

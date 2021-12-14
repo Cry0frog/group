@@ -1,0 +1,302 @@
+<div>
+  <p *ngIf="!isUpdateVacancy(); else updateVacancy" class="h1">Создать вакансию</p>
+  <ng-template #updateVacancy>
+    <p class="h1">Обновить вакансию</p>
+  </ng-template>
+  <div class="with_field city-section">
+    <p-dropdown class="city-choose" [options]="cities" [(ngModel)]="selectedCity"
+      (keyup)="onChangeCity($event)" (onChange)="onChooseCity($event)" [filter]="true"
+      placeholder="Выберите город" emptyFilterMessage="Не найдено">
+    </p-dropdown>
+  </div>
+  <div class="select_cat mt30">
+    <!-- <div class="with_field_50" style="margin-right: 5px;">
+      <div class="select-block_sz" include="form-input()">
+        <mat-select class="select-sz" [(ngModel)]="selRootFieldActivityId" [formControl]="toppingFieldActivity"
+            placeholder="Выберите сферу деятельности"  (selectionChange)="selectedRootFieldActivity()">
+          <mat-option *ngFor="let category of fieldsActivity" class="my-mat-option" [value]="category.id">
+              {{category.name}}
+          </mat-option>
+        </mat-select>
+      </div>
+    </div> -->
+
+    <div class="with_field_50">
+      <div class="select-block_sz" include="form-input()">
+        <mat-select class="select-sz" [(ngModel)]="selChildCategoryId" [formControl]="toppingChildFieldActivity"
+            placeholder="Выберите сферу деятельности" (selectionChange)="selectedChildFieldActivity()">
+          <mat-option *ngFor="let childCategory of childFieldsActivity" class="my-mat-option" [value]="childCategory.id">
+            {{childCategory.name}}
+          </mat-option>
+        </mat-select>
+      </div>
+    </div>
+  </div>
+  <app-validation-error-template [errorHandler]="vacancy" [propertyTemplate]="'fieldActivity'">
+  </app-validation-error-template>
+
+  <div *ngIf="isShowBodyPage()" class="mt30">
+    <div class="with_field mb30">
+      <p class="zag-sz ng-star-inserted"> Название вакансии </p>
+      <input type="text" [(ngModel)]="vacancy.name" placeholder="{{getPlacholderForName()}}">
+      <app-validation-error-template [errorHandler]="vacancy" [propertyTemplate]="'name'">
+      </app-validation-error-template>
+    </div>
+
+    <div class="with_field mb30">
+      <p class="zag-sz ng-star-inserted"> Описание</p>
+      <textarea type="textarea" [(ngModel)]="vacancy.description" placeholder="{{getPlacholderForDecrtiption()}}"></textarea>
+      <p class="podpis-wf">Максимально подробно опишите обязанности и что необходимо знать соискателю вакансии</p>
+      <app-validation-error-template [errorHandler]="vacancy" [propertyTemplate]="'description'">
+      </app-validation-error-template>
+    </div>
+
+    <div class="mb30">
+      <p class="zag-sz ng-star-inserted">Возраст</p>
+      <div class="flex_display">
+        <div style="display: flex; margin-right: 10px;">
+          <div class="with_field max_with_field">
+            <input type="text" maxlength="2" [(ngModel)]="vacancy.minAge" placeholder="От">
+          </div>
+          <span style="margin: auto 0;">лет</span>
+        </div>
+        <div style="display: flex;">
+          <div class="with_field max_with_field">
+            <input type="text" [(ngModel)]="vacancy.maxAge" maxlength="2" placeholder="До">
+          </div>
+          <span style="margin: auto 0;">лет</span>
+        </div>
+      </div>
+    </div>
+<!--
+    <div class="with_field mb30">
+      <p class="zag-sz ng-star-inserted"> Требуемые качества</p>
+      <textarea type="textarea" [(ngModel)]="vacancy.qualities" placeholder="Умение общаться с людьми;
+Желание зарабатывать и развиваться;
+Активность, честность; добросовестное отношение к работе.">
+      </textarea>
+      <p class="podpis-wf">Укажите, какие качества необходимы для потенциального сотрудника </p>
+      <app-validation-error-template [errorHandler]="vacancy" [propertyTemplate]="'qualities'">
+      </app-validation-error-template>
+    </div> -->
+
+    <div class="with_field mb30">
+      <p class="zag-sz ng-star-inserted"> Требования</p>
+      <textarea type="textarea" [(ngModel)]="vacancy.requirements" placeholder="{{getPlacholderForSkills()}}"></textarea>
+      <p class="podpis-wf">Расскажите, какими качествами и навыками должен обладать кандидат</p>
+      <app-validation-error-template [errorHandler]="vacancy" [propertyTemplate]="'requirements'">
+      </app-validation-error-template>
+    </div>
+
+    <div *ngIf="selectedCity != null" class="mb30">
+      <p class="zag-sz ng-star-inserted">В случае необходимости укажите адрес офиса</p>
+      <p class="card-signature" >Используйте долгое нажатие на карте для добавления новой точки. Или нажатие на старой точке для её удаления.</p>
+      <app-map-vacancy-handler [mapMode]="getMapMode()"
+        [mapPoints]="vacancy.points"
+        (addAddressEvent)="addAddressHandler($event)"
+        (deleteAddressEvent)="removePointsHandler($event)"
+        (updateAddressEvent)="updateAddressHandler($event)">
+      </app-map-vacancy-handler>
+
+      <ng-container>
+        <div *ngFor="let point of vacancy.getPointsSortedByOrder()">
+            <div class="with_field mb10 spec-field">
+                <div class="cordinate_block" style="margin-top: 20px; width: 100%;">
+                    <div class="with_field city-section geoposition">
+                        <p-dropdown #dd class="city-choose" [options]="point.selectedItems"
+                            [(ngModel)]="point.geoCityPropertyAddr"
+                            (keyup)="onUpdateChangeAddress($event, point)"
+                            (onClick)="onClickUpdate($event, point, dd)"
+                            [filter]="true" filterBy="fakeFilter"
+                            placeholder="Выберите адрес"
+                            [style]="{'width':'100%'}"
+                            emptyFilterMessage="Не найдено">
+                        </p-dropdown>
+                    </div>
+                    <button class="geolocation" style="margin-right: 10px" (click)="goToPoint(point)"></button>
+                    <button matTooltip="Удалить адрес" class="buttonDeleteUsers"
+                        style="background-color: #FF8000; margin: auto 0;"
+                        (click)="deleteAddress(point)">
+                    </button>
+                </div>
+            </div>
+        </div>
+      </ng-container>
+      <div *ngIf="!isNotEmptyPoints() || addAddressMode" class="with_field city-section" style="margin-top: 20px;">
+        <p-dropdown class="city-choose" id="addr" [options]="addresses" [(ngModel)]="selectedAddr"
+            (keyup)="onChangeAddress($event)"
+            (onClick)="onClick($event)"
+            [filter]="true" filterBy="fakeFilter"
+            placeholder="Выберите адрес"
+            emptyFilterMessage="Не найдено">
+        </p-dropdown>
+      </div>
+      <button *ngIf="isNotEmptyPoints()" matTooltip="Добавить адрес"
+        style="height: 30px; padding: 0 15px; margin: -6px 10px 0 30px;" class="orange_btn" (click)="addAddressMode = !addAddressMode">
+          Добавить адрес
+      </button>
+    </div>
+
+    <div class="flex_display mb30">
+      <div class="with_field_50 wrap-calc-choosen-prop-el" style="margin-right: 5px;">
+        <p class="zag-sz ng-star-inserted"> Укажите тип занятости</p>
+        <div class="select-block_sz" include="form-input()">
+          <mat-select class="select-sz" [(ngModel)]="vacancy.employmentType" placeholder="Тип занятости">
+            <mat-option *ngFor="let employmentType of employmentTypes" [value]="employmentType.value">
+                {{employmentType.viewValue}}
+            </mat-option>
+          </mat-select>
+        </div>
+        <app-validation-error-template [errorHandler]="vacancy" [propertyTemplate]="'employmentType'">
+        </app-validation-error-template>
+      </div>
+
+      <div class="with_field_50 wrap-calc-choosen-prop-el">
+        <p class="zag-sz ng-star-inserted"> Укажите график работы</p>
+        <div class="select-block_sz" include="form-input()">
+          <mat-select class="select-sz" [(ngModel)]="vacancy.scheduleType" placeholder="График работы">
+            <mat-option *ngFor="let scheduleType of scheduleTypes" [value]="scheduleType.value">
+                {{scheduleType.viewValue}}
+            </mat-option>
+          </mat-select>
+        </div>
+        <app-validation-error-template [errorHandler]="vacancy" [propertyTemplate]="'scheduleType'">
+        </app-validation-error-template>
+      </div>
+    </div>
+
+    <div class="with_field_50 mb30 wrap-calc-choosen-prop-el">
+      <p class="zag-sz ng-star-inserted"> Укажите образование</p>
+      <div class="select-block_sz" include="form-input()">
+        <mat-select class="select-sz" [(ngModel)]="vacancy.educationType" placeholder="Образование">
+          <mat-option *ngFor="let education of educationTypes" [value]="education.value">
+              {{education.viewValue}}
+          </mat-option>
+        </mat-select>
+      </div>
+      <app-validation-error-template [errorHandler]="vacancy" [propertyTemplate]="'educationType'">
+      </app-validation-error-template>
+    </div>
+
+    <div *ngIf='isShowEducation()' class="with_field mb30">
+      <textarea type="textarea" [(ngModel)]="vacancy.education" placeholder="Укажите специальность (необязательно)"></textarea>
+    </div>
+
+    <div>
+      <p class="zag-sz ng-star-inserted"> Укажите опыт работы</p>
+      <div class="flex_display">
+        <div class="with_field_50 mb30 wrap-calc-choosen-prop-el" style="margin-right: 5px;">
+          <div class="select-block_sz" include="form-input()">
+            <mat-select class="select-sz" [(ngModel)]="vacancy.experienceType" placeholder="Опыт работы">
+              <mat-option *ngFor="let workExperienceType of workExperienceTypes" [value]="workExperienceType.value">
+                  {{workExperienceType.viewValue}}
+              </mat-option>
+            </mat-select>
+          </div>
+          <app-validation-error-template [errorHandler]="vacancy" [propertyTemplate]="'experienceType'">
+          </app-validation-error-template>
+        </div>
+
+        <div *ngIf='isRequiredWorkExperience()' class="mb30" style="display: flex;">
+          <div class="with_field">
+            <input type="number" [(ngModel)]="vacancy.workExperienceValue" placeholder="От">
+          </div>
+          <span style="margin: auto 0;">лет</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="with_field_50 mb30 wrap-calc-choosen-prop-el">
+      <p class="zag-sz ng-star-inserted"> Укажите место работы</p>
+      <div class="select-block_sz" include="form-input()">
+        <mat-select class="select-sz" [(ngModel)]="vacancy.placeWorkType" placeholder="Место работы">
+          <mat-option *ngFor="let workType of placeWorkTypes" [value]="workType.value">
+              {{workType.viewValue}}
+          </mat-option>
+        </mat-select>
+      </div>
+      <app-validation-error-template [errorHandler]="vacancy" [propertyTemplate]="'placeWorkType'">
+      </app-validation-error-template>
+    </div>
+
+    <div>
+      <div class="cb-div mb30">
+        <input type="checkbox" id="c1" name="cc" [(ngModel)]="vacancy.businessTrips"/>
+        <label class="label-job" for="c1">
+            <span></span>Возможность командировок
+        </label>
+      </div>
+    </div>
+
+    <div class="cb-div mb30">
+      <input type="checkbox" id="c2" name="cc" [(ngModel)]="vacancy.moving"/>
+      <label class="label-job" for="c2">
+          <span></span>Возможность переезда
+      </label>
+    </div>
+
+    <!-- <div *ngIf="vacancy.moving" class="with_field mb30">
+      <textarea type="textarea" [(ngModel)]="vacancy.addressMoving" placeholder="Адресс для переезда"></textarea>
+    </div> -->
+
+    <div class="mb30">
+      <p class="zag-sz ng-star-inserted"> Укажите заработанную плату</p>
+      <div style="display: flex;">
+        <div class="with_field max_with_field">
+          <input type="number" [(ngModel)]="vacancy.salary" placeholder="От">
+        </div>
+        <span style="margin: auto 0px">р.</span>
+      </div>
+    </div>
+
+    <div class="with_field flex mb30">
+      <input id="fio" type="text" [(ngModel)]="vacancy.userInfo.name" placeholder="Как к Вам обращаться?" >
+      <p-inputMask id="phone1" mask="+7 (999) 999-9999" placeholder="Номер телефона" [(ngModel)]="vacancy.userInfo.phoneNumber"></p-inputMask>
+    </div>
+
+    <div *ngIf="!isUpdateVacancy()" class="with_field_50 mb30 wrap-calc-choosen-prop-el">
+      <div class="select-block_sz" include="form-input()">
+        <mat-select class="select-sz" [(ngModel)]="vacancy.status" placeholder="Статус вакансии">
+          <mat-option *ngFor="let status of vacancyStatuses" [value]="status.value">
+              {{status.viewValue}}
+          </mat-option>
+        </mat-select>
+      </div>
+      <app-validation-error-template [errorHandler]="vacancy" [propertyTemplate]="'status'">
+      </app-validation-error-template>
+    </div>
+
+    <div *ngIf="!isUpdateVacancy()">
+      <button class="orange_btn" [ngClass]="{'background_btn': isDisabledBtn}" (click)="createVacancy()" [disabled]="isDisabledBtn">
+        Создать вакансию
+      </button>
+    </div>
+
+    <div *ngIf="isDisabledBtn" class="windows8">
+      <div class="wBall" id="wBall_1">
+        <div class="wInnerBall"></div>
+      </div>
+      <div class="wBall" id="wBall_2">
+        <div class="wInnerBall"></div>
+      </div>
+      <div class="wBall" id="wBall_3">
+        <div class="wInnerBall"></div>
+      </div>
+      <div class="wBall" id="wBall_4">
+        <div class="wInnerBall"></div>
+      </div>
+      <div class="wBall" id="wBall_5">
+        <div class="wInnerBall"></div>
+      </div>
+    </div>
+
+    <app-validation-error-template [errorHandler]="vacancy"
+      [commonMessage]="'Вы не заполнили/заполнили некорректно некоторые поля для создания вакансии, пожалуйста, исправьте и попробуйте создать вакансию снова'">
+    </app-validation-error-template>
+    <div *ngFor="let error of vacancy.getErrorsWithoutFields(); let i = index">
+      <app-validation-error-template [errorHandler]="vacancy" [index]="i">
+      </app-validation-error-template>
+    </div>
+
+  </div>
+</div>

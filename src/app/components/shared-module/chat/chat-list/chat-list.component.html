@@ -1,0 +1,22 @@
+<div class="contact-block-child online" *ngFor="let chat of chats">
+    <a href="/user/{{getUser(chat).id}}" style="display: initial; cursor: pointer;">
+        <img src="api/partner/info/photo/{{getUser(chat).id}}">
+    </a>
+    <div>
+        <div style="display: grid;">
+            <a class="contact-name" href="/user/{{getUser(chat).id}}" *ngIf="chat.isCommon() || chat.isDeleted()">{{getUser(chat).username}}</a>
+            <a *ngIf="(chat.isCommon() || chat.isDeleted()) && !isVacancy(chat)" class="contact-name" style="font-size: 14px; overflow: hidden; text-overflow: ellipsis"
+            href="/find_task/{{getTaskForCommonChat(chat).id}}" target="_blank">
+              <a *ngIf="getTaskForCommonChat(chat).name != null" class="contact-write" style="cursor: pointer;">Задание  </a>
+                {{getTaskForCommonChat(chat).name}}
+            </a>
+            <a *ngIf="(chat.isCommon() || chat.isDeleted()) && isVacancy(chat)" class="contact-name" style="font-size: 14px; overflow: hidden; text-overflow: ellipsis"
+            href="/job/find_vacancy/{{getVacancyForCommonChat(chat).id}}" target="_blank">
+              <a *ngIf="getVacancyForCommonChat(chat).name != null" class="contact-write" style="cursor: pointer;">Вакансия  </a>
+              {{getVacancyForCommonChat(chat).name}}
+            </a>
+            <a class="contact-write" style="cursor: pointer;" (click)="openChat(chat)">Написать</a>
+        </div>
+    </div>
+    <a class="contact-name" style="cursor: pointer;" *ngIf="chat.isArbitration()" (click)="openChat(chat)">{{getTask(chat)}}</a>
+</div>

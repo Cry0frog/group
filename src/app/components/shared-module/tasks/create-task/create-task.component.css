@@ -1,0 +1,36 @@
+@media (min-width: 1000px) {
+    .card {margin-top: 20px;}
+}
+
+.zakaz4ik_info img {
+    height: 80px;
+    object-fit: fill;
+    border-radius: 50px;
+}
+
+@media(max-width: 768px) {
+    .go_instructions {padding-top: 25px; padding-left: 20px;}
+}
+
+.potential_performer {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.zakaz4ik_name {
+    font-size: 21px;
+}
+
+@media(max-width: 1000px) {
+    .potential_performer{
+        font-size: 18px !important; 
+        margin-bottom: 25px !important; 
+    }
+    .mt_25 {
+        margin-top: 25px !important;
+    } 
+}
+
+.padding-block-potential-performer {
+    padding: 10px 35px 10px !important;
+}

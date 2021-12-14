@@ -1,0 +1,26 @@
+<div class="wrapper content paddingi">
+  <div class="width_100 paddingi">
+
+      <div class="common-tabs tabs user-panel">
+          <input id="tab1" class="categories" type="radio" name="tabs" checked>
+          <label class="non-focused-label" for="tab1" (click)="switchToCategories()">
+              <i class="tavs-icon"></i>
+              <span>Категории задач</span>
+          </label>
+
+          <input id="tab2" class="fields_activity" type="radio" name="tabs">
+          <label class="non-focused-label" for="tab2" (click)="switchToFieldsActivity()">
+              <i class="tavs-icon"></i>
+              <span>Категории работы</span>
+          </label>
+
+          <div class="block-corner">
+              <router-outlet></router-outlet>
+          </div>
+          <div style="margin-top: 24px;">
+            <app-admin-setting></app-admin-setting>
+          </div>
+      </div>
+  </div>
+</div>
+

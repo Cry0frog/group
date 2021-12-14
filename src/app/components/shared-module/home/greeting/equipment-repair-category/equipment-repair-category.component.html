@@ -1,0 +1,181 @@
+<div (scroll)="scrollHandler($event)">
+  <div class="first_screen_adv">
+  	<div class="wrapper paddingi">
+  		<h1 class="big_h1">Ремонт цифровой и бытовой техники</h1>
+      <p class="p-adv">GoodDeal – современный удобный сервис по поиску специалистов в области ремонта цифровой и бытовой техники</p>
+      <p class="p-adv">Телефон: 8800-301-12-97</p>
+      <p class="p-adv">Режим работы - круглосуточно</p>
+  		<ol>
+  			<li>Создайте задание</li>
+  			<li>Выберите лучшего исполнителя</li>
+  			<li>Готово! Ваше задание уже выполняется</li>
+  		</ol>
+  		<a class="new_orange_btn" id="create_task" href="/new_task">Создать задание</a>
+  	</div>
+  </div>
+
+  <a *ngIf="isShowButton" class="create-zadanie create-zadanie-fixed def-href-point" href="/new_task"> Создать задание </a>
+
+  <div class="new_cat">
+  	<div class="wrapper">
+
+  		<h2 class="h2_index paddingi">Мы имеем большой штат исполнителей</h2>
+      <p class="podh2_index paddingi">готовы помочь вам в решении самых разнообразных задач</p>
+
+      <div class="flex">
+  		<!--
+        <div *ngFor="let category of sortedArray" class="new-cat-block" (click)='routerCreateTask(category)'>
+  				<div class="ncb-content">
+  					<img src="../../../../../../assets/img/nabor.png" />
+  					<p>{{category.nameCategory}}</p>
+  				</div>
+        </div> -->
+
+  			<div class="new-cat-block"  (click)='routerCreateTask("Ремонт компьютеров и ноутбуков")'>
+  				<div class="ncb-content">
+  					<img src="../../../../../../assets/img/1_Ремонт_компьютеров_и_ноутбуков.jpg" />
+  					<p>Ремонт компьютеров и ноутбуков</p>
+  				</div>
+  			</div>
+  			<div class="new-cat-block"  (click)='routerCreateTask("Ремонт мобильных устройств")'>
+  				<div class="ncb-content">
+  					<img src="../../../../../../assets/img/2_Ремонт_смартфонов_и_планшетов.jpg" />
+  					<p>Ремонт смартфонов и планшетов</p>
+  				</div>
+  			</div>
+  			<div class="new-cat-block"  (click)='routerCreateTask("Ремонт телевизоров")'>
+  				<div class="ncb-content">
+  					<img src="../../../../../../assets/img/3_Ремонт_ТВ.jpg"/>
+  					<p>Ремонт телевизоров</p>
+  				</div>
+  			</div>
+        <div class="new-cat-block"  (click)='routerCreateTask("Ремонт и установка кухонной техники")'>
+  				<div class="ncb-content">
+  					<img src="../../../../../../assets/img/4_Ремонт_кухонной_техники.jpg" />
+  					<p>Ремонт и установка кухонной техники</p>
+  				</div>
+        </div>
+  			<div class="new-cat-block"  (click)='routerCreateTask("Ремонт и установка техники в ванную/туалет")'>
+  				<div class="ncb-content">
+  					<img src="../../../../../../assets/img/5_Ремонт_техники_в_ванную.jpg"/>
+  					<p>Ремонт и установка ванной техники</p>
+  				</div>
+  			</div>
+        <div class="new-cat-block"  (click)='routerCreateTask("Ремонт и установка мелкой домашней техники")'>
+  				<div class="ncb-content">
+  					<img src="../../../../../../assets/img/6_Ремонт_мелкой_бытовой_техники.jpg" />
+  					<p>Ремонт и установка мелкой домашней техники</p>
+  				</div>
+        </div>
+        <div class="new-cat-block"  (click)='routerCreateTask("Ремонт и установка климатической техники")'>
+  				<div class="ncb-content">
+  					<img src="../../../../../../assets/img/7_Ремонт_климатической_техники.jpg" />
+  					<p>Ремонт и установка климатической техники</p>
+  				</div>
+        </div>
+        <div class="new-cat-block" (click)='routerCreateTask("Ремонт садовых приборов и строительных инструментов")'>
+          <div class="ncb-content">
+            <img src="../../../../../../assets/img/8_Ремонт_садовых_и_строительных_инструментов.jpg" />
+            <p>Ремонт садовых и строительных инструментов</p>
+          </div>
+        </div>
+        <div class="new-cat-block"  (click)='routerCreateTask("Ремонт фото/видео техники")'>
+          <div class="ncb-content">
+            <img src="../../../../../../assets/img/9_Ремонт_фотовидео_техники.jpg" />
+            <p>Ремонт фото/видео аппаратуры</p>
+          </div>
+        </div>
+        <div class="new-cat-block"  (click)='routerCreateTask("Ремонт сканеров, принтеров и другой оргтехники")'>
+          <div class="ncb-content">
+            <img src="../../../../../../assets/img/10_Ремонт_и_настройка_оргтехники.jpg" />
+            <p>Ремонт и настройка оргтехники</p>
+          </div>
+        </div>
+        <div class="new-cat-block" style="margin-left: auto;" (click)='routerCreateTask("Ремонт и установка звуковой и световой аппаратуры/техники")'>
+          <div class="ncb-content">
+            <img src="../../../../../../assets/img/11_Ремонт_свето-звуковой_техники.jpg" />
+            <p>Ремонт и установка свето-звуковой техники</p>
+          </div>
+        </div>
+        <div class="new-cat-block" (click)='routerCreateTask("Настройка Wi-Fi и интернета")'>
+          <div class="ncb-content">
+            <img src="../../../../../../assets/img/12_Настройка_ТВ_и_интернета.jpg" />
+            <p>Настройка интернета и телевидения</p>
+          </div>
+        </div>
+        <div class="new-cat-block" style="margin-right: auto;" (click)='routerCreateTask("Ремонт и установка кофемашин и торговых автоматов")'>
+          <div class="ncb-content">
+            <img src="../../../../../../assets/img/13_Ремонт_торговых_автоматов_и_кофемашин.jpg" />
+            <p>Обслуживание торговых автоматов и кофемашин</p>
+          </div>
+        </div>
+  			<!-- <a href="" class="see_cat">Посмотреть все категории</a> -->
+  		</div>
+  	</div>
+  </div>
+
+  <app-default-body-category-construction></app-default-body-category-construction>
+
+  <div class="wrapper paddingi">
+    <h2 class="h2_index_big no-litle">Как формируется цена и какую цену мне поставить?</h2>
+    <p style="text-align: justify;">
+      В приложении GoodDeal Вы можете поставить ту цену, которую готовы заплатить за работу исполнителю . Исполнители могут откликнуться на
+      Ваше задание по текущей цене, или предложить более выгодные для Вас или себя условия. В целом на стоимость работ обычно влияет сложность работ,
+      наличие дополнительных услуг (наклеить плёнку на смартфон после ремонта экрана, почистить компьютер после ремонта и т.д.) а так же срочность
+      выполнения задания. Чтобы быстрее найти исполнителя мы рекомендуем указывать реальные цены.
+    </p>
+  	<!-- <div class="price-block">
+  		<div class="pri-block">Вы сами определяете цену</div>
+  		<div class="pri-block">Старайтесь указывать реальные и объективные цены</div>
+  		<div class="pri-block">Указывать можно и примерные цены</div>
+  		<div class="pri-block">На цену может влиять срочность, сложность, объем работ</div>
+    </div> -->
+  </div>
+
+  <div>
+    <div class="wrapper">
+      <div class="flex">
+        <div class="category_block">
+          <div class="category_block_new">
+            <a>
+              <img src="../../../../../../assets/img/2723375681.jpg"/>
+            </a>
+            <a class="zag-create"> Бойцова Ангелина Степановна</a>
+            <div class="non-focused-label" style="cursor: pointer;">
+              <span class="zag-create-span">1000₽</span>
+              <p style="margin: 0 0 10px">Создана 15.02.2021</p>
+              <p class="desc-create">Почистить ноутбук Acer от пыли</p>
+            </div>
+          </div>
+        </div>
+        <div class="category_block">
+          <div class="category_block_new">
+            <a>
+              <img src="../../../../../../assets/img/116245413638d42d66c1ef1e70e4e6c48ff.jpg"/>
+            </a>
+            <a class="zag-create"> Шишалов Антон Валентинович</a>
+            <div class="non-focused-label" style="cursor: pointer;">
+              <span class="zag-create-span">300₽</span>
+              <p style="margin: 0 0 10px">Создана 12.02.2021</p>
+              <p class="desc-create">Заменить провод у лобзика Makita</p>
+            </div>
+          </div>
+        </div>
+        <div class="category_block">
+          <div class="category_block_new">
+            <a>
+              <img src="../../../../../../assets/img/2898859394.jpg"/>
+            </a>
+            <a class="zag-create"> Ульянова Виктория Денисовна</a>
+            <div class="non-focused-label" style="cursor: pointer;">
+              <span class="zag-create-span">800₽</span>
+              <p style="margin: 0 0 10px">Создана 19.02.2021</p>
+              <p class="desc-create">Заменить дисплей SE 2016 (дисплей куплен)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>

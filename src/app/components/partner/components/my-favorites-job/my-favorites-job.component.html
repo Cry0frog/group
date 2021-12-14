@@ -1,0 +1,17 @@
+<ng-container (scroll)="scrollHandler($event)">
+  <div class="vibor">
+    <a class="vipolneno-vibor def-href-point" (click)="switchFilter('FAVORITE_VACANCIES')" [ngClass]="{'active-vibor': isFavoriteVacancyFilterStatus()}">
+      Избранные вакансии
+    </a>
+    <a class="chernovik-vibor def-href-point" (click)="switchFilter('FAVORITE_RESUME')" [ngClass]="{'active-vibor': isFavoriteResumeFilterStatus()}">
+      Избранные резюме
+    </a>
+  </div>
+
+  <ng-container *ngIf="isFavoriteVacancyFilterStatus()">
+    <app-list-vacancies [shortVacancies]="shortVacancies" [vacancyComponentMode]='getVacanciesMode'></app-list-vacancies>
+  </ng-container>
+  <ng-container *ngIf="isFavoriteResumeFilterStatus()">
+    <app-list-resume [listResume]="favoritesResume" [resumeComponentMode]="getResumeMode"></app-list-resume>
+  </ng-container>
+</ng-container>

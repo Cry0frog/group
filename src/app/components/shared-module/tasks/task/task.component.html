@@ -1,0 +1,794 @@
+<div class="flex">
+	<div class="section-content" style="width: 100%;">
+		<div class="top-zakaza">
+			<a class="back-link" [routerLink]="['../']">
+				<span class="back-icon"></span> назад
+			</a>
+			<div class="task-condition-bar">
+				<div>
+					<button *ngIf="isYourTask() && task.isShowEditTask()" matTooltip="Редактировать задачу"
+						class="edit-password" (click)="editTask()"></button>
+				</div>
+				<div *ngIf="isYourTask() && mode == taskComponentMode.COMMON">
+					<p class="status-zakaza st-process task-condition-element">
+						Ваша задача
+					</p>
+				</div>
+				<div *ngIf="task.isHide() || task.isOnHold() || task.isPublished() || task.isPerformerSelected() || task.isFinished()"
+					style="margin-left: auto;">
+					<p class="status-zakaza st-process task-condition-element">
+						{{taskStatusTranslates[task.status]}}
+					</p>
+				</div>
+				<div *ngIf="task.isPerformRequestToFinish()"
+					class="margin_for_request_to_finish">
+					<p class="status-zakaza st-process task-condition-element line_height_1_2">
+						{{taskStatusTranslates[task.status]}}
+					</p>
+				</div>
+				<div *ngIf="task.isCanceledByOwner() || task.isCanceledByPerformer()" style="margin-left: auto;">
+					<p class="status-zakaza st-process task-condition-element">
+						{{taskStatusTranslates[task.status]}}
+					</p>
+				</div>
+
+				<div *ngIf="task.isNotPayed()" style="margin-left: auto; margin-right: auto;">
+					<div align="right" class="task_status_translates">
+						<div>
+							<p class="task-waiting-condition-element status-zakaza st-process task-condition-element">
+								{{taskStatusTranslates[task.status]}}
+							</p>
+						</div>
+						<div class="gd-hint" (click)="getTooltipMobile(notPayedForCustomer)"
+							[matTooltipDisabled]="isMobileMode" *ngIf="isYourTask()"
+							matTooltip="{{notPayedForCustomer}}">
+							?
+						</div>
+						<div class="gd-hint" (click)="getTooltipMobile(notPayedForPerformer)"
+							[matTooltipDisabled]="isMobileMode" *ngIf="!isYourTask()"
+							matTooltip="{{notPayedForPerformer}}">
+							?
+						</div>
+					</div>
+					<div *ngIf="isYourTask() && task.dealState != null" align="right" class="finish_status"
+						style="padding-right: 65px;">
+						<div>
+							<p class="task-waiting-condition-element status-zakaza st-process task-condition-element"
+								[ngClass]="{'deal_registered':task.isDealStatusCreated()}" matTooltip="{{task.getPaymentErrorDescription()}}">
+								{{dealStateTranslates[task.dealState]}}
+							</p>
+						</div>
+						<div *ngIf="task.getPaymentErrorDescription()" class="gd-hint"
+							(click)="getTooltipMobile(task.getPaymentErrorDescription())"
+							[matTooltipDisabled]="isMobileMode" matTooltip="{{task.getPaymentErrorDescription()}}">
+							?
+						</div>
+						<!--
+						<div class="gd-hint" matTooltip="{{dealStateTooltip[task.dealState]}}">
+							?
+						</div>-->
+					</div>
+				</div>
+
+				<div *ngIf="task.isFinishedInFavorCustomer() && isYourTask()" style="float: right;">
+					<div align="right" class="finish_status">
+						<div>
+							<p class="task-waiting-condition-element status-zakaza st-process task-condition-element"
+								matTooltip="{{task.getCancelPaymentDescription()}}">
+								{{dealStateTranslates[task.dealState]}}
+							</p>
+						</div>
+						<div *ngIf="task.isShowPayerCard()" class="gd-hint"
+							(click)="getTooltipMobile(task.getCancelPaymentDescription())"
+							[matTooltipDisabled]="isMobileMode" matTooltip="{{task.getCancelPaymentDescription()}}">
+							?
+						</div>
+					</div>
+				</div>
+
+				<div *ngIf="task.isProcessing()" style="margin-left: auto;">
+					<p class="status-zakaza st-process task-condition-element">
+						{{taskStatusTranslates[task.status]}}
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div *ngIf="task.isCancelInProgress() && isYourTask()"
+			style="display: flex; margin-top: 50px; margin-bottom: 15px;">
+			<button class="orange_btn poluchit-btn margin-5 request-handling-btn"
+				style="margin-right: auto; margin-left: auto;" (click)="checkDealStatus()">
+				Проверить статус
+			</button>
+		</div>
+
+		<div *ngIf="task.isNotPayed() && isYourTask()" class="status_not_payed" style="margin-top: 20px;">
+			<button class="orange_btn poluchit-btn margin-5 request-handling-btn"
+				style="margin-right: auto; margin-left: auto;" (click)="payForTask()" *ngIf="isPayerToolChoosen()">
+				Внести платеж
+			</button>
+			<span class="task-waiting-condition-element status-zakaza st-process task-condition-element"
+				style="margin-right: auto; margin-left: auto; display: inline-table; vertical-align: middle; line-height: 26px;"
+				*ngIf="!isPayerToolChoosen()" matTooltip="Сначала выберите карту, с которой будет произведена выплата">
+				Внести платеж
+			</span>
+
+			<button class="orange_btn poluchit-btn margin-5 request-handling-btn"
+				style="margin-right: auto; margin-left: auto;" *ngIf="task.isAvailableToCheckDealStatus()"
+				(click)="checkDealStatus()">
+				Проверить статус
+			</button>
+		</div>
+		<p class="zagolovok-super-new">{{task.name}}</p>
+
+		<p class="primer" style="margin-bottom: 0px">
+			Категория:
+			<a *ngIf="task.category.root != null" (click)="goToFindTaskFilterByCategory(true)"
+				class="example-task-name">
+				{{task.category.root.name}}
+			</a>
+		</p>
+		<p class="primer">
+			Подкатегория:
+			<a (click)="goToFindTaskFilterByCategory(false)" class="example-task-name">
+				{{task.category.name}}
+			</a>
+		</p>
+
+		<table class="table-zakaz">
+			<tbody>
+				<ng-container *ngFor="let taskProp of sortPropByOrder(task.properties)">
+					<tr>
+						<ng-container *ngIf="taskProp.refProperty.isMapCategoryPropertyType() && taskProp.locationType">
+
+							<td class="left-table-zakaz">
+								<span class="zakaz-icon"></span>
+								<span>Место выполнения задания: </span>
+							</td>
+							<td class="right-table-zakaz">
+								{{locationTypeDisplay[taskProp.locationType]}}
+							</td>
+						</ng-container>
+					</tr>
+					<tr *ngIf="isEmptyProperties(taskProp)">
+						<ng-container *ngIf="taskProp.refProperty.isSimpleCategoryPropertyType()">
+							<td class="left-table-zakaz">
+								<span class="zakaz-icon"></span>{{taskProp.refProperty.title}}
+							</td>
+							<td class="right-table-zakaz">
+								{{taskProp.value}}
+							</td>
+						</ng-container>
+						<ng-container *ngIf="taskProp.refProperty.isDateCategoryPropertyType()">
+							<td *ngIf="taskProp.isDatable()" class="left-table-zakaz">
+								<span class="zakaz-icon"></span>Дата и время
+							</td>
+							<td *ngIf="!taskProp.isDatable()" class="left-table-zakaz">
+								<span class="zakaz-icon"></span>Режим выполнения задания
+							</td>
+							<td class="right-table-zakaz">
+								<ng-container *ngIf="taskProp.isDatable(); else notDatable">
+									<div class="date-time-property-area" *ngIf="taskProp.refProperty.isDateTime()">
+										{{taskProp.dateStart | date:'dd.MM.yyyy HH:mm'}}
+									</div>
+									<div class="date-time-property-area"
+										*ngIf="taskProp.refProperty.isDateTimeInterval()">
+										<div>
+											От {{taskProp.dateStart | date:'dd.MM.yyyy HH:mm'}}
+										</div>
+										<div>
+											До {{taskProp.dateEnd | date:'dd.MM.yyyy HH:mm'}}
+										</div>
+									</div>
+									<div class="date-time-property-area" *ngIf="taskProp.refProperty.isDate()">
+										{{taskProp.dateStart | date:'dd.MM.yyyy'}}
+									</div>
+								</ng-container>
+
+								<ng-template #notDatable>
+									{{modeTaskPerformerTranslate[taskProp.modeTaskPerformer]}}
+								</ng-template>
+							</td>
+						</ng-container>
+						<ng-container *ngIf="taskProp.refProperty.isMapCategoryPropertyType() && taskProp.points.length != 0">
+							<td class="left-table-zakaz" style="padding-left: 5px;padding-top: 0px;padding-bottom: 0px;" colspan="2">
+								<div *ngIf="isVisibleMap(taskProp.locationType)" style="padding-bottom: 10px;">
+									<div>
+										<div *ngFor="let point of taskProp.getPointsSortedByOrder()">
+											<div *ngIf="point.isPoint()" class="address_otkuda point-green">
+												<i class="location_icon"></i>
+												{{point.addr}}
+											</div>
+											<div *ngIf="point.isStartPoint()" class="address_otkuda point-green">
+												<i class="location_icon"></i>
+												{{point.addr}}
+											</div>
+											<div *ngIf="point.isIntermediatePoint()" class="point-blue address_kuda">
+												<i class="location_icon"></i>
+												{{point.addr}}
+											</div>
+											<div *ngIf="point.isEndPoint()" class="address_kuda point-red">
+												<i class="location_icon"></i>
+												<span style="word-break: break-word;">{{point.addr}}</span>
+											</div>
+										</div>
+									</div>
+
+									<app-map-handler [mapMode]="getMapMode(taskProp.refProperty)" [task]="task"
+										[mapProperty]="taskProp">
+									</app-map-handler>
+									<p class="podpis-wf">
+										<ng-container
+											*ngIf="taskProp.choosenCalcMode == null || taskProp.choosenCalcMode == calcMode.BASED_ON_METER">
+											Предполагаемое расстояние {{getDistance(taskProp)}} (м)
+										</ng-container>
+										<ng-container *ngIf="taskProp.choosenCalcMode == calcMode.BASED_ON_HOUR">
+											Время аренды {{task.hour}} (ч)
+										</ng-container>
+									</p>
+								</div>
+							</td>
+						</ng-container>
+					</tr>
+					<ng-container *ngIf="taskProp.refProperty.isMapCategoryPropertyType()">
+						<tr *ngIf="taskProp.refProperty.showCategoryTransport">
+							<td class="left-table-zakaz">
+								<span class="zakaz-icon"></span>
+								Ожидаемый способ доставки
+							</td>
+							<td class="right-table-zakaz">
+								{{taskProp.getDisplayTransportCategory()}}
+							</td>
+						</tr>
+						<tr *ngIf="taskProp.refProperty.showCategoryWeight">
+							<td class="left-table-zakaz">
+								<span class="zakaz-icon"></span>
+								Весовая категория
+							</td>
+							<td class="right-table-zakaz">
+								{{taskProp.getDisplayWeightCategory()}}
+							</td>
+						</tr>
+						<tr *ngIf="taskProp.refProperty.showCategoryProduct">
+							<td class="left-table-zakaz">
+								<span class="zakaz-icon"></span>
+								Категория товара
+							</td>
+							<td class="right-table-zakaz">
+								{{taskProp.getDisplayProductCategory()}}
+							</td>
+						</tr>
+						<tr *ngIf="taskProp.refProperty.showPorterOption && taskProp.porterSelected">
+							<td class="left-table-zakaz">
+								<span class="zakaz-icon"></span>
+								Необходимое количество грузчиков (Услуги грузчиков оплачиваются отдельно)
+							</td>
+							<td class="right-table-zakaz">
+								{{taskProp.porterCount}}
+							</td>
+						</tr>
+						<tr *ngIf="taskProp.refProperty.showPassengerOption">
+							<td class="left-table-zakaz">
+								<span class="zakaz-icon"></span>
+								Кол-во пассажиров
+							</td>
+							<td class="right-table-zakaz">
+								{{taskProp.passengerCount}}
+							</td>
+						</tr>
+					</ng-container>
+				</ng-container>
+
+				<tr>
+					<td class="left-table-zakaz">
+						<span class="zakaz-icon"></span>Город
+					</td>
+					<td *ngIf="task.city != null" class="right-table-zakaz">
+						<span class="zakaz-process">{{task.city.state}}, {{task.city.name}}</span>
+						<span class="ddtr"> </span>
+					</td>
+				</tr>
+				<tr>
+					<td class="left-table-zakaz">
+						<span class="zakaz-icon"></span>Стоимость
+					</td>
+					<td class="right-table-zakaz">
+						<span class="zakaz-process">{{task.totalPay}}₽</span>
+						<span class="ddtr"> </span>
+					</td>
+				</tr>
+				<tr>
+					<td class="left-table-zakaz">
+						<span class="zakaz-icon"></span>Вид платежа (способ платежа)
+					</td>
+					<td class="right-table-zakaz">
+						<div style="display: flex">
+							<span class="zakaz-process">{{payoutTypeDisplay[task.payoutType]}}</span>
+							<span class="ddtr"> </span>
+							<div class="gd-hint" (click)="getTooltipMobile(getDescriptionPay(task.payoutType))"
+								[matTooltipDisabled]="isMobileMode" matTooltip="{{getDescriptionPay(task.payoutType)}}">
+								?
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr *ngIf="task.isShowAdminNotice()">
+					<td class="left-table-zakaz">
+						<span class="zakaz-icon point-red" style="color: red; font-size: 19px;">!!!</span>
+						Внимание
+					</td>
+					<td class="right-table-zakaz">
+						<span class="zakaz-process">{{task.category.adminNoticeText}}</span>
+						<span class="ddtr"> </span>
+					</td>
+				</tr>
+				<tr *ngIf="task.isShowPayerCard() && isYourTask()">
+					<td class="left-table-zakaz">
+						<span class="zakaz-icon"></span>Выплата будет осуществлена с карты:
+					</td>
+					<td class="right-table-zakaz">
+						<span class="zakaz-process">{{task.payerPaymentMask}}</span>
+						<button title="Редактировать" class="edit_btn margin-5" (click)="updatePayerTool()">
+							
+						</button>
+					</td>
+				</tr>
+				<tr *ngIf="task.isShowBeneficiaryCard()">
+					<td class="left-table-zakaz">
+						<span class="zakaz-icon"></span>Выплата будет зачислена на карту:
+					</td>
+					<td class="right-table-zakaz">
+						<span class="zakaz-process">{{task.beneficiaryPaymentMask}}</span>
+					</td>
+				</tr>
+				<tr *ngIf="task.images && task.images.length != 0">
+					<td class="left-table-zakaz">
+						<span class="zakaz-icon"></span>
+						<p>Вложения</p>
+					</td>
+					<td class="right-table-zakaz images">
+						<app-work-examples [images]='task.images' [isOwner]='false' [isTaskImages]='true'>
+						</app-work-examples>
+					</td>
+				</tr>
+				<tr *ngIf="task.docs && task.docs.length != 0">
+					<td class="left-table-zakaz">
+						<span class="zakaz-icon"></span>
+						<p>Документы</p>
+					</td>
+					<td class="right-table-zakaz">
+						<div *ngFor="let doc of task.docs">
+							<a (click)="downloadFile(doc)" style="cursor: pointer;">{{doc.nameDoc}}</a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="left-table-zakaz" colspan="2">
+						<div *ngIf="(isLogged() | async)" class="align-center">
+							<div *ngIf="isPerformerOfTask()">
+								<div class="action-task-right-5">
+									<button *ngIf="task.isPerformRequestToFinish()" type="button" class="cancel_zakaz"
+										(click)="requestArbitration()">
+										Запросить арбитраж
+									</button>
+									<button *ngIf="task.isProcessing()" type="button" class="cancel_zakaz"
+										(click)="onPerformerCancelTask()">
+										Отменить выполнение заказа
+									</button>
+									<button *ngIf="task.isProcessing()" type="button" class="complete_zakaz"
+										(click)="onPerformerFinishTask()">
+										Заказ выполнен
+									</button>
+								</div>
+								<div class="action-task-right-5"
+									*ngIf="task.isCanceledByPerformer() || task.isCanceledByOwner()">
+									<button type="button" class="cancel_zakaz" (click)="onPerformerStartDiscussion()">
+										Перейти к обсуждению задачи с заказчиком
+									</button>
+								</div>
+							</div>
+							<div *ngIf="isYourTask()">
+								<div class="action-task-right-5">
+									<button *ngIf="task.isPerformRequestToFinish() || task.isProcessing()" type="button"
+										class="cancel_zakaz" (click)="onOwnerCancelTask()">
+										Задание не выполнено
+									</button>
+									<button *ngIf="task.isPerformRequestToFinish()" type="button" class="complete_zakaz"
+										(click)="onOwnerFinishTask()">
+										Принять выполнение
+									</button>
+								</div>
+								<div class="action-task-right-5"
+									*ngIf="task.isCanceledByPerformer() || task.isCanceledByOwner()">
+									<button type="button" class="cancel_zakaz" (click)="onOwnerStartDiscussion()">
+										Перейти к обсуждению задачи с исполнителем
+									</button>
+								</div>
+							</div>
+
+							<div *ngIf="openRequestComment||(isFinishedTask() && checkComment())">
+								<div *ngIf="isYourTask()">
+									<button type="button" class="orange_btn btn_comment"
+										(click)="openDialogWithRequestComment()">
+										Оставить комментарий исполнителю
+									</button>
+								</div>
+								<div *ngIf="isPerformerOfTask()">
+									<button type="button" class="orange_btn btn_comment"
+										(click)="openDialogWithRequestComment()">
+										Оставить комментарий заказчику
+									</button>
+								</div>
+							</div>
+							<div *ngIf="task.isPublished()">
+								<div *ngIf="isYourTask() && !isBadPartner()">
+									<button type="button" class="orange_btn" (click)="offerTask(task.id)">
+										Предложить задачу исполнителю
+									</button>
+								</div>
+							</div>
+
+							<div *ngIf="isYourTask() && !isCommonMode() && !isWaitResponse">
+								<div *ngIf="task.isHide()" class="padding-button">
+									<button type="button" class="status-on-hold complete_zakaz"
+										(click)="switchToStatus(taskStatuses.ON_HOLD)">
+										{{taskStatusActionTranslates[taskStatuses.ON_HOLD]}}
+									</button>
+									<button type="button" class="complete_zakaz"
+										(click)="switchToStatus(taskStatuses.PUBLISHED)">
+										{{taskStatusActionTranslates[taskStatuses.PUBLISHED]}}
+									</button>
+								</div>
+								<div *ngIf="task.isOnHold()" class="padding-button">
+									<button type="button" class="status-hide complete_zakaz"
+										(click)="switchToStatus(taskStatuses.HIDE)">
+										{{taskStatusActionTranslates[taskStatuses.HIDE]}}
+									</button>
+									<button type="button" class="complete_zakaz"
+										(click)="switchToStatus(taskStatuses.PUBLISHED)">
+										{{taskStatusActionTranslates[taskStatuses.PUBLISHED]}}
+									</button>
+								</div>
+								<div *ngIf="task.isPublished()" class="padding-button">
+									<button type="button" class="status-hide complete_zakaz"
+										(click)="switchToStatus(taskStatuses.HIDE)">
+										{{taskStatusActionTranslates[taskStatuses.HIDE]}}
+									</button>
+									<button type="button" class="status-on-hold complete_zakaz"
+										(click)="switchToStatus(taskStatuses.ON_HOLD)">
+										{{taskStatusActionTranslates[taskStatuses.ON_HOLD]}}
+									</button>
+								</div>
+							</div>
+							<div *ngIf="task.dateAutoFinishTask && task.isPerformRequestToFinish()">
+								<div *ngIf="isPerformerOfTask()">
+									Вы завершили выполнение задания. Ожидайте, пока заказчик примет выполненную Вами
+									работу или через
+									{{timerDays}}д {{timerHours}}ч {{timerMinutes}}м {{timerSeconds}}с задача
+									автоматически завершена в Вашу пользу
+								</div>
+								<div *ngIf="isYourTask()">
+									Исполнитель завершил выполнение задания. Подтвердите выполнение задания, или через
+									{{timerDays}}д {{timerHours}}ч {{timerMinutes}}м {{timerSeconds}}с задача
+									автоматически будет завершена в пользу исполнителя
+								</div>
+							</div>
+							<div *ngIf="isWaitResponse" class="windows8">
+								<div class="wBall" id="wBall_1">
+									<div class="wInnerBall"></div>
+								</div>
+								<div class="wBall" id="wBall_2">
+									<div class="wInnerBall"></div>
+								</div>
+								<div class="wBall" id="wBall_3">
+									<div class="wInnerBall"></div>
+								</div>
+								<div class="wBall" id="wBall_4">
+									<div class="wInnerBall"></div>
+								</div>
+								<div class="wBall" id="wBall_5">
+									<div class="wInnerBall"></div>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="description-block bm50" style="width: 100%;" *ngIf="isNotFastTask()">
+		<p class="zag-profile">Заявки на выполнение: +{{taskRequests.length}} / -1</p>
+		<div>
+			<div class="feedback-block" *ngFor="let request of taskRequests">
+				<div *ngIf="isOwnerTaskRequest(request)">
+					<div class="delete_btn_for_mobile">
+						<button type="button" class="close" style="float: right; transform: translateY(-20px);" *ngIf="request.isAvailableToRemoveRequest()" (click)="removeRequestByPerformer(request)">
+							<span>&times;</span>
+						</button>
+					</div>
+				</div>
+				<div class="link_user not_fast_link_user">
+					<div>
+						<a href="/user/{{request.user.id}}" style="display: block; cursor: pointer;">
+							<img class="feedback-img not_fast_img" src="api/partner/info/photo/{{request.user.id}}" />
+						</a>
+					</div>
+					<div class="feedback-block-content">
+						<a href="/user/{{request.user.id}}" style="cursor: pointer;"
+							class="feedback-zag">{{request.user.username}}</a>
+					</div>
+				</div>
+				<!-- <div style="display: flex;">
+					<div class="feedback-block-content">
+						<p class="feedback-description">{{request.comment}}</p>
+					</div>
+				</div>
+				<div class="speach-time" style="float: right;">
+					{{parseTime(request) | date:'dd.MM.yyyy HH:mm'}}
+				</div> -->
+				<div class="display_on_mobile">
+					<div class="speach-time" style="display: flex; float: right; padding-top: 5px;">
+						{{parseTime(request) | date:'dd.MM.yyyy HH:mm'}}
+					</div>
+					<div style="display: inline-flex;">
+						<div class="feedback-block-content">
+							<p class="feedback-description">{{request.comment}}</p>
+						</div>
+					</div>
+				</div>
+				<div class="display_on_computer">
+					<div style="display: flex;">
+						<div class="feedback-block-content">
+							<p class="feedback-description">{{request.comment}}</p>
+						</div>
+					</div>
+					<div class="speach-time" style="float: right;">
+						{{parseTime(request) | date:'dd.MM.yyyy HH:mm'}}
+					</div>
+				</div>
+				<div *ngIf="isVisibleReadyToPay(request)" class="block_new_price">
+					<div *ngIf="request.readyToPayPerformer != null" style="margin-left: 14px;">
+						<p matTooltip="Цена исполнителя" style="color: #FF8000; font-size: 20px; margin-top: 4px;">
+							Исполнитель: {{request.readyToPayPerformer}}₽</p>
+					</div>
+					<div *ngIf="request.readyToPayPartner != null" style="margin-left: 14px;">
+						<p matTooltip="Цена заказчика" style="color: red; font-size: 20px; margin-top: 4px;">Заказчик:
+							{{request.readyToPayPartner}}₽</p>
+					</div>
+				</div>
+				<div class="ball not_fast_ball">{{request.user.rating}}</div>
+
+				<!-- TaskRequest section -->
+				<div class="request-handling-section" *ngIf="(isLogged() | async)">
+					<div class="task-request-operation-container"
+						*ngIf="isYourTask(); else notYourTask_TaskRequestSection">
+						<button class="orange_btn poluchit-btn margin-5 request-handling-btn"
+							*ngIf="isAllowToApproveByOwner(request)"
+							(click)="approveByCustomerRequestToPerform(request)">
+							Назначить исполнителем
+						</button>
+						<button class="orange_btn poluchit-btn margin-5 request-handling-btn"
+							*ngIf="isAllowToApproveByOwner(request) && !isTaskWithCoordPath() && request.readyToPayPerformer != null"
+							(click)="setNewPrice(request)">
+							Торговаться
+						</button>
+
+						<div style="display: flex;">
+							<span *ngIf="request.isApprovedByCustomer()"
+								style="margin: 0 auto; margin-bottom: 5px;">Ожидаем ответа исполнителя</span>
+						</div>
+
+						<button *ngIf="task.isPerformerSelected() && request.isApprovedByCustomer()"
+							class="line_height_1_1 orange_btn poluchit-btn margin-5 request-handling-btn"
+							(click)="abandonPerformer(request)">
+							Отменить выбор исполнителя
+						</button>
+						<span *ngIf="request.isRejectedByCustomer()">Вы отклонили предложение исполнителя</span>
+						<span *ngIf="request.isRejectedByPerformer()">Исполнитель отказался от задачи</span>
+						<span *ngIf="request.isAcceptedByPerformer()">Исполнитель согласился</span>
+					</div>
+					<ng-template #notYourTask_TaskRequestSection>
+						<div *ngIf="isOwnerTaskRequest(request)" class="task-request-operation-container">
+							<button class="orange_btn poluchit-btn margin-5 request-handling-btn"
+								*ngIf="request.isApprovedByCustomer()" (click)="acceptByPerformerRequest(request)">
+								Перейти к выполнению
+							</button>
+							<button class="orange_btn poluchit-btn margin-5 request-handling-btn"
+								*ngIf="request.isApprovedByCustomer()" (click)="rejectByPerformerRequest(request)">
+								Отказаться от задачи
+							</button>
+							<span *ngIf="request.isRejectedByCustomer()">Заказчик отклонил Вашу заявку</span>
+							<span *ngIf="request.isRejectedByPerformer()">Вы отказались от задачи</span>
+							<span *ngIf="request.isAcceptedByPerformer()">Вы исполнитель задачи</span>
+
+							<div class="display_request_for_execution" [ngClass]="{'bargain': request.readyToPayPartner == null}">
+								<button
+									class="padding_15 orange_btn poluchit-btn margin-5 request-handling-btn remove-task-request center_element"
+									*ngIf="request.isAvailableToRemoveRequest() && !isTaskWithCoordPath()"
+									(click)="setNewPrice(request)">
+									Торговаться
+								</button>
+								<div class="delete_btn_for_web">
+									<button
+										class="orange_btn poluchit-btn margin-5 request-handling-btn remove-task-request"
+										style="margin-left: 5px;" *ngIf="request.isAvailableToRemoveRequest()"
+										[ngClass]="{'bargain_btn': request.readyToPayPartner == null}"
+										(click)="removeRequestByPerformer(request)">
+										Удалить
+									</button>
+								</div>
+							</div>
+							<button class="orange_btn poluchit-btn margin-5 request-handling-btn agree_сustomer_price"
+								style="margin-top: 7px; padding: 0px 10px;"
+								*ngIf="request.isAvailableToRemoveRequest() && !isTaskWithCoordPath() && request.readyToPayPartner != null"
+								(click)="agreeCustomerPrice(request)">
+								Согласиться с ценой заказчика
+							</button>
+						</div>
+					</ng-template>
+				</div>
+				<!-- end of TaskRequest section -->
+			</div>
+
+			<div *ngIf="mode == taskComponentMode.COMMON">
+				<div *ngIf="(isLogged() | async); else notLogged">
+					<p *ngIf="isNotAlreadySendRequest()" class="zag-profile">Подать заявку:</p>
+
+					<div *ngIf="isYourTask(); else notYourTask">
+						<p class="zag-profile">
+							Это Ваша задача, Вы не можете выполнять свои задачи
+						</p>
+					</div>
+					<ng-template #notYourTask>
+						<div *ngIf="isPerformer(); else notPerformer">
+							<div *ngIf="task.status == taskStatuses.PUBLISHED; else notAvailableStatusTask">
+								<div *ngIf="isNotAlreadySendRequest() && !isBadPerformer()">
+									<div class="bottom-chat">
+										<textarea class="textarea-chat" placeholder="Введите сообщение для заказчика"
+											[(ngModel)]="requestMessage" disabled
+											[ngClass]="{'textarea_chat_new' : !isTaskWithCoordPath()}">
+										</textarea>
+										<button class="send_button" matTooltip="Отправить заявку"
+											(click)="sendRequest(null, true)"></button>
+										<button *ngIf="!isTaskWithCoordPath()" style="margin-left: 5px;"
+											matTooltip="Предложить свою цену" class="send_new_price_button"
+											(click)="sendRequest(null, false)"></button>
+									</div>
+									<app-validation-error-template [errorHandler]="newTaskRequest"
+										[propertyTemplate]="'comment'">
+									</app-validation-error-template>
+									<app-validation-error-template [errorHandler]="newTaskRequest">
+									</app-validation-error-template>
+								</div>
+								<!--
+								<ng-template #alreadySendRequest>
+									<p class="zag-profile">
+										Вы уже подали заявку на выполнение данной задачи
+									</p>
+								</ng-template>
+								-->
+							</div>
+							<p *ngIf="isBadPerformer()">
+								Вы не можете подать заявку, т.к. Ваш аккаунт заблокирован
+							</p>
+							<ng-template #notAvailableStatusTask>
+								<p class="zag-profile">
+									Вы не можете подать заявку, т.к. задача в статусе
+									"{{taskStatusTranslates[task.status]}}"
+								</p>
+							</ng-template>
+
+						</div>
+						<ng-template #notPerformer>
+							<p class="zag-profile">
+								Для того чтобы подать заявку, Вы должны стать исполнителем
+							</p>
+							<p style="margin-top: -15px; font-size: 85%;">
+								Вы можете сделать это в личном кабинете
+							</p>
+						</ng-template>
+					</ng-template>
+				</div>
+
+				<ng-template #notLogged>
+					<p class="zag-profile request-login" (click)="saveRedirectUrl()">
+						Выполните вход, чтобы подать заявку
+					</p>
+				</ng-template>
+			</div>
+		</div>
+	</div>
+
+	<div class="description-block bm50" style="width: 100%;" *ngIf="isFastTask()">
+		<p class="zag-profile" *ngIf="taskRequests != null && taskRequests.length != 0">Исполнитель: </p>
+		<div>
+			<div class="feedback-block" *ngFor="let request of taskRequests">
+				<a href="/user/{{request.user.id}}" style="display: block; cursor: pointer;">
+					<img class="feedback-img" src="api/partner/info/photo/{{request.user.id}}" />
+				</a>
+				<div class="feedback-block-content">
+					<a href="/user/{{request.user.id}}" style="cursor: pointer;"
+						class="feedback-zag">{{request.user.username}}</a>
+					<p class="feedback-description">{{request.comment}}</p>
+				</div>
+				<div class="speach-time" style="float: right;">
+					{{parseTime(request) | date:'dd.MM.yyyy HH:mm'}}
+				</div>
+				<div class="ball">{{request.user.rating}}</div>
+			</div>
+
+			<div *ngIf="mode == taskComponentMode.COMMON">
+				<div *ngIf="(isLogged() | async); else notLogged">
+					<div *ngIf="isYourTask(); else notYourTask">
+						<p class="zag-profile">
+							Это Ваша задача, Вы не можете выполнять свои задачи
+						</p>
+					</div>
+					<ng-template #notYourTask>
+						<div *ngIf="isPerformer(); else notPerformer">
+							<div *ngIf="task.status == taskStatuses.PUBLISHED; else notAvailableStatusTask">
+								<div *ngIf="isNotAlreadySendRequest()" style="text-align: center;">
+									<div *ngIf="showAdditionalMessageForFastTask">
+										<div class="bottom-chat" style="margin-bottom: 20px;">
+											<textarea class="textarea-chat"
+												placeholder="Введите сопроводительное сообщение для заказчика"
+												[(ngModel)]="requestMessage" disabled
+												(keydown.enter)="sendRequest($event, true)">
+											</textarea>
+										</div>
+										<app-validation-error-template [errorHandler]="newTaskRequest"
+											[propertyTemplate]="'comment'">
+										</app-validation-error-template>
+										<app-validation-error-template [errorHandler]="newTaskRequest">
+										</app-validation-error-template>
+									</div>
+
+									<p *ngIf="isBadPerformer()">
+										Вы не можете подать заявку, т.к. Ваш аккаунт заблокирован
+									</p>
+									<div style="display: inline-grid;">
+										<button class="orange_btn" [ngClass]="{'gray_btn': isBadPerformer()}"
+											(click)="sendRequest(null, true)" [disabled]='isBadPerformer()'>
+											Стать исполнителем
+										</button>
+										<a class="additional-message" *ngIf="!showAdditionalMessageForFastTask"
+											(click)="showAdditionalMessageForFastTask = true; requestMessage = '';">
+											Добавить сопроводительное сообщение
+										</a>
+									</div>
+								</div>
+							</div>
+
+							<ng-template #notAvailableStatusTask>
+								<p class="zag-profile">
+									Вы не можете стать исполнителем, т.к. исполнитель уже найден
+								</p>
+							</ng-template>
+
+						</div>
+						<ng-template #notPerformer>
+							<p class="zag-profile">
+								Для того чтобы подать заявку, Вы должны стать исполнителем
+							</p>
+							<p style="margin-top: -15px; font-size: 85%;">
+								Вы можете сделать это в личном кабинете
+							</p>
+						</ng-template>
+					</ng-template>
+				</div>
+
+				<ng-template #notLogged>
+					<p class="zag-profile request-login" (click)="saveRedirectUrl()">
+						Выполните вход, чтобы подать заявку
+					</p>
+				</ng-template>
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="isFinishedTask() && mode!=taskComponentMode.COMMON" style="width: -webkit-fill-available;">
+		<p class="zag-profile">Отзывы:</p>
+		<app-task-comments-wrapper [taskId]="taskId"></app-task-comments-wrapper>
+	</div>
+
+</div>

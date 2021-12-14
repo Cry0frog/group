@@ -1,0 +1,48 @@
+.category {
+  display: contents;
+}
+
+.breadcrumb {
+  text-decoration: none;
+  display: flex;
+  color: #FF8000;
+}
+
+.breadcrumb-item {
+  display: inline-block;
+  cursor: pointer;
+}
+
+li::after {
+  content: "/";
+}
+
+.active {
+  cursor: auto;
+}
+
+.color_blue {
+  color: #007ad9;
+}
+
+.color_orange {
+  color: #FF8000;
+}
+
+@media(max-width: 1000px) {
+  .block-s-zayavkami {
+    margin-bottom:30px;
+  }
+}
+
+@media (max-width: 445px) {
+  .wrapper {
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+.zakaz4ik_name {
+  font-size: 20px;
+}

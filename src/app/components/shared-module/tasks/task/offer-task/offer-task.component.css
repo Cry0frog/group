@@ -1,0 +1,9 @@
+@media (max-width: 560px) {
+  .orange_btn {margin-right: auto; margin-left: auto; width: 310px; line-height: initial;}
+  .request-handling-btn {margin-top: 10px;}
+  .right-align {height: auto;}
+}
+
+@media(max-width: 442px) {
+  .standart-short-btn {height: 35px; border-radius: 20px;}
+}

@@ -1,0 +1,16 @@
+<div class="wrapper content">
+	<div class="width_66 paddingi">
+		<div *ngFor="let news of newsList" class="block_novosti">
+			<div class="block_novosti_img">
+				<img src="/api/news/photo/{{news.id}}">
+			</div>
+			<div class="block_novosti_content">
+				<p class="date-news">{{news.dateCreated | date:'dd.MM.yyyy'}}</p>
+				<a class="novost_link" [routerLink]="[news.id]">{{news.title}}</a>
+				<p class="preview">{{news.shortDescription}}</p>
+				<a class="read_more_btn" [routerLink]="[news.id]">Читать полностью</a>
+			</div>
+			<div class="clear"></div>
+		</div>
+	<div class="clear"></div>
+</div>

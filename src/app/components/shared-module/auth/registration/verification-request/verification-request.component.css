@@ -1,0 +1,31 @@
+.block_input input {
+  width: 80%;
+  padding-left: 25px;
+  padding-right: 25px;
+  height: 50px;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(0deg, rgba(255,88,0,1) 0%, rgba(255,170,0,1) 100%);
+  border-radius: 25px;
+}
+
+.block_input{
+  position: relative;
+  width: 0;
+  margin-bottom: 20px;
+  display: table;
+  margin: auto;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+@media (max-width: 450px) {
+  .orange_btn {width: -webkit-fill-available; margin-bottom: 5px;}
+}

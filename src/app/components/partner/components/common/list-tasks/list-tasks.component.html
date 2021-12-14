@@ -1,0 +1,92 @@
+<div class="section-content">
+    <div class="vibor" *ngIf="isNotCommon()">
+        <a class="def-href-point" (click)="filterAll()" [ngClass]="{'active-vibor': isAllStatus()}">
+            Все
+        </a>
+        <a class="vipolneno-vibor def-href-point" (click)="filterFinished()" [ngClass]="{'active-vibor': isFinishedStatus()}">
+            Выполненные
+        </a>
+        <a class="vprocesse-vibor def-href-point" (click)="filterInProgress()" [ngClass]="{'active-vibor': isInProgressStatus()}">
+            В процессе
+        </a>
+        <a class="chernovik-vibor def-href-point" (click)="filterHide()" [ngClass]="{'active-vibor': isHideStatus()}">
+            Скрытые
+        </a>
+        <a class="trouble-vibor def-href-point" (click)="filterTrouble()" [ngClass]="{'active-vibor': isTroubleStatus()}">
+            Проблемные
+        </a>
+    </div>
+    <div class="zadanie-block" *ngFor="let shortTask of taskInfos" style="width: 100%;">
+        <div class="zadanie-block-content">
+            <div style="display: flex;">
+                <a class="zadanie-block-img" target="_blank" href="/user/{{shortTask.creatorId}}">
+                    <img class="ispolnitel_img" src="/api/partner/info/photo/{{shortTask.creatorId}}"/>
+                </a>
+                <a class="ispolnitel_name" *ngIf="mode == taskComponentMode.PARTNER"
+                        href="/user/{{shortTask.creatorId}}" target="_blank">
+                    Вы
+                </a>
+                <a class="ispolnitel_name" *ngIf="mode == taskComponentMode.PERFORMER || mode == taskComponentMode.COMMON"
+                        href="/user/{{shortTask.creatorId}}" target="_blank">
+                    {{shortTask.fioTaskOwner}}
+                </a>
+            </div>
+
+            <div class="non-focused-label" style="cursor: pointer;"
+                (click)="chooseOrOpenTask(shortTask)"
+            >
+                <p style="font-size: 12px; margin: 0px;">
+                    Создана {{shortTask.createdAt | date:'dd.MM.yyyy'}}
+                </p>
+                <p *ngIf='shortTask.city' style="font-size: 12px; margin: 0px;">
+                  {{shortTask.city.name}}
+                </p>
+                <p class="zadanie-link zadanie-block-name">
+                    {{shortTask.name}}
+                </p>
+                <div class="righttop">
+                    <!--
+                    <p class="zadanie-block-date">завершено 23.09.19</p>
+                    -->
+                    <div class="margin-5-p-area display_flex_status_zakaza">
+                        <p class="zadanie-block-date status-zakaza st-process task-condition-element"
+                                *ngIf="isShowYourTask(shortTask)">
+                            Ваша задача
+                        </p>
+                        <p class="zadanie-block-date" *ngIf="isNotCommonOffering()"
+                            [ngClass] = "{
+                                'task-not-available-status-color': shortTask.isCommonHide(),
+                                'task-published-status-color': mode != taskComponentMode.COMMON && (shortTask.isCommonInProgress() || shortTask.isPendingPayment()),
+                                'st-process task-condition-element zadanie-block-date': mode == taskComponentMode.COMMON,
+                                'task-succes-status-color': shortTask.isSuccess(),
+                                'task-trouble-status-color': shortTask.isTrouble()}">
+                            {{taskStatusTranslates[shortTask.status]}}
+                        </p>
+                    </div>
+
+                    <p class="zadanie-block-price" [ngClass] = "{
+                        'task-pending-payment': shortTask.isPendingPayment(),
+                        'task-not-available-status-color': shortTask.isCommonHide(),
+                        'task-price-color': shortTask.isCommonInProgress(),
+                        'task-succes-status-color': shortTask.isSuccess(),
+                        'task-trouble-status-color': shortTask.isTrouble()
+                    }">
+                        {{shortTask.moneyTopBorder}}₽
+                    </p>
+                </div>
+                <!--
+                <div class="zadanie-block-otziv" *ngIf="isNotCommon()">
+                    <div class="zadanie-block-otsenka">5</div>
+                    <p>Работаем над комментированием задач</p>
+                </div>-->
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--
+<div *ngIf="!isInfosNotEmpty() && isLoaded">
+    Задач нет
+</div>
+-->

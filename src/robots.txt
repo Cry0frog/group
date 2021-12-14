@@ -1,0 +1,42 @@
+Host: https://gooddealonline.ru
+Sitemap: https://gooddealonline.ru/sitemap.xml
+
+User-agent: *
+Disallow: /login
+Disallow: /registration
+Disallow: /admin
+Disallow: /partner
+Disallow: /user
+Disallow: /support
+Disallow: /terms_of_user
+Disallow: /privacy_policy
+
+User-agent: Yandex
+Disallow: /login
+Disallow: /registration
+Disallow: /admin
+Disallow: /partner
+Disallow: /user
+Disallow: /support
+Disallow: /terms_of_user
+Disallow: /privacy_policy
+
+User-agent: Googlebot
+Disallow: /login
+Disallow: /registration
+Disallow: /admin
+Disallow: /partner
+Disallow: /user
+Disallow: /support
+Disallow: /terms_of_user
+Disallow: /privacy_policy
+
+User-agent: Mail.Ru
+Disallow: /login
+Disallow: /registration
+Disallow: /admin
+Disallow: /partner
+Disallow: /user
+Disallow: /support
+Disallow: /terms_of_user
+Disallow: /privacy_policy

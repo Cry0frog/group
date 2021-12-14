@@ -1,0 +1,64 @@
+.arrow_right,
+.phone_icon {
+  background-size: 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 35px;
+  height: 20px;
+}
+
+.phone_icon {
+  margin: auto 10px auto 0;
+  background-image: url(../../../../assets/icons/gd_icon_finally.svg);
+}
+
+.arrow_right {
+  background-image: url(../../../../assets/icons/arrow.svg);
+  rotate: 90;
+  transform: rotate(90deg);
+  background-size: 15px;
+  width: 15px;
+  height: 15px;
+  margin: auto 0;
+}
+
+.body_link_app {
+  display: flex;
+  justify-content: space-between;
+  margin: auto 50px;
+  width: 100%;
+}
+
+.block_link_app {
+  background-color: #021A3A;
+  display: none;
+  height: 50px;
+}
+
+@media(max-width: 1000px) {
+  .block_link_app {display: flex;}
+}
+
+@media(max-width: 405px) {
+  .body_link_app{margin: auto; width: auto; }
+}
+
+.switcher_block {
+  width: 100%;
+  background: #021A3A;
+  height: 40px;
+}
+
+@media(max-width: 1000px) {
+  .switcher_block {
+    display: none;
+  }
+}
+
+.switcher {
+  left: 155px;
+}
+
+.gooddealtask {
+  color: #FF8000 !important;
+}

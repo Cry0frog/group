@@ -1,0 +1,70 @@
+<h1 class="h1">Резюме</h1>
+
+<div class="select_roles">
+  <mat-select [(ngModel)]="resumeWithCountedPages.filterStatusResume" (selectionChange)="selectFilterStatus($event.value)">
+    <mat-option *ngFor="let filter of filterStatusResumeMapper" [value]="filter.value">
+        {{filter.viewValue}}
+    </mat-option>
+  </mat-select>
+</div>
+
+<mat-form-field class="table-filter-area">
+  <input matInput (keyup) = "applyFilter($event.target.value)" placeholder = "Поиск">
+</mat-form-field>
+
+  <table mat-table [dataSource] = "dataSource" (matSortChange)="sortChange($event)" matSort class = "table_users">
+
+    <!-- Id Column -->
+    <ng-container matColumnDef = "id">
+        <th *matHeaderCellDef mat-sort-header> ID </th>
+        <td *matCellDef = "let row">
+            <a (click)="linkToProfile(row.creatorId)" class="link">{{row.id}}</a>
+        </td>
+    </ng-container>
+
+    <!--Creator name Column -->
+    <ng-container matColumnDef = "creatorName">
+        <th *matHeaderCellDef> Создатель </th>
+        <td *matCellDef = "let row"> {{row.creatorName}} </td>
+    </ng-container>
+
+    <!-- Vacancy Id Column -->
+    <ng-container matColumnDef = "vacancyId">
+      <th *matHeaderCellDef> Вакансия </th>
+      <td *matCellDef = "let row">
+        <a (click)="linkToResume(row.vacancyId)" class="link">{{row.vacancyId}}</a>
+      </td>
+    </ng-container>
+
+
+    <!-- Date create Column -->
+    <ng-container matColumnDef = "dateOfCreation">
+      <th *matHeaderCellDef mat-sort-header > Дата создания </th>
+      <td *matCellDef = "let row"> {{row.createdAt | date:'dd.MM.yyyy HH:mm'}} </td>
+    </ng-container>
+
+    <!-- Date last update Column -->
+    <ng-container matColumnDef = "dateOfLastChange">
+      <th *matHeaderCellDef mat-sort-header > Дата последнего обновления</th>
+      <td *matCellDef = "let row"> {{row.lastUpdatedAt | date:'dd.MM.yyyy HH:mm'}} </td>
+    </ng-container>
+
+    <!-- Operations Column -->
+    <ng-container matColumnDef="operations">
+        <th *matHeaderCellDef> Операции </th>
+        <td *matCellDef = "let row" class = "users_btns">
+            <button matTooltip = "Удалить задачу" class = "buttonDeleteUsers " (click) = "deleteResume(row)"></button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
+    <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator
+  [pageSize]="resumeWithCountedPages.pageableParams.size"
+  [pageSizeOptions]="[15, 40, 80]"
+  [showFirstLastButtons]="true"
+  [length]="resumeWithCountedPages.pageableParams.countedPages"
+  [pageIndex]="resumeWithCountedPages.pageableParams.page"
+  (page)="handlePage($event)">
+</mat-paginator>

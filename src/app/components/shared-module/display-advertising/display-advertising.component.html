@@ -1,0 +1,9 @@
+<div *ngIf='shortAdvertising.advertising != null' class="position_advertising">
+  <div class="block_advertising indent_advertising" style="margin: 0 auto;">
+    <iframe id="myFrame" class="iframe_advertising"></iframe>
+    <div style="display: flex;">
+      <a *ngIf="shortAdvertising.href != null" class="link" href="{{shortAdvertising.href}}" target="_blank">Перейти</a>
+    </div>
+  </div>
+</div>
+

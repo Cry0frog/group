@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Недостаточно GD бонусов</h1>
+<div *ngIf="data.isPublishedTask; else messageTaskPerformerSelectedStatus" mat-dialog-content class="with_field">
+    <p>Вы не можете подать заявку на выполнение данной задачи, поскольку Вы не имеете достаточно средств для дальнейшей оплаты комисии</p>
+    <p>Пожалуйста, перейдите в профиль и пополните баланс на недостающую сумму в размере {{data.request.moneyForCommission}} руб.</p>
+    <p>(при подаче заявки комиссия не взымается)</p>
+</div>
+<ng-template #messageTaskPerformerSelectedStatus>
+  <div mat-dialog-content class="with_field">
+    <p>Вы не можете перейти к выполнению данной задачи, поскольку Вы не имеете достаточно средств для оплаты комиссии.</p>
+    <p>Пожалуйста, перейдите в профиль и пополните баланс на недостающую сумму в размере {{data.request.moneyForCommission}} руб.</p>
+    <p>При переходе к выполнению задачи комиссия будет зарезервирована с Вашего счета и снята по факту успешного завершения задачи,
+      в случае отмены задачи комиссия будет возвращена на Ваш виртуальный счёт, и
+      Вы в дальнейшем сможете использовать эти средства для взятия других заданий.
+    </p>
+</div>
+</ng-template>
+
+<div mat-dialog-actions style="display: flex; justify-content: space-between">
+  <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+  <button class="orange_btn" (click)="goToPayEnough()">
+    Пополнить бонусы
+  </button>
+</div>

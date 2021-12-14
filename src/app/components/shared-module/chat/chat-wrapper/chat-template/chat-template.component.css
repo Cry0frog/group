@@ -1,0 +1,194 @@
+.speech-login {
+    position: absolute;
+    bottom: 90px;
+    left: 0px;
+    padding-left: 0;
+    font-size: 14px;
+    color: #D7D7D7;
+    height: 20px;
+    line-height: 20px;
+    width: 45px;
+    text-align: center;
+}
+
+.speach {
+    padding-bottom: 20px;
+}
+
+.author-speach .msg-align {
+    display: grid;
+    float: right;
+}
+
+.author-speach .chat-document {
+    margin-left: auto;
+}
+
+.author-speach {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.chat-content {
+    height: calc(100% - 55px);
+	height: -moz-calc(100% - 55px);
+    height: -webkit-calc(100% - 55px);
+    overflow-y: auto;
+}
+
+.speach img {
+    width: 40px;
+    bottom: 68px;
+    height: 40px;
+    border-radius: 30px;
+    object-fit: fill;
+}
+
+.pt59 {
+    padding-top: 59px;
+}
+
+.pt8{
+    padding-top: 8px;
+}
+
+.pt14{
+    padding-top: 14px;
+}
+
+.block-chat img {
+    width: 40px;
+    height: 40px;
+    border-radius: 30px;
+    object-fit: fill;
+}
+
+.link_user {
+    padding-top: 8px;
+}
+
+.link_user_after_status {
+    padding-top: 32px;
+}
+
+.chat_template {
+    height: calc(100% - 90px);
+}
+
+.textarea-chat {
+    max-height: initial;
+    height: 45px;
+}
+
+@media (max-width: 1220px) {
+    .chat_template {height: calc(100% - 80px);}
+}
+
+@media (max-width: 453px) {
+    .chat_template {height: calc(100% - 90px);}
+    .close_arbitration {font-size: 14px;}
+}
+@media (max-width: 414px) {
+    .chat_template {height: calc(100% - 110px);}
+}
+
+@media (max-width: 768px) {
+    .status_arbitrations {width: 80%; float: right;}
+}
+
+@media (max-width: 440px) {
+    .link_user_after_status {padding-top: 45px;}
+    .chat_template {height: calc(100% - 105px);}
+}
+
+@media (max-width: 414px) {
+    .link_user_after_status {padding-top: 70px;}
+    .chat_template {height: calc(100% - 120px);}
+}
+
+.chat-block {
+    min-height: 600px;
+}
+
+@media (max-width: 400px){
+	.block-corner{padding:65px 20px;}
+}
+
+.speach-text {
+  max-width: 420px;
+  word-break: break-word;
+  text-align: justify;
+}
+
+.podpredz {
+  margin: 8px 5px;
+}
+
+.height-window {
+    height: 100%;
+}
+
+.padding_window{
+    padding-top: 10px;
+}
+
+.parameters_block_chat {
+    height: 55px;
+    padding-top: 8px;
+}
+
+.online-consultant-chat-content {
+    height: 297px;
+    margin: 3px auto;
+    padding-right: 10px;
+}
+
+.font_size_12 {
+    font-size:12px;
+}
+
+.font_size_14 {
+    font-size:14px;
+}
+
+.location_of_arbitration_title {
+    margin-bottom: 5px; 
+}
+
+@media(max-width: 1000px) {
+    .location_of_arbitration_title {
+        float: right;
+    }
+
+    .location_of_arbitration_description {
+        display: inline-grid;
+    }
+}
+
+@media(max-width: 433px) {
+    .textarea-chat {
+        font-size: 14px;
+        padding: 12px 5px 10px;
+    }
+}
+
+@media(max-width: 321px) {
+    .textarea-chat {
+        padding: 5px 5px 10px;
+    }
+}
+
+@media (max-width: 306px) {
+    .close_arbitration {
+        max-height: 35px;
+        overflow-y: auto;
+    }
+    ::-webkit-scrollbar {
+        width: 4px;
+    }
+}
+
+@media (max-width: 441px) {
+    .arbitration_description_text {font-size: 15px;}
+    .status_arbitrations {width: 95%; font-size: 14px;}
+}

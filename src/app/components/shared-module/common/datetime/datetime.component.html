@@ -1,0 +1,10 @@
+<div class="datetime-section">
+    <div class="datetime-date-time">
+        <p-calendar class="datetime-date with-time" readonlyInput="true" [(ngModel)]="dateTimeObj.strActionTime_date"
+            dateFormat="dd.mm.yy" placeholder="Дата" [locale]="ru_calendar">
+        </p-calendar>
+        <p-calendar class="datetime-time" readonlyInput="true" [(ngModel)]="dateTimeObj.strActionTime_time" hourFormat="24"
+            placeholder="Время" timeOnly="true" [locale]="ru_calendar">
+        </p-calendar>
+    </div>
+</div>

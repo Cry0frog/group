@@ -1,0 +1,16 @@
+.feedback-block:hover {
+  background-color: #eaeaea;
+}
+
+.block_promotion {
+  display: flex;
+}
+
+@media(max-width: 550px) {
+  .block_promotion {display: block;}
+}
+
+@media(max-width: 550px) and (min-width:400px) {
+  .feedback-zag {margin-bottom: 20px;}
+  .feedback-img {transform: translateY(-20px);}
+}

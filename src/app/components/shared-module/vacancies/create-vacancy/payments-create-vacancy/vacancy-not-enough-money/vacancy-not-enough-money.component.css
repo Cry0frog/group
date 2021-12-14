@@ -1,0 +1,9 @@
+@media (max-width: 520px) {
+  .orange_btn {width: -webkit-fill-available; margin-bottom: 5px;}
+}
+
+@media (max-width: 380px) {
+  .orange_btn {height: 37px; margin-bottom: 7x;}
+  .mat-dialog-content {margin: 0px; padding: 0px; max-height: 40vh;}
+  .mat-dialog-title {margin: 0 0 15px;}
+}

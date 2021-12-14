@@ -1,0 +1,49 @@
+
+.cat_btns > button {
+  margin-right: 5px;
+}
+
+.cat_btns > button:last-child {
+  margin-right: 0px;
+}
+
+.cat_btns {
+  width: 190px;
+}
+
+.h1 {
+  margin-bottom: 0px;
+  text-align: left;
+}
+
+table.mat-table {
+  border-spacing: 1px;
+}
+
+.mt51 {
+  margin-top: -51px;
+}
+
+.child-category {
+  width: 100%;
+  margin-left: 50px;
+}
+
+mat-icon {
+  cursor: pointer;
+}
+
+img {
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 50%;
+  height: 36px;
+  margin-right: 6px;
+  width: 36px;
+  object-fit: fill;
+}
+
+.photo {
+  background-image: url(../.././../../../../assets/icons/camera.svg);
+  background-size: 23px;
+}

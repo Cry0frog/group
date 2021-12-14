@@ -1,0 +1,15 @@
+<div mat-dialog-content>
+    <span>У вас действительно остались споры или разногласия с заказчиком?</span>
+</div>
+<div mat-dialog-actions class="mapping-btn">
+    <button mat-stroked-button color="primary" class="cancel_zakaz standart-short-btn request-handling-btn m_b_5"
+          [mat-dialog-close]="data">
+        Запросить арбитраж
+    </button>
+
+    <button class="right-align orange_btn margin-5 request-handling-btn m_b_5" mat-stroked-button color="primary"
+            (click)="onNoClick()">
+        Ожидать ответа заказчика
+    </button>
+
+</div>

@@ -1,0 +1,42 @@
+<h1 class="h1">Акции</h1>
+<mat-form-field class="table-filter-area">
+  <input matInput (keyup) = "applyFilter($event.target.value)" placeholder = "Поиск">
+</mat-form-field>
+<table mat-table [dataSource] = "dataSource" matSortActive="id" matSortDirection="desc" matSort class = "table_users">
+  <!-- Name Column -->
+  <ng-container matColumnDef = "name">
+    <th *matHeaderCellDef mat-sort-header > Название </th>
+    <td *matCellDef = "let row">
+      <div style="display: flex;">
+        <div class="promotion">
+          <img src="/api/admin/promotion/photo/{{row.id}}">
+        </div>
+        <div style="display: flex;">
+          <p style="margin-top: auto; margin-bottom: auto;">{{row.name}}</p>
+        </div>
+      </div>
+    </td>
+  </ng-container>
+  <!-- Status Column -->
+  <ng-container matColumnDef="status">
+      <th *matHeaderCellDef mat-sort-header > Статус </th>
+      <td *matCellDef="let row" > {{row.getStatus()}} </td>
+  </ng-container>
+  <!-- Operations Column -->
+  <ng-container matColumnDef="operations">
+      <th *matHeaderCellDef mat-sort-header > Операции </th>
+      <td *matCellDef = "let row" class = "users_btns">
+        <button matTooltip = "Обновить акцию" class = "buttonUpdateUsers margin-5" (click) = "updatePromotion(row)"></button>
+        <button matTooltip = "Обновить фото" class = "buttonUpdateUsers photo" (click) = "updatePhotoPromotion(row)"></button>
+        <button matTooltip = "Удалить акцию" class = "buttonDeleteUsers margin-5" (click) = "deletePromotion(row)"></button>
+      </td>
+   </ng-container>
+  <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
+  <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
+</table>
+<button matTooltip = "Создание акции" class = "buttonAdd" (click)='addPromotion()'>Создать акцию</button>
+<mat-paginator
+  [length]="100"
+  [pageSize]="10"
+  [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>

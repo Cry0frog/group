@@ -1,0 +1,14 @@
+.input_img {
+    cursor: pointer;
+    font-size: 20px;
+    height: 36px;
+    width: 70%;
+    color: white;
+    background: linear-gradient(0deg, rgba(255,88,0,1) 0%, rgba(255,170,0,1) 100%);
+    border-radius: 30px;
+    margin-left: 80px;
+}
+
+.input_img:hover, .input_img:focus {
+    background: linear-gradient(0deg, rgba(255,94,0,1) 0%, rgba(255,209,0,1) 100%);
+}

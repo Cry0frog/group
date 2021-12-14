@@ -1,0 +1,29 @@
+<div *ngIf="isNotEmptyNotifications(); else isEmptyNotifications">
+    <div>
+        <div class="uvedomlenia" *ngFor="let notification of notifications">
+            <p class="uvedomlenia-date">
+                {{notification.date | date:'dd.MM.yyyy HH:mm'}}
+            </p>
+            <p class="uvedomlenia-content">
+                {{notification.message}}
+            </p>
+            <div>
+                <button *ngIf="displayLink(notification)" class="transition" style="font-size: 14px;"
+                     (click)="markAsRead(notification, true)">
+                    Переход
+                </button>
+                <button class="uvedomlenia-read" (click)="markAsRead(notification, false)">Пометить прочитанным</button>
+            </div>
+            <div *ngIf="isUser() && isTypeComment(notification) && notification.isCheckComment">
+                <button class="transition" (click)="addComment(notification)">Оставить отзыв</button>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <a *ngIf="!checkNotification()" class="see_cat" (click)="clearAllNotification()">Очистить все оповещения</a>
+</div>
+<ng-template #isEmptyNotifications>
+    <span class="message_position">
+        У Вас пока нет уведомлений
+    </span>
+</ng-template>

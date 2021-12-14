@@ -1,0 +1,15 @@
+.message_position {
+    position: relative;
+    left: -25%;
+    color: #cdcbcb;
+}
+
+@media(max-width: 1000px) {
+    .message_position {
+        left: 5%;
+    }
+}
+
+.see_cat {
+  line-height: inherit;
+}

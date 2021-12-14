@@ -1,0 +1,28 @@
+<div class="wrapper content paddingi">
+    <div class="width_100 paddingi">
+
+        <div class="common-tabs tabs user-panel">
+            <input id="tab1" class="users" type="radio" name="tabs" checked>
+            <label class="non-focused-label" for="tab1" (click)="switchToUsersMode()">
+                <i class="tavs-icon"></i>
+                <span>Пользователи</span>
+            </label>
+
+            <input id="tab2" class="legal_entities" type="radio" name="tabs">
+            <label class="non-focused-label" for="tab2" (click)="switchToLegalEntitiesMode()">
+                <i class="tavs-icon"></i>
+                <span>Организации</span>
+            </label>
+
+            <input id="tab3" class="blocked_users" type="radio" name="tabs">
+            <label class="non-focused-label" for="tab3" (click)="switchToBlockedUsersMode()">
+                <i class="tavs-icon"></i>
+                <span>Заблокированные пользователи</span>
+            </label>
+
+            <div class="block-corner">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+.rate_block {
+    display: flex;
+    margin: auto;
+}
+
+.rate_block p {
+    margin-top: auto;
+    margin-bottom: auto;
+    font-weight: 900;
+}
+
+.orange_btn {
+    height: 26px;
+    padding: 0 13px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.block_operation {
+    display: flex;
+}
+
+.param {
+    margin: auto;
+}
+
+.block_param {
+    display: flex;
+}

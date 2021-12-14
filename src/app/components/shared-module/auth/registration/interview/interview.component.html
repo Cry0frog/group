@@ -1,0 +1,25 @@
+<div>
+    <p class="h1">Пройдите, пожалуйста опрос</p>
+    
+    <div class="main_content">
+        <div style="display: flex;">
+            <p style="margin-top: auto; margin-bottom: auto; margin-right: 20px;">Укажите, как Вы нашли нас</p>
+        </div>
+
+        <div class="block_input with_field">
+            <div class="select-block_sz">    
+                <mat-select class="select-sz" [(ngModel)]="value" placeholder="Выберите вариант">
+                    <mat-option *ngFor="let option of translateSurveyOptions" class="my-mat-option" [value]="option.value">
+                        {{option.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </div>    
+        </div>
+    </div>
+
+</div>
+
+<div class="dialog-actions" mat-dialog-actions>
+    <button class="orange_btn" (click)="onNoClick()">Отмена</button>
+    <button class="orange_btn" (click)="sendInterview()">Подтвердить</button>
+</div>

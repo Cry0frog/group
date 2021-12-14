@@ -1,0 +1,29 @@
+.zadanie-link {
+    margin-top: 20px;
+}
+
+.ispolnitel_img{
+    height: 60px;
+    object-fit: fill;
+}
+
+.task-pending-payment {
+    font-weight: bold;
+    font-size: 20px;
+    color: red;
+    margin-bottom: 0;
+}
+
+
+.display_flex_status_zakaza {
+    display: flex;
+}
+
+@media(max-width: 600px) {
+    .display_flex_status_zakaza {
+        display: grid;
+    }
+    .task-condition-element {
+        text-align: center;
+    }
+}

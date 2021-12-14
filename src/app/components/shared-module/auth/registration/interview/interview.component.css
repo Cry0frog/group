@@ -1,0 +1,68 @@
+.my-mat-option {
+    display: table;
+    width: -webkit-fill-available;
+    line-height: 2em !important;
+    height: 2em !important;
+}
+
+::ng-deep .mat-select-panel::-webkit-scrollbar-button{width: 28px; height: 30px;} 
+
+::ng-deep .ui-dropdown-filter-container {
+    border-top-left-radius: 20px !important;
+    border-top-right-radius: 20px !important;;
+}
+
+::ng-deep .ui-dropdown-panel {
+    border-radius: 20px !important;
+}
+
+::ng-deep .ui-dropdown-item {
+    border-bottom-right-radius: 20px !important;
+    border-bottom-left-radius: 20px !important;
+}
+
+::ng-deep .select-sz .mat-select-trigger {
+    width: 100%;
+}
+
+::ng-deep .select-sz .mat-select-arrow {
+    visibility: hidden;
+}
+
+::ng-deep .select-sz .mat-select-value-text span {
+    color: #888;
+}
+
+::ng-deep .mat-select-panel{
+    border-radius: 30px !important;
+    padding: 20px !important;
+
+}
+
+.main_content {
+    display: flex;
+}
+
+.with_field {
+    width: 40%;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    margin-bottom: 0;
+    margin-top: 20px;
+}
+
+@media (max-width: 450px) {
+    .orange_btn {width: -webkit-fill-available; margin-bottom: 5px;}
+}
+
+@media(max-width: 800px) {
+    .with_field {width: 100%;}
+}
+
+@media(max-width: 600px) {
+    .main_content {display: block;}
+}

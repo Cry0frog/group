@@ -1,0 +1,24 @@
+<div class="setting-block paddingi">
+  <h1 class="h1">Cтатистика работы</h1>
+</div>
+<div class="flex">
+  <div class="statistic-50 paddingi">
+      <div *ngIf="configNewVacancy != null">
+          <app-statistic-chart #newVacanciesChart [etalonChartConfig]="configNewVacancy">
+          </app-statistic-chart>
+      </div>
+  </div>
+  <div class="statistic-50 paddingi">
+    <div *ngIf="configNewDefResume != null">
+        <app-statistic-chart #newDefResumeChart [etalonChartConfig]="configNewDefResume">
+        </app-statistic-chart>
+    </div>
+  </div>
+  <div class="statistic-50 paddingi">
+    <div *ngIf="configSubmittedResume != null">
+        <app-statistic-chart #submittedResumeChart [etalonChartConfig]="configSubmittedResume">
+        </app-statistic-chart>
+    </div>
+  </div>
+</div>
+

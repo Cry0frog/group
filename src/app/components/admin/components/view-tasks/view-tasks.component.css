@@ -1,0 +1,11 @@
+.users_btns {
+    width: 100px;
+}
+
+.link {
+    cursor: pointer;
+}
+
+.link:hover {
+    text-decoration: underline;
+}

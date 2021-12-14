@@ -1,0 +1,23 @@
+.user_info {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.full_string {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mobile_store .store-block .apple_store_link {
+    margin-top: 0px;
+}
+
+.mobile_store .orange_podzag {
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
